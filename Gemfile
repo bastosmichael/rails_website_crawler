@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
 gem 'sqlite3'
+gem 'awesome_print'
+gem 'trollop'
 gem 'sidekiq'
 gem 'sinatra', require: false
 

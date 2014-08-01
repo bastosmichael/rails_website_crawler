@@ -28,6 +28,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    awesome_print (1.2.0)
     builder (3.2.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
@@ -100,6 +101,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    trollop (2.0)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
 
@@ -107,9 +109,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  awesome_print
   rails (= 4.1.4)
   sdoc (~> 0.4.0)
   sidekiq
   sinatra
   spring
   sqlite3
+  trollop
