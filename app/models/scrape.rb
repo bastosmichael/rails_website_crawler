@@ -49,7 +49,7 @@ class Scrape
 
   def post params, headers = ''
   	Timeout.timeout(60) do 
-      VCR.use_cassette(File.join(cache_key, params.to_query + headers) do
+      VCR.use_cassette(File.join(cache_key, params.to_query + headers)) do
   	    mechanize.post(url, params, headers)
       end
   	end
