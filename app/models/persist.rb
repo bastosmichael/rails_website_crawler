@@ -1,4 +1,4 @@
-class Persister
+class Persist
   def [](key)
     Cloud.instance.get(key).try(:body)
   end
