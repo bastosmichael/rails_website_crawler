@@ -3,12 +3,12 @@ class Scrape
     @url = clean_up_url(url)
   end
 
-  def mechanize
-  	@mechanize ||= defaults
+  def agent
+  	@agent ||= defaults
   end
 
   def page
-    mechanize.page
+    agent.page
   end
 
   def cache_key
@@ -42,7 +42,7 @@ class Scrape
   def get
   	Timeout.timeout(60) do 
       VCR.use_cassette(cache_key) do
-  	    mechanize.get(url)
+  	    agent.get(url)
       end
   	end
   end
@@ -50,7 +50,7 @@ class Scrape
   def post params, headers = ''
   	Timeout.timeout(60) do 
       VCR.use_cassette(File.join(cache_key, params.to_query + headers)) do
-  	    mechanize.post(url, params, headers)
+  	    agent.post(url, params, headers)
       end
   	end
   end

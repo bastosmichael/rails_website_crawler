@@ -1,9 +1,13 @@
 class Persist
+  def initialize(name)
+  	@name = name
+  end
+
   def [](key)
-    Cloud.instance.get(key).try(:body)
+    Cloud.new(@name).get(key).try(:body)
   end
 
   def []=(key, content)
-    Cloud.instance.sync(key, content)
+    Cloud.new(@name).sync(key, content)
   end
 end

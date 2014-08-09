@@ -1,7 +1,15 @@
 class Cloud
-  include Singleton
-  
-  CONTAINER = 'crawler'
+
+  attr_accessor :bucket
+
+  def initialize bucket_name
+    self.bucket = bucket_name if bucket_name
+  end
+
+  def after_initialize
+     return unless new_record?
+     self.bucket = 'crawler'
+  end
 
   def storage
     @storage = Fog::Storage.new({ provider: 'Local',
@@ -10,7 +18,7 @@ class Cloud
   end
 
   def container
-    @container = storage.directories.get(CONTAINER)
+    @container ||= storage.directories.get(bucket) 
     create_container if @container.nil?
     return @container
   end
@@ -47,6 +55,6 @@ class Cloud
   end
 
   def create_container
-    storage.directories.create({ :key => CONTAINER, :public => true })
+    @container = storage.directories.create({ :key => bucket, :public => true })
   end
 end
