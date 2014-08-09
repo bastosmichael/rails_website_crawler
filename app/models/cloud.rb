@@ -1,6 +1,7 @@
 class Cloud
 
   attr_accessor :bucket
+  attr_accessor :provider
 
   def initialize bucket_name
     self.bucket = bucket_name if bucket_name
@@ -18,7 +19,7 @@ class Cloud
   end
 
   def container
-    @container ||= storage.directories.get(bucket) 
+    @container = storage.directories.get(bucket) 
     create_container if @container.nil?
     return @container
   end

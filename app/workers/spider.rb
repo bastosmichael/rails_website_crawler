@@ -14,6 +14,10 @@ class Spider < Worker
   	@scraper ||= Scrape.new(@url)
   end
 
+  def capturer
+    @capturer ||= Capture.new(@url)
+  end
+
   def parser
   	@parser ||= Parse.new(scraper.page)
   end

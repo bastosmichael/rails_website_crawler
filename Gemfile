@@ -8,6 +8,11 @@ gem 'trollop'
 
 gem 'nokogiri'
 gem 'mechanize'
+
+gem 'selenium-webdriver'
+gem 'headless'
+gem 'rmagick'
+
 gem 'vcr'
 gem 'webmock'
 gem 'fog'

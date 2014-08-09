@@ -1,7 +1,4 @@
-class Scrape
-  def initialize url
-    @url = clean_up_url(url)
-  end
+class Scrape < Url
 
   def agent
   	@agent ||= defaults
@@ -9,34 +6,6 @@ class Scrape
 
   def page
     agent.page
-  end
-
-  def cache_key
-    File.join(build_path, Date.today.to_s)
-  end
-
-  def build_path
-    File.join(name, host, md5)
-  end
-
-  def uri
-    @uri ||= get_uri
-  end
-
-  def url
-    uri.to_s
-  end
-
-  def md5
-    Digest::MD5.hexdigest(url)
-  end
-
-  def host
-    get_host_without_www
-  end
-
-  def name
-    host.split('.').first
   end
 
   def get
@@ -56,21 +25,6 @@ class Scrape
   end
 
   private
-
-  def get_uri
-    page ? page.uri : URI.parse(@url)
-  end
-
-  def get_host_without_www
-    host = uri.host.downcase
-    host.start_with?('www.') ? host[4..-1] : host
-  end
-
-  def clean_up_url url
-    url = URI.encode(url)
-    url = "http://#{url}" if URI.parse(url).scheme.nil?
-    url
-  end
 
   def defaults
     agent = Mechanize.new

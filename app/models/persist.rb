@@ -3,11 +3,15 @@ class Persist
   	@name = name
   end
 
+  def cloud
+  	@cloud ||= Cloud.new(@name)
+  end
+
   def [](key)
-    Cloud.new(@name).get(key).try(:body)
+    cloud.get(key).try(:body)
   end
 
   def []=(key, content)
-    Cloud.new(@name).sync(key, content)
+    cloud.sync(key, content)
   end
 end
