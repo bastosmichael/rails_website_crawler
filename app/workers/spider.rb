@@ -4,6 +4,10 @@ class Spider < Worker
   def perform url, params = nil, headers = ''
   	@url = url
     get_page params, headers
+
+
+
+
   end
 
   def get_page params, headers
@@ -20,5 +24,9 @@ class Spider < Worker
 
   def parser
   	@parser ||= Parse.new(scraper.page)
+  end
+
+  def cloud
+    @cloud ||= Cloud.new('data')
   end
 end

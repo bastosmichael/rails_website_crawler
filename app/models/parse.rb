@@ -12,20 +12,28 @@ class Parse
   end
 
   def links
-  	page.links
+  	page.links.select { |link| link if is_uri? link.href }
   end
 
   def internal_links
-    links.map { |link| File.join(base, link) if !has_host? link }.compact
+    links.map { |link| base + link.href if !has_host? link.href }.compact
   end
 
   def external_links
-    links.map { |link| link if has_host? }.compact
+    links.map { |link| link.href if has_host? link.href }.compact
   end
 
   private
 
   def has_host? link
-    URI.parse(link.href).host
-  end  
+    is_uri?(link).host
+  rescue
+    nil
+  end
+
+  def is_uri? link
+    URI.parse(link)
+  rescue URI::InvalidURIError
+    nil
+  end
 end
