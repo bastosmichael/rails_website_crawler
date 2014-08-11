@@ -2,18 +2,23 @@ class Capture < Url
   require 'RMagick'
   include Magick
 
+  PNG = '.png'
+  JPG = '.jpg'
+
   def screen
-  	if !File.exist?(png_file_path)
+    # if cloud.head jpg_relative_path
       check_temp_path
       get_png
       compress_png
-    end
+      cloud.sync(jpg_relative_path, jpeg)
+      delete_images
+    # end
+    return jpg_relative_path
   end
 
   def compress_png
-    image.write(jpg_file_path) do
+    image.minify.write(jpg_file_path) do
       self.format = 'JPEG'
-      self.quality = 10
     end
   end
 
@@ -30,12 +35,29 @@ class Capture < Url
     FileUtils::mkdir_p(path) if !File.exist?(path)
   end
 
+  def delete_images
+    FileUtils.rm jpg_file_path
+    FileUtils.rm png_file_path
+  rescue Errno::ENOENT
+    nil
+  end
+
+  def jpeg
+    File.read jpg_file_path
+  rescue Errno::ENOENT
+    nil
+  end
+
   def png_file_path
-    temp_path + '.png'
+    temp_path + PNG
   end
 
   def jpg_file_path
-    temp_path + '.jpg'
+    temp_path + JPG
+  end
+
+  def jpg_relative_path
+    cache_key + JPG
   end
 
   def temp_path
@@ -44,5 +66,9 @@ class Capture < Url
 
   def image
     @image ||= Image.read(png_file_path).first
+  end
+
+  def cloud
+    @cloud ||= Cloud.new('screenshots')
   end
 end
