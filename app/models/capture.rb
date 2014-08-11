@@ -11,8 +11,9 @@ class Capture < Url
   end
 
   def compress_png
-    image.write(png_file_path) do 
-      self.compression = Magick::ZipCompression
+    image.write(jpg_file_path) do
+      self.format = 'JPEG'
+      self.quality = 10
     end
   end
 
@@ -25,15 +26,20 @@ class Capture < Url
   end
 
   def check_temp_path
-    FileUtils::mkdir_p(temp_path) if !File.exist?(temp_path)
+    path = File.dirname temp_path
+    FileUtils::mkdir_p(path) if !File.exist?(path)
   end
 
   def png_file_path
-    File.join(temp_path, date + '.png')
+    temp_path + '.png'
+  end
+
+  def jpg_file_path
+    temp_path + '.jpg'
   end
 
   def temp_path
-  	File.join(Rails.root, 'tmp/screenshots', build_path)
+  	File.join(Rails.root, 'tmp/screenshots', cache_key)
   end
 
   def image
