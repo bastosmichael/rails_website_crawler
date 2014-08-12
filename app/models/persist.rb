@@ -1,10 +1,8 @@
 class Persist
-  def initialize(name)
-  	@name = name
-  end
-
+  include Singleton
+  
   def cloud
-  	@cloud ||= Cloud.new(@name)
+  	@cloud ||= Cloud.new('vcr')
   end
 
   def [](key)
@@ -13,5 +11,9 @@ class Persist
 
   def []=(key, content)
     cloud.sync(key, content)
+  end
+
+  def exists? key
+    cloud.head(key)
   end
 end

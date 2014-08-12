@@ -13,7 +13,7 @@ gem 'selenium-webdriver'
 gem 'headless'
 gem 'rmagick'
 
-gem 'vcr'
+gem 'vcr', '2.4.0'
 gem 'webmock'
 gem 'fog'
 

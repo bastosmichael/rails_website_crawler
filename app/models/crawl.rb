@@ -2,7 +2,7 @@ class Crawl
   include Singleton
 
   def process_url url
-  	ap url
+  	Spider.perform_async url
   end
 
   def process_urls urls
