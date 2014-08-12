@@ -26,7 +26,7 @@ class Spider < Worker
   end
 
   def crawled? key
-    in_vcr? key || in_sidekiq? key
+    in_vcr?(key) || in_sidekiq?(key)
   end  
 
   def in_sidekiq? key
