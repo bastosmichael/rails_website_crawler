@@ -34,8 +34,6 @@ class Url
     host.split('.').first
   end
 
-  private
-
   def get_host_without_www
     host = uri.host.downcase
     host.start_with?('www.') ? host[4..-1] : host

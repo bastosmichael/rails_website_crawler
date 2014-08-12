@@ -1,39 +1,39 @@
-class Parse
-  def initialize page
-  	@page = page
+class Parse < Url
+  URI_REGEX = /\A#{URI::regexp(['http', 'https'])}\z/
+
+  attr_accessor :page
+
+  def links
+    page.links.map do |link| 
+      clean_up_link(link.href)
+    end.compact
+  end
+
+  def internal_links
+    links.map { |link| link if internal? link }.compact
+  end
+
+  def external_links
+    links.map { |link| link if !internal? link }.compact
+  end
+
+  def clean_up_link link
+    link_uri = URI.parse(link)
+    if link_uri.scheme.nil? && link_uri.host.nil?
+      link = (base + link)
+    else 
+      link
+    end
+  rescue
+    nil
   end
 
   def base
     "#{page.uri.scheme}://#{page.uri.host}"
   end
 
-  def page
-    @page
+  def internal? link
+    URI.parse(link).host == host
   end
 
-  def links
-  	page.links.select { |link| link if is_uri? link.href }
-  end
-
-  def internal_links
-    links.map { |link| base + link.href if !has_host? link.href }.compact
-  end
-
-  def external_links
-    links.map { |link| link.href if has_host? link.href }.compact
-  end
-
-  private
-
-  def has_host? link
-    is_uri?(link).host
-  rescue
-    nil
-  end
-
-  def is_uri? link
-    URI.parse(link)
-  rescue URI::InvalidURIError
-    nil
-  end
 end
