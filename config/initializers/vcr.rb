@@ -1,5 +1,5 @@
 VCR.configure { |c|
-  c.cassette_library_dir = 'tmp'
+  c.cassette_library_dir = 'tmp/cache'
   c.hook_into :webmock
   # c.cassette_persisters[:test] = Persist.instance
   # c.default_cassette_options[:persist_with] = :test
