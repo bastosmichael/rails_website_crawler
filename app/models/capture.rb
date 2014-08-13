@@ -6,13 +6,13 @@ class Capture < Url
   JPG = '.jpg'
 
   def screen
-    # if cloud.head jpg_relative_path
+    if cloud.head jpg_relative_path
       check_temp_path
       get_png
       compress_png
       cloud.sync(jpg_relative_path, jpeg)
       delete_images
-    # end
+    end
     return jpg_relative_path
   end
 
@@ -61,7 +61,7 @@ class Capture < Url
   end
 
   def temp_path
-  	File.join(Rails.root, 'tmp/screenshots', cache_key)
+  	File.join(Rails.root, 'tmp', cache_key)
   end
 
   def image
@@ -69,6 +69,6 @@ class Capture < Url
   end
 
   def cloud
-    @cloud ||= Cloud.new('screenshots')
+    @cloud ||= Cloud.new(name + '_screenshots')
   end
 end

@@ -36,4 +36,7 @@ class Parse < Url
     URI.parse(link).host == host
   end
 
+  def cloud
+    @cloud ||= Cloud.new(name + '_data')
+  end
 end

@@ -11,7 +11,7 @@ class Url
   end
 
   def build_path
-    File.join(name, host, md5)
+    File.join(host, md5)
   end
 
   def uri
