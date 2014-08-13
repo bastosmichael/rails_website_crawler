@@ -2,9 +2,13 @@ class Spider < Worker
   sidekiq_options backtrace: true, unique: :all, expiration: 24 * 60 * 60
 
   def perform url, params = nil, headers = ''
-  	@url = url
+    @url = url
+    @params = params
+    @headers = headers
     get_page params, headers
     visit
+  rescue Net::HTTP::Persistent::Error
+    Spider.perform_async @url, @params, @headers
   end
 
   def get_page params = nil, headers = ''
