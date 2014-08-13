@@ -5,8 +5,8 @@ class Parse < Url
 
   def links
     page.links.map do |link| 
-      clean_up_link(link.href)
-    end.compact
+      remove_hash_bangs(clean_up_link(link.href))
+    end.compact.uniq
   end
 
   def internal_links
@@ -26,6 +26,15 @@ class Parse < Url
     end
   rescue
     nil
+  end
+
+  def remove_hash_bangs link
+    return if link.nil?
+    if hash_bang = link.match(/(.+?)\#/)
+      hash_bang[1]
+    else
+      link
+    end
   end
 
   def base
