@@ -10,7 +10,8 @@ class Scrape < Url
 
   def get
   	Timeout.timeout(60) do 
-      VCR.use_cassette(cache_key) do
+      # TODO change it back to cache_key when built
+      VCR.use_cassette(build_path) do
   	    agent.get(url)
       end
   	end
