@@ -17,6 +17,8 @@ gem 'vcr', '2.4.0'
 gem 'webmock'
 gem 'fog'
 
+gem 'redis-objects'
+
 gem 'sidekiq'
 gem 'sinatra', require: false
 

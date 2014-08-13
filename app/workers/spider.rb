@@ -4,9 +4,7 @@ class Spider < Worker
   def perform url, params = nil, headers = ''
   	@url = url
     get_page params, headers
-    parser.internal_links.each do |link|
-      push_job link
-    end
+    visit
   end
 
   def get_page params = nil, headers = ''
@@ -21,19 +19,7 @@ class Spider < Worker
   	@parser ||= Parse.new(@url)
   end
 
-  def push_job link
-    Spider.perform_async link if !crawled? link
-  end
-
-  def crawled? key
-    in_vcr?(key) || in_sidekiq?(key)
-  end  
-
-  def in_sidekiq? key
-
-  end
-
-  def in_vcr? key
-    Persist.instance.exists? Url.new(key).cache_key + '.yml'
+  def visit
+    @visit ||= Visit.new(parser.internal_links)
   end
 end

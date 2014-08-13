@@ -126,6 +126,8 @@ GEM
     redis (3.1.0)
     redis-namespace (1.5.0)
       redis (~> 3.0, >= 3.0.4)
+    redis-objects (1.0.0)
+      redis (>= 3.0.2)
     rmagick (2.13.3)
     rubyzip (1.1.6)
     safe_yaml (1.0.3)
@@ -188,6 +190,7 @@ DEPENDENCIES
   mechanize
   nokogiri
   rails (= 4.1.4)
+  redis-objects
   rmagick
   sdoc (~> 0.4.0)
   selenium-webdriver
