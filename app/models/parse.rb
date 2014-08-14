@@ -4,7 +4,7 @@ class Parse < Url
   attr_accessor :page
 
   def links
-    page.links.map do |link| 
+    page.links.map do |link|
       remove_hash_bangs(clean_up_link(link.href))
     end.compact.uniq
   end
@@ -21,7 +21,7 @@ class Parse < Url
     link_uri = URI.parse(link)
     if link_uri.scheme.nil? && link_uri.host.nil?
       link = (base + link)
-    else 
+    else
       link
     end
   rescue
@@ -42,7 +42,7 @@ class Parse < Url
   end
 
   def internal? link
-    URI.parse(link).host == host
+    get_host_without_www(URI.parse(link)) == host
   end
 
   def cloud

@@ -27,15 +27,15 @@ class Url
   end
 
   def host
-    get_host_without_www
+    get_host_without_www uri
   end
 
   def name
     host.split('.').first
   end
 
-  def get_host_without_www
-    host = uri.host.downcase
+  def get_host_without_www new_uri
+    host = new_uri.host.downcase
     host.start_with?('www.') ? host[4..-1] : host
   end
 
