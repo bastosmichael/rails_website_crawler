@@ -1,10 +1,7 @@
 ---
-:concurrency: 20
+:concurrency: 4
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [scrimp, 2]
+  - [scrimper, 2]
   - [spider, 1]
   - default
-:limits:
-  scrimper: 5
-  spider: 5

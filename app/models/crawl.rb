@@ -1,13 +1,17 @@
 class Crawl
   include Singleton
 
-  def process_url url
+  def scrimp_url url
+    Scrimper.perform_async url
+  end
+
+  def spider_url url
   	clear_visited
   	Spider.perform_async url
   end
 
-  def process_urls urls
-  	ap urls
+  def scrimp_urls urls
+    ap urls
   end
 
   def clear_visited

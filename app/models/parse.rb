@@ -4,17 +4,17 @@ class Parse < Url
   attr_accessor :page
 
   def links
-    page.links.map do |link|
+    @links ||= page.links.map do |link|
       remove_hash_bangs(clean_up_link(link.href))
     end.compact.uniq
   end
 
   def internal_links
-    links.map { |link| link if internal? link }.compact
+    @internal_links ||= links.map { |link| link if internal? link }.compact
   end
 
   def external_links
-    links.map { |link| link if !internal? link }.compact
+    @external_links ||= links.map { |link| link if !internal? link }.compact
   end
 
   def clean_up_link link
