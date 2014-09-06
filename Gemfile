@@ -13,13 +13,14 @@ gem 'selenium-webdriver'
 gem 'headless'
 gem 'rmagick'
 
-gem 'vcr', '2.4.0'
-gem 'webmock', '1.10'
+gem 'vcr'
+gem 'webmock'
 gem 'fog'
 
 gem 'redis-objects'
 
 gem 'sidekiq'
+gem 'sidekiq-unique-jobs'
 gem 'sinatra', require: false
 gem 'thin'
 

@@ -1,5 +1,5 @@
 class Spider < Worker
-  sidekiq_options backtrace: true, unique: :all, expiration: 24 * 60 * 60
+  sidekiq_options backtrace: true, unique: true, unique_job_expiration: 24 * 60 * 60
 
   def perform url, params = nil, headers = ''
     @url = url

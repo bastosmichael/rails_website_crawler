@@ -11,16 +11,19 @@ class Scrape < Url
   def get
   	Timeout.timeout(60) do 
       # TODO change it back to cache_key when built
-      VCR.use_cassette(build_path) do
-  	    agent.get(url)
+      VCR.use_cassette(build_path, :record => :new_episodes) do
+        @agent = defaults
+  	    @agent.get(url)
       end
   	end
   end
 
   def post params, headers = ''
   	Timeout.timeout(60) do 
-      VCR.use_cassette(File.join(cache_key, params.to_query + headers)) do
-  	    agent.post(url, params, headers)
+      # TODO change it back to cache_key when built
+      VCR.use_cassette(File.join(build_path, params.to_query + headers), :record => :new_episodes) do
+  	    @agent = defaults
+        @agent.post(url, params, headers)
       end
   	end
   end

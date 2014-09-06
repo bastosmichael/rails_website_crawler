@@ -43,6 +43,8 @@ class Parse < Url
 
   def internal? link
     get_host_without_www(URI.parse(link)) == host
+  rescue
+    nil
   end
 
   def cloud
