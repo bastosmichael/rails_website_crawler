@@ -6,5 +6,5 @@
   - [spider, 1]
   - default
 :limits:
-  scrimp: 5
+  scrimper: 5
   spider: 5
