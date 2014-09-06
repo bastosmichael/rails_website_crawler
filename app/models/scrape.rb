@@ -4,30 +4,30 @@ class Scrape < Url
   	@agent ||= defaults
   end
 
-  def page
-    agent.page
-  end
-
   def get
-  	Timeout.timeout(60) do 
-      # TODO change it back to cache_key when built
-      VCR.use_cassette(build_path, :record => :new_episodes) do
-      # Rails.cache.fetch(build_path) do
-        @agent = defaults
-  	    @agent.get(url)
-      end
-  	end
+  	get_with_vcr :new_episodes
+  rescue Psych::SyntaxError
+    agent.get(url)
   end
 
   def post params, headers = ''
-  	Timeout.timeout(60) do 
-      # TODO change it back to cache_key when built
-      VCR.use_cassette(File.join(build_path, params.to_query + headers), :record => :new_episodes) do
-  	  # Rails.cache.fetch(build_path, params.to_query + headers) do
-        @agent = defaults
-        @agent.post(url, params, headers)
-      end
-  	end
+    # TODO change it back to cache_key when built
+    VCR.use_cassette(File.join(build_path, params.to_query + headers), :record => :new_episodes) do
+  	# Rails.cache.fetch(build_path, params.to_query + headers) do
+      @agent = defaults
+      @agent.post(url, params, headers)
+    end
+  end
+
+  private
+
+  def get_with_vcr record
+    # TODO change it back to cache_key when built
+    VCR.use_cassette(build_path, :record => record) do
+    # Rails.cache.fetch(build_path) do
+      @agent = defaults
+      @agent.get(url)
+    end
   end
 
   def defaults

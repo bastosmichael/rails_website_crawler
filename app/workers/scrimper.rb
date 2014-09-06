@@ -9,4 +9,12 @@ class Scrimper < Creeper
   rescue Net::HTTP::Persistent::Error
     Scrimper.perform_async @url, @params, @headers
   end
+
+  def get_page params = nil, headers = ''
+    parser.page = params ? scraper.post(params, headers) : scraper.get
+  end
+
+  def parser
+  	@parser ||= Parse.new(@url)
+  end
 end

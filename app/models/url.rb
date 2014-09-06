@@ -1,4 +1,6 @@
 class Url
+  URI_REGEX = /\A#{URI::regexp(['http', 'https'])}\z/
+  
   attr_accessor :date
 
   def initialize url
