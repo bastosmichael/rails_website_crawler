@@ -7,6 +7,6 @@ class Scrimper < Creeper
     @headers = headers
     get_page params, headers
   rescue Net::HTTP::Persistent::Error
-    Spider.perform_async @url, @params, @headers
+    Scrimper.perform_async @url, @params, @headers
   end
 end
