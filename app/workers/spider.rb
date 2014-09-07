@@ -1,5 +1,9 @@
 class Spider < Creeper
-  sidekiq_options queue: :spider, backtrace: true, unique: true, unique_job_expiration: 24 * 60 * 60
+  sidekiq_options queue: :spider,
+                  retry: true,
+                  backtrace: true,
+                  unique: true,
+                  unique_job_expiration: 24 * 60 * 60
 
   def perform url, params = nil, headers = ''
     @url = url
