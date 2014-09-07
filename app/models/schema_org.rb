@@ -1,9 +1,10 @@
 class SchemaOrg < Page
 
-  def build
+  def build_schema
+    parent_build
     # schema = @page.doc.css('//*[contains(@itemtype, "schema.org")]').first["itemtype"]
     @schema_org = false
-    self.methods.grep(/schema/).each do |schema|
+    self.methods.grep(/schema_org/).each do |schema|
       self.send(schema) rescue nil
     end
     @schema_org = true if @type
@@ -14,7 +15,7 @@ class SchemaOrg < Page
   # and have an asterisk 
   ###############################################################
 
-  def schema_type
+  def schema_org_type
     @type = page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1]
   end
 
@@ -22,7 +23,7 @@ class SchemaOrg < Page
   # Grab Meta Data for Schema and assign instance variable
   ###############################################################
 
-  def schema_meta
+  def schema_org_meta
     parser.css('//meta').each do |m|
     if !m[:itemprop].nil?
       instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m[:content]}")
@@ -34,7 +35,7 @@ class SchemaOrg < Page
   # Grab Span Data for Schema and assign instance variable
   ###############################################################
 
-  def schema_span
+  def schema_org_span
     parser.css('//span').each do |m|
     if !m[:itemprop].nil?
       instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m.text}")
@@ -46,7 +47,7 @@ class SchemaOrg < Page
   # Grabbing Keywords as Tags
   ###############################################################
 
-  def schema_tags
+  def schema_org_tags
     tags = parser.css("meta[@name='keywords']").first['content'].split(/ |,/)
     tags.delete_if {|x| x.match(/and|for|more/)}
     @tags = tags.reject(&:empty?).uniq
