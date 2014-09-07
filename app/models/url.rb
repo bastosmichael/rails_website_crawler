@@ -21,7 +21,7 @@ class Url
   end
 
   def url
-    uri.to_s
+    @url ||= uri.to_s
   end
 
   def md5

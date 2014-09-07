@@ -1,24 +1,12 @@
 class OpenGraph < Page
 
-  def id
-    @id = Digest::MD5.hexdigest(page.uri.to_s) if !@id
-  end
-
-  def new_url
-    @url = parser.css("link[@rel='canonical']").first['href'] if !@url rescue nil
-    @url = page.uri.to_s if !@url
-  end
-
-  def new_name
-    @name = parser.at('title').inner_html if !@name rescue nil
-  end
-
-  def description
-    @description = parser.css("meta[@name='description']").first['content'] if !@description rescue nil
-  end
-
-  def mobile_url
-    @mobile_url = parser.css("link[@media='handheld']").first['href'] if !@mobile_url rescue nil
+  def build
+    @open_graph = false
+    self.methods.grep(/og/).each do |og|
+      self.send(og) 
+    end
+    @open_graph = true if @type
+    # @id = @name.tr(" ", "_") if @type
   end
 
   ###############################################################
