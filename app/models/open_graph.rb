@@ -1,0 +1,3 @@
+class OpenGraph < Page
+
+end

@@ -1,0 +1,3 @@
+class SchemaOrg < Page
+
+end
