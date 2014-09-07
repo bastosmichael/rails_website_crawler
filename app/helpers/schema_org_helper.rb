@@ -1,7 +1,6 @@
-class SchemaOrg < Page
+module SchemaOrgHelper
 
   def build_schema
-    parent_build
     # schema = @page.doc.css('//*[contains(@itemtype, "schema.org")]').first["itemtype"]
     @schema_org = false
     self.methods.grep(/schema_org/).each do |schema|

@@ -1,7 +1,6 @@
-class OpenGraph < Page
+module OpenGraphHelper
 
   def build_open_graph
-    parent_build
     @open_graph = false
     self.methods.grep(/og/).each do |og|
       self.send(og) 

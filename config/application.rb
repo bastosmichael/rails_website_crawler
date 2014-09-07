@@ -9,5 +9,6 @@ Bundler.require(*Rails.groups)
 module Crawler
   class Application < Rails::Application
     config.autoload_paths += %W(#{config.root}/sites)
+    config.autoload_paths += %W(#{config.root}/helpers)
   end
 end
