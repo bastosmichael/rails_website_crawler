@@ -9,10 +9,10 @@ class Visit
 
   def visit link
   	key = Url.new(link).cache_key
-	if !keys.include? key
-	  keys << key
-	  push_job link
-	end
+  	if !keys.include? key
+  	  keys << key
+  	  push_job link
+  	end
   end
 
   def push_job link
