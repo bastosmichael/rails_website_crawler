@@ -8,9 +8,9 @@ class Parse < Page
   end
 
   def parent_build
-  	build_page
   	build_open_graph
-  	build_schema
+    build_schema
+    build_page
   end
 
   def save

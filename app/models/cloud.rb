@@ -1,5 +1,4 @@
 class Cloud
-
   attr_accessor :bucket
   attr_accessor :provider
 

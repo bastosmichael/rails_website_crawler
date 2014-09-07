@@ -23,4 +23,8 @@ class Scrimper < Creeper
   rescue NameError
   	@parser ||= Parse.new(@url)
   end
+
+  def parse_page
+    parser.save if parser.build
+  end
 end

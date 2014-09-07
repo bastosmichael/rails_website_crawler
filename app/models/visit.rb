@@ -1,5 +1,4 @@
 class Visit
-
   def initialize links
   	links = *links
   	links.each do |link|

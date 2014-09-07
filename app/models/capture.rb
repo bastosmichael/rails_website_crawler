@@ -57,18 +57,22 @@ class Capture < Url
   end
 
   def jpg_relative_path
-    cache_key + JPG
+    cache_image + JPG
   end
 
   def temp_path
-  	File.join(Rails.root, 'tmp/cache', cache_key)
+  	File.join(Rails.root, 'tmp/cache', cache_image)
   end
 
   def image
     @image ||= Image.read(png_file_path).first
   end
 
+  def cache_image
+    File.join(host, md5, date)
+  end
+
   def cloud
-    @cloud ||= Cloud.new(name + '_screenshots')
+    @cloud ||= Cloud.new('screenshots_' + name)
   end
 end

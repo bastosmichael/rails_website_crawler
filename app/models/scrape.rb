@@ -1,5 +1,4 @@
 class Scrape < Url
-
   def agent
   	@agent ||= defaults
   end
@@ -12,7 +11,7 @@ class Scrape < Url
 
   def post params, headers = ''
     # TODO change it back to cache_key when built
-    VCR.use_cassette(File.join(build_path, params.to_query + headers), :record => :new_episodes) do
+    VCR.use_cassette(File.join(cache_vcr, params.to_query + headers), :record => :new_episodes) do
   	# Rails.cache.fetch(build_path, params.to_query + headers) do
       @agent = defaults
       @agent.post(url, params, headers)
@@ -23,11 +22,15 @@ class Scrape < Url
 
   def get_with_vcr record
     # TODO change it back to cache_key when built
-    VCR.use_cassette(build_path, :record => record) do
+    VCR.use_cassette(cache_vcr, :record => record) do
     # Rails.cache.fetch(build_path) do
       @agent = defaults
       @agent.get(url)
     end
+  end
+
+  def cache_vcr
+    File.join(host, date, md5)
   end
 
   def defaults

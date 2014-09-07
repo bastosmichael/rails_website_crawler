@@ -7,7 +7,7 @@ module PageHelper
   end
 
   def page_helper_id
-    @id = Digest::MD5.hexdigest(page.uri.to_s) if !@id
+    @id = md5 if !@id
   end
 
   def page_helper_url
