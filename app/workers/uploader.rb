@@ -5,8 +5,11 @@ class Uploader < Worker
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform hash = {}
-    require 'ap'
-    ap hash
+  def perform metadata = {}
+    resoluter.metadata = metadata
+  end
+
+  def resoluter
+  	@resoluter ||= Results.new(@url) 
   end
 end

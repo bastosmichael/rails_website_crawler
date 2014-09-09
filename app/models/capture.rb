@@ -73,6 +73,6 @@ class Capture < Url
   end
 
   def cloud
-    @cloud ||= Cloud.new('screenshots_' + name)
+    @cloud ||= Cloud.new(name + '_screenshots')
   end
 end
