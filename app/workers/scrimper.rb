@@ -10,6 +10,7 @@ class Scrimper < Creeper
     @params = params
     @headers = headers
     get_page params, headers
+    Uploader.perform_async parsed if exists?
   rescue Net::HTTP::Persistent::Error
     Scrimper.perform_async @url, @params, @headers
   end
@@ -24,7 +25,11 @@ class Scrimper < Creeper
   	@parser ||= Parse.new(@url)
   end
 
-  def parse_page
-    parser.save if parser.build
+  def parsed
+    @parsed ||= parser.save if parser.build
+  end
+
+  def exists?
+    parsed['type']
   end
 end

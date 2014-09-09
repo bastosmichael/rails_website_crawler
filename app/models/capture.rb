@@ -6,7 +6,7 @@ class Capture < Url
   JPG = '.jpg'
 
   def screen
-    if cloud.head jpg_relative_path
+    if !cloud.head jpg_relative_path
       check_temp_path
       get_png
       compress_png

@@ -2,6 +2,7 @@
 :concurrency: 4
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
+  - [spider, 4]
   - [scrimper, 2]
-  - [spider, 1]
+  - [uploader, 1]
   - default
