@@ -45,12 +45,10 @@ class Results < Url
     return new_data
   end
 
-  def get_data
-    cloud.get(json_relative_path).try(:body) || {}.to_json
-  end
-
   def data
-    JSON.parse(get_data, :quirks_mode => true)
+    JSON.parse(cloud.get(json_relative_path).try(:body), :quirks_mode => true)
+  rescue 
+    {}
   end
 
   def data= new_hash = {}
