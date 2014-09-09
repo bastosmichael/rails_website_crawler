@@ -6,17 +6,16 @@ class Results < Url
                  date 
                  name 
                  image 
-                 description 
-                 schema_org 
-                 open_graph/.freeze
+                 description/.freeze
 
   attr_accessor :metadata
 
-  def save
-    self.data = update_metadata(update_canonical(data))
+  def sync
+    self.data = update_canonical(data)
+    # update_metadata
   end
 
-  def update_canonical new_data
+  def update_canonical new_data = {}
     date = metadata['date'] if date_exists?
     metadata.each do |key, value|
       if CANONICAL.include? key.to_sym
@@ -24,9 +23,10 @@ class Results < Url
         metadata.delete(key)
       end
     end
+    return new_data
   end
 
-  def update_metadata new_data
+  def update_metadata new_data = {}
     metadata.each do |key, value|
       if new_data[key]
         original_hash = new_data[key]
@@ -42,15 +42,19 @@ class Results < Url
         new_data[key] = {date => value}
       end
     end
-    new_data
+    return new_data
+  end
+
+  def get_data
+    cloud.get(json_relative_path).try(:body) || {}.to_json
   end
 
   def data
-  	@data ||= cloud.get(json_relative_path) || {}
+    JSON.parse(get_data, :quirks_mode => true)
   end
 
-  def data= hash = {}
-  	cloud.sync json_relative_path, hash.to_json
+  def data= new_hash = {}
+  	cloud.sync json_relative_path, new_hash.to_json
   end
 
   def json_relative_path

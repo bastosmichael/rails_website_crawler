@@ -6,6 +6,7 @@ class Uploader < Worker
                   unique_job_expiration: 24 * 60 * 60
 
   def perform metadata = {}
+    @url = metadata['url']
     resoluter.metadata = metadata
   end
 
