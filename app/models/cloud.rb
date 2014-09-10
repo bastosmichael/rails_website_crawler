@@ -12,9 +12,7 @@ class Cloud
   end
 
   def storage
-    @storage = Fog::Storage.new({ provider: 'Local',
-                                  local_root:'tmp/fog',
-                                  endpoint: 'http://example.com' })
+    @storage = Fog::Storage.new(SETTINGS[:fog])
   end
 
   def container
