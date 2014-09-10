@@ -1,0 +1,1 @@
+SETTINGS ||= YAML.load(File.read(Rails.root.join('config', 'application.yml'))).deep_symbolize_keys!

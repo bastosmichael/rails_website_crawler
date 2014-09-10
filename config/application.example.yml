@@ -1,0 +1,4 @@
+fog:
+  provider: 'Local'
+  local_root: 'tmp/fog'
+  end_point: 'http://example.com'
