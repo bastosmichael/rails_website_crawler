@@ -55,7 +55,7 @@ class Results < Url
   end
 
   def json_relative_path
-  	build_path + '.json'
+  	md5 + '.json'
   end
 
   def cache_data
