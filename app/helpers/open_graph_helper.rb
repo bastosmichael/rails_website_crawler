@@ -121,16 +121,16 @@ module OpenGraphHelper
   ###############################################################
 
   def og_upc
-    @upc = parser.css('meta[@property="og:upc"]').first['content'] if !@upc rescue nil
+    @upc = parser.css('meta[@property="og:upc"]').first['content'].try(:squish) if !@upc rescue nil
   end
 
   def meta_property metadata
-    property = parser.css("meta[@property='#{metadata}']").first['content']
+    property = parser.css("meta[@property='#{metadata}']").first['content'].try(:squish)
     # if !property.nil? then @open_graph = true; return property end
   end
 
   def meta_name metadata
-    name = parser.css("meta[@name='#{metadata}']").first['content']
+    name = parser.css("meta[@name='#{metadata}']").first['content'].try(:squish)
     # if !name.nil? then @open_graph = true; return name end
   end
 end

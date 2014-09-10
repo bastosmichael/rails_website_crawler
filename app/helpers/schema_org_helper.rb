@@ -15,7 +15,7 @@ module SchemaOrgHelper
   ###############################################################
 
   def schema_org_type
-    @type = page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1]
+    @type = page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1].try(:squish)
   end
 
   ###############################################################
@@ -24,9 +24,9 @@ module SchemaOrgHelper
 
   def schema_org_meta
     parser.css('//meta').each do |m|
-    if !m[:itemprop].nil?
-      instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m[:content]}")
-    end
+      if !m[:itemprop].nil?
+        instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m[:content].try(:squish)}")
+      end
     end
   end
 
@@ -37,7 +37,7 @@ module SchemaOrgHelper
   def schema_org_span
     parser.css('//span').each do |m|
     if !m[:itemprop].nil?
-      instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m.text}")
+      instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m.text.try(:squish)}")
     end
     end
   end

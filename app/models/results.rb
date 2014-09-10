@@ -11,8 +11,7 @@ class Results < Url
   attr_accessor :metadata
 
   def sync
-    self.data = update_canonical(data)
-    # update_metadata
+    self.data = update_metadata(update_canonical(data))
   end
 
   def update_canonical new_data = {}
