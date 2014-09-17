@@ -30,6 +30,6 @@ class Scrimper < Creeper
   end
 
   def exists?
-    parsed['type']
+    parsed.nil? ? false : parsed['type']
   end
 end
