@@ -7,12 +7,13 @@ class Uploader < Worker
 
   def perform metadata = {}
     if @url = metadata['url']
+      resoluter.id = metadata['id']
       resoluter.metadata = metadata
       resoluter.sync
     end
   end
 
   def resoluter
-  	@resoluter ||= Results.new(@url) 
+  	@resoluter ||= Results.new(@url)
   end
 end

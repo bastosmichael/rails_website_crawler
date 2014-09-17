@@ -9,6 +9,7 @@ class Results < Url
                  description/.freeze
 
   attr_accessor :metadata
+  attr_accessor :id
   attr_accessor :screenshot
 
   def sync
@@ -78,11 +79,7 @@ class Results < Url
   end
 
   def json_relative_path
-    md5 + '.json'
-  end
-
-  def cache_data
-    File.join(host, types, md5)
+    @json_relative_path ||= id ? id + '.json' : md5 + '.json'
   end
 
   def types
