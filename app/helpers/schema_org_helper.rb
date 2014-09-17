@@ -10,12 +10,12 @@ module SchemaOrgHelper
   end
 
   ###############################################################
-  # Types that have multiple parents are expanded out only once 
-  # and have an asterisk 
+  # Types that have multiple parents are expanded out only once
+  # and have an asterisk
   ###############################################################
 
   def schema_org_type
-    @type = page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1].try(:squish)
+    @type = cleanup_value page.body.match(/itemtype="http:\/\/schema.org\/(.+?)"/)[1]
   end
 
   ###############################################################
@@ -25,7 +25,9 @@ module SchemaOrgHelper
   def schema_org_meta
     parser.css('//meta').each do |m|
       if !m[:itemprop].nil?
-        instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m[:content].try(:squish)}")
+        key = cleanup_key m[:itemprop]
+        value = cleanup_value m[:content]
+        instance_variable_set("@#{key}",value)
       end
     end
   end
@@ -37,7 +39,9 @@ module SchemaOrgHelper
   def schema_org_span
     parser.css('//span').each do |m|
     if !m[:itemprop].nil?
-      instance_variable_set("@#{m[:itemprop].tr(" ", "_")}","#{m.text.try(:squish)}")
+      key = cleanup_key m[:itemprop]
+      value = cleanup_value m.text
+      instance_variable_set("@#{key}",value)
     end
     end
   end
@@ -50,5 +54,13 @@ module SchemaOrgHelper
     tags = parser.css("meta[@name='keywords']").first['content'].split(/ |,/)
     tags.delete_if {|x| x.match(/and|for|more/)}
     @tags = tags.reject(&:empty?).uniq
+  end
+
+  def cleanup_key key
+    key.tr(" ", "_")
+  end
+
+  def cleanup_value value
+    value.try(:squish)
   end
 end
