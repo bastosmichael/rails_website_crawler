@@ -5,12 +5,13 @@ class Screener < Worker
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform url
+  def perform url, date = nil
     @url = url
+    capturer.date = date
     capturer.screen
   end
 
   def capturer
-  	@capturer ||= Capture.new(@url)
+    @capturer ||= Capture.new(@url)
   end
 end

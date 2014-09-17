@@ -39,7 +39,7 @@ class Results < Url
             new_hash[date] = value
             if screenshot
               new_data['screenshot'][date] = screenshot
-              # Screener.perform_async url, date
+              Screener.perform_async url, date
             end
           end
         end
@@ -49,7 +49,7 @@ class Results < Url
         if screenshot
           if !new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
-            # Screener.perform_async url, date
+            Screener.perform_async url, date
           end
         end
       end
