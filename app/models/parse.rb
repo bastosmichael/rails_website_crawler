@@ -4,7 +4,8 @@ class Parse < Page
   include SchemaOrgHelper
 
   def build
-  	parent_build
+    parent_build
+    self.methods.grep(/find_/).each { |parse| self.send(parse) } if @type
   end
 
   def parent_build
@@ -13,11 +14,17 @@ class Parse < Page
     build_page
   end
 
+  def screenshot
+    @screenshot ||= File.join(host, md5, date) + '.jpg'
+  end
+
   def save
     remove_instance_variable(:@page)
+    remove_instance_variable(:@uri) rescue nil
     hash = {}
-    instance_variables.each do |var| 
-      hash[var.to_s.delete("@")] = instance_variable_get(var) 
+    instance_variables.each do |var|
+      value = instance_variable_get(var)
+      hash[var.to_s.delete("@")] = value if !value.blank?
     end
     hash
   end
