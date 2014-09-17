@@ -12,11 +12,11 @@ class Cloud
   end
 
   def storage
-    @storage = Fog::Storage.new(SETTINGS[:fog])
+    @storage ||= Fog::Storage.new(SETTINGS[:fog])
   end
 
   def container
-    @container = storage.directories.get(bucket) 
+    @container = storage.directories.get(bucket)
     create_container if @container.nil?
     return @container
   end
