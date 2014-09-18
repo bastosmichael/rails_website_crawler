@@ -9,3 +9,4 @@
   - default
 :limits:
   screener: 1
+  spider: 1
