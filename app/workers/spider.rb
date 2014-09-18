@@ -17,18 +17,20 @@ class Spider < Creeper
   end
 
   def get_links params = nil, headers = ''
-    links.page = params ? scraper.post(params, headers) : scraper.get
+    parser.page = params ? scraper.post(params, headers) : scraper.get
   end
 
   def scrimp_page
     Scrimper.perform_async @url, @params, @headers
   end
 
-  def links
-    @links ||= Links.new(@url)
+  def parser
+    @parser ||= scraper.name.capitalize.constantize.new(@url)
+  rescue NameError
+    @parser ||= Parse.new(@url)
   end
 
   def visit
-    @visit ||= Visit.new(links.internal)
+    @visit ||= Visit.new(parser.internal_links)
   end
 end
