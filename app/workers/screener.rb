@@ -1,5 +1,5 @@
 class Screener < Worker
-  sidekiq_options queue: :uploader,
+  sidekiq_options queue: :screener,
                   retry: true,
                   backtrace: true,
                   unique: true,

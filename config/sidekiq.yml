@@ -1,5 +1,5 @@
 ---
-:concurrency: 4
+:concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [screener, 8]
@@ -7,3 +7,5 @@
   - [scrimper, 2]
   - [spider, 1]
   - default
+:limits:
+  screener: 1
