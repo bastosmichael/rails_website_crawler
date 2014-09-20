@@ -2,11 +2,13 @@
 :concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [screener, 8]
-  - [uploader, 4]
-  - [scrimper, 2]
+  - [screener, 16]
+  - [uploader, 8]
+  - [scrimper, 4]
+  - [sitemapper, 2]
   - [spider, 1]
   - default
 :limits:
   screener: 1
+  sitemapper: 1
   spider: 1

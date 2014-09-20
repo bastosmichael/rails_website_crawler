@@ -9,6 +9,11 @@ namespace :run do
   	Crawl.instance.scrimp_url(args.url)
   end
 
+  desc "Run the crawler in sitemapper mode"
+  task :sitemapper, [:url] => :environment do |task, args|
+    Crawl.instance.sitemapper_url(args.url)
+  end
+
   desc "Run the crawlers"
   task :scrimpers, 1000.times.map { |i| "arg#{i}".to_sym } => :environment do |t, args|
   	Crawl.instance.scrimper_urls(args.values)
