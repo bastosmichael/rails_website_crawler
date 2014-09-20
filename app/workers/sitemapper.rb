@@ -1,4 +1,4 @@
-class SiteMapper < Creeper
+class Sitemapper < Creeper
   sidekiq_options queue: :sitemapper,
                   retry: true,
                   backtrace: true,
@@ -15,7 +15,7 @@ class SiteMapper < Creeper
       sitemapper.index_links.each { |u| get_sitemap u }
     end
   rescue Net::HTTP::Persistent::Error
-    SiteMapper.perform_async @url
+    Sitemapper.perform_async @url
   end
 
   def get_xml
