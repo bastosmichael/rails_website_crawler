@@ -87,6 +87,6 @@ class Results < Url
   end
 
   def cloud
-    @cloud ||= Cloud.new(name + '_' + types)
+    @cloud ||= Cloud.new(name + '-' + types)
   end
 end

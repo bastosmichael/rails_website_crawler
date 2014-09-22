@@ -1,1 +1,1 @@
-SETTINGS = YAML.load(File.read(Rails.root.join('config', 'application.yml'))).deep_symbolize_keys! rescue YAML.load(File.read(Rails.root.join('config', 'application.example.yml'))).deep_symbolize_keys!
+SETTINGS = YAML.load(File.read(Rails.root.join('config', 'application.yml'))).deep_symbolize_keys! #rescue YAML.load(File.read(Rails.root.join('config', 'application.example.yml'))).deep_symbolize_keys!
