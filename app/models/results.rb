@@ -83,7 +83,7 @@ class Results < Url
   end
 
   def types
-    metadata['type'].downcase.pluralize
+    @types ||= metadata['type'].downcase.pluralize
   end
 
   def cloud
