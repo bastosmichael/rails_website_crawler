@@ -14,7 +14,7 @@ gem 'headless'
 gem 'rmagick'
 
 gem 'vcr'
-gem 'webmock'
+gem 'typhoeus'
 gem 'fog'
 
 gem 'redis-objects'

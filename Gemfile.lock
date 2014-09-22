@@ -27,7 +27,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    addressable (2.3.6)
     arel (5.0.1.20140414130214)
     awesome_print (1.2.0)
     builder (3.2.2)
@@ -36,12 +35,12 @@ GEM
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     connection_pool (2.0.0)
-    crack (0.4.2)
-      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     domain_name (0.5.20)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
+    ethon (0.7.1)
+      ffi (>= 1.3.0)
     eventmachine (1.0.3)
     excon (0.39.5)
     ffi (1.9.3)
@@ -52,7 +51,7 @@ GEM
       fog-softlayer
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
-    fog-brightbox (0.5.0)
+    fog-brightbox (0.5.1)
       fog-core (~> 1.22)
       fog-json
       inflecto
@@ -65,7 +64,7 @@ GEM
       net-ssh (>= 2.1.3)
     fog-json (1.0.0)
       multi_json (~> 1.0)
-    fog-softlayer (0.3.16)
+    fog-softlayer (0.3.17)
       fog-core
       fog-json
     formatador (0.2.5)
@@ -149,7 +148,6 @@ GEM
       redis (>= 2.2)
     rmagick (2.13.3)
     rubyzip (1.1.6)
-    safe_yaml (1.0.3)
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -194,15 +192,14 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     trollop (2.0)
+    typhoeus (0.6.9)
+      ethon (>= 0.7.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.6)
     vcr (2.9.2)
-    webmock (1.18.0)
-      addressable (>= 2.3.6)
-      crack (>= 0.3.2)
     webrobots (0.1.1)
     websocket (1.2.1)
 
@@ -228,5 +225,5 @@ DEPENDENCIES
   sqlite3
   thin
   trollop
+  typhoeus
   vcr
-  webmock
