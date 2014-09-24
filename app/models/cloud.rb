@@ -16,13 +16,25 @@ class Cloud
   end
 
   def container
-    @container = storage.directories.get(bucket)
-    create_container if @container.nil?
-    return @container
+    @container = storage.get_bucket(bucket, {'max-keys' =>'100000'} )
+  rescue Excon::Errors::Forbidden
+    return create_container
   end
 
   def files
-    @files = container.files
+    @files = update_files
+  end
+
+  def update_files
+    truncated_files = container
+    truncated = truncated_files.body['IsTruncated']
+    @files = truncated_files.body['Contents']
+    while truncated
+      truncated_files = storage.get_bucket(bucket,{'max-keys' =>'100000', 'marker' => truncated_files.body['Contents'].last["Key"]})
+      truncated = truncated_files.body['IsTruncated']
+      @files = @files + truncated_files.body['Contents']
+    end
+    @files
   end
 
   def listing prefix
