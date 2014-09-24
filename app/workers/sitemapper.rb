@@ -7,13 +7,9 @@ class Sitemapper < Creeper
 
   def perform url
     @url = url
-    if sitemapper.final_sitemap?
-      get_xml
-      sitemapper.site_links.each { |u| get_page u }
-    else
-      get_xml
-      sitemapper.index_links.each { |u| get_sitemap u }
-    end
+    get_xml
+    sitemapper.site_links.each { |u| get_page u } if sitemapper.sites?
+    sitemapper.index_links.each { |u| get_sitemap u } if sitemapper.indexes?
   rescue Net::HTTP::Persistent::Error
     Sitemapper.perform_async @url
   end

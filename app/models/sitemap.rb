@@ -6,18 +6,22 @@ class Sitemap < Url
   end
 
   def index_links
-    parser.css('//sitemap/loc').map { |u| u.text }.compact.uniq.sort
+    @index_links ||= parser.css('//sitemap/loc').map { |u| u.text }.compact.uniq.sort
   end
 
   def site_links
-    parser.css('//url/loc').map { |u| u.text }.compact.uniq.sort
+    @site_links ||= parser.css('//url/loc').map { |u| u.text }.compact.uniq.sort
   end
 
   def base
     "#{uri.scheme}://#{uri.host}"
   end
 
-  def final_sitemap?
-    url.ends_with? '.gz'
+  def indexes?
+    !index_links.empty?
+  end
+
+  def sites?
+    !site_links.empty?
   end
 end
