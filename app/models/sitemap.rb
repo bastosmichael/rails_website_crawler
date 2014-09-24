@@ -18,10 +18,10 @@ class Sitemap < Url
   end
 
   def indexes?
-    index_links.any?
+    !index_links.empty?
   end
 
   def sites?
-    index_links.any?
+    !site_links.empty?
   end
 end
