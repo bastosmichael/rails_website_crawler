@@ -7,11 +7,10 @@ class Sitemapper < Creeper
 
   def perform url
     @url = url
-    if sitemapper.final_sitemap?
-      get_xml
+    get_xml
+    if sitemapper.sites?
       sitemapper.site_links.each { |u| get_page u }
-    else
-      get_xml
+    elsif sitemapper.indexes?
       sitemapper.index_links.each { |u| get_sitemap u }
     end
   rescue Net::HTTP::Persistent::Error
