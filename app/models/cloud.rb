@@ -1,5 +1,5 @@
 class Cloud
-  MAX_KEYS = 100000000
+  MAX_KEYS = 100000000000
 
   attr_accessor :bucket
   attr_accessor :provider
