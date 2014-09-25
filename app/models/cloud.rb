@@ -1,4 +1,6 @@
 class Cloud
+  MAX_KEYS = 100000000000
+
   attr_accessor :bucket
   attr_accessor :provider
 
@@ -16,18 +18,29 @@ class Cloud
   end
 
   def container
-    @container = storage.directories.get(bucket)
+    @container ||= storage.directories.get(bucket)
     create_container if @container.nil?
     return @container
   end
 
   def files
-    @files = container.files
+    @files ||= update_files
   end
 
-  def listing prefix
-    files.all delimiter: '/', prefix: prefix
+  def update_files
+    @files = container.files.all({'max-keys' => MAX_KEYS })
+    truncated = @files.is_truncated
+    while truncated
+      bucket_object = container.files.all({'max-keys' => MAX_KEYS, 'marker' => @files.last.key })
+      truncated = bucket_object.is_truncated
+      @files = @files + bucket_object
+    end
+    @files
   end
+
+  # def listing prefix
+  #   files.all delimiter: '/', prefix: prefix
+  # end
 
   def head key
     files.head key
