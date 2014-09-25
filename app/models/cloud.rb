@@ -18,13 +18,13 @@ class Cloud
   end
 
   def container
-    @container = storage.directories.get(bucket)
+    @container ||= storage.directories.get(bucket)
     create_container if @container.nil?
     return @container
   end
 
   def files
-    @files = update_files
+    @files ||= update_files
   end
 
   def update_files
@@ -38,9 +38,9 @@ class Cloud
     @files
   end
 
-  def listing prefix
-    files.all delimiter: '/', prefix: prefix
-  end
+  # def listing prefix
+  #   files.all delimiter: '/', prefix: prefix
+  # end
 
   def head key
     files.head key
