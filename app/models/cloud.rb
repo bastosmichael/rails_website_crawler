@@ -1,4 +1,6 @@
 class Cloud
+  MAX_KEYS = 100000000
+
   attr_accessor :bucket
   attr_accessor :provider
 
@@ -16,7 +18,7 @@ class Cloud
   end
 
   def container
-    @container = storage.get_bucket(bucket, {'max-keys' =>'100000'} )
+    @container = storage.directories.get(bucket)
   rescue Excon::Errors::Forbidden
     return create_container
   end
@@ -26,13 +28,12 @@ class Cloud
   end
 
   def update_files
-    truncated_files = container
-    truncated = truncated_files.body['IsTruncated']
-    @files = truncated_files.body['Contents']
+    @files = container.files.all({'max-keys' => MAX_KEYS })
+    truncated = @files.is_truncated
     while truncated
-      truncated_files = storage.get_bucket(bucket,{'max-keys' =>'100000', 'marker' => truncated_files.body['Contents'].last["Key"]})
-      truncated = truncated_files.body['IsTruncated']
-      @files = @files + truncated_files.body['Contents']
+      bucket_object = container.files.all({'max-keys' => MAX_KEYS, 'marker' => @files.last.key })
+      truncated = bucket_object.is_truncated
+      @files = @files + bucket_object
     end
     @files
   end
