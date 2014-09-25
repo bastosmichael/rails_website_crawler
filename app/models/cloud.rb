@@ -19,8 +19,8 @@ class Cloud
 
   def container
     @container = storage.directories.get(bucket)
-  rescue Excon::Errors::Forbidden
-    return create_container
+    create_container if @container.nil?
+    return @container
   end
 
   def files
