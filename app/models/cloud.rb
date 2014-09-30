@@ -28,17 +28,17 @@ class Cloud
   end
 
   def update_files delimiter = '/', prefix = ''
-    @files = container.files.all({ delimiter: delimiter,
-                                   prefix: prefix })
-    truncated = @files.try(:is_truncated)
+    files = container.files.all({ delimiter: delimiter,
+                                  prefix: prefix })
+    truncated = files.try(:is_truncated)
     while truncated
-      bucket_object = container.files.all({ marker: @files.last.key,
+      bucket_object = container.files.all({ marker: files.last.key,
                                             delimiter: delimiter,
                                             prefix: prefix })
       truncated = bucket_object.is_truncated
-      @files = @files + bucket_object
+      files = files + bucket_object
     end
-    @files
+    files
   end
 
   def listing prefix
@@ -46,11 +46,11 @@ class Cloud
   end
 
   def head key
-    files.head key
+    container.files.head key
   end
 
   def get key
-    files.get key
+    container.files.get key
   end
 
   def sync key, data
@@ -63,7 +63,7 @@ class Cloud
   end
 
   def copy key, data
-    file = files.new key: key
+    file = container.files.new key: key
     file.body = data
     file.save
   end
