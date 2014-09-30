@@ -1,7 +1,6 @@
 fog:
   provider: 'Local'
   local_root: 'tmp/fog'
-  end_point: 'http://example.com'
   # provider: 'AWS'
   # aws_access_key_id: '32 bit key'
   # aws_secret_access_key: '32 bit key'
