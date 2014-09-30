@@ -69,7 +69,7 @@ class Capture < Url
   end
 
   def cache_image
-    File.join(host, md5, date)
+    File.join(md5, date)
   end
 
   def cloud

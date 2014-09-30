@@ -15,7 +15,7 @@ class Parse < Page
   end
 
   def screenshot
-    @screenshot ||= File.join(host, md5, date) + '.jpg'
+    @screenshot ||= File.join(md5, date) + '.jpg'
   end
 
   def remove_extras symbol
