@@ -27,20 +27,23 @@ class Cloud
     @files ||= update_files
   end
 
-  def update_files
-    @files = container.files.all
+  def update_files delimiter = '/', prefix = ''
+    @files = container.files.all({ delimiter: delimiter,
+                                   prefix: prefix })
     truncated = @files.try(:is_truncated)
     while truncated
-      bucket_object = container.files.all({marker: @files.last.key })
+      bucket_object = container.files.all({ marker: @files.last.key,
+                                            delimiter: delimiter,
+                                            prefix: prefix })
       truncated = bucket_object.is_truncated
       @files = @files + bucket_object
     end
     @files
   end
 
-  # def listing prefix
-  #   files.all delimiter: '/', prefix: prefix
-  # end
+  def listing prefix
+    @listing ||= update_files '/', prefix
+  end
 
   def head key
     files.head key
