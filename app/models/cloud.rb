@@ -28,10 +28,10 @@ class Cloud
   end
 
   def update_files
-    @files = container.files.all({'max-keys' => MAX_KEYS })
-    truncated = @files.is_truncated
+    @files = container.files.all
+    truncated = @files.try(:is_truncated)
     while truncated
-      bucket_object = container.files.all({'max-keys' => MAX_KEYS, 'marker' => @files.last.key })
+      bucket_object = container.files.all({marker: @files.last.key })
       truncated = bucket_object.is_truncated
       @files = @files + bucket_object
     end
