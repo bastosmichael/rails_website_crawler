@@ -24,12 +24,6 @@ class Spider < Creeper
     Scrimper.perform_async @url, @params, @headers
   end
 
-  def parser
-    @parser ||= scraper.name.capitalize.constantize.new(@url)
-  rescue NameError
-    @parser ||= Parse.new(@url)
-  end
-
   def visit
     @visit ||= Visit.new(parser.internal_links)
   end

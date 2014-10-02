@@ -19,12 +19,6 @@ class Scrimper < Creeper
     parser.page = params ? scraper.post(params, headers) : scraper.get
   end
 
-  def parser
-    @parser ||= scraper.name.capitalize.constantize.new(@url)
-  rescue NameError
-  	@parser ||= Parse.new(@url)
-  end
-
   def parsed
     @parsed ||= parser.save if parser.build
   end
