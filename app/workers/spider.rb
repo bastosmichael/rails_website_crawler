@@ -5,23 +5,13 @@ class Spider < Creeper
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform url, params = nil, headers = ''
+  def perform url
     @url = url
-    @params = params
-    @headers = headers
-    get_links params, headers
-    scrimp_page
-    visit
+    parser.page = scraper.get
+    Uploader.perform_async parsed if exists?
+    visit.spider
   rescue Net::HTTP::Persistent::Error
-    Spider.perform_async @url, @params, @headers
-  end
-
-  def get_links params = nil, headers = ''
-    parser.page = params ? scraper.post(params, headers) : scraper.get
-  end
-
-  def scrimp_page
-    Scrimper.perform_async @url
+    Spider.perform_async @url
   end
 
   def visit

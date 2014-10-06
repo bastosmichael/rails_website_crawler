@@ -1,4 +1,4 @@
-class Sitemapper < Creeper
+class Sitemapper < Worker
   sidekiq_options queue: :sitemapper,
                   retry: true,
                   backtrace: true,

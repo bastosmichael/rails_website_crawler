@@ -12,12 +12,4 @@ class Scrimper < Creeper
   rescue Net::HTTP::Persistent::Error
     Scrimper.perform_async @url
   end
-
-  def parsed
-    @parsed ||= parser.save if parser.build
-  end
-
-  def exists?
-    parsed.nil? ? false : parsed['type']
-  end
 end

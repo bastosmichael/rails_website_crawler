@@ -1,21 +1,26 @@
 class Visit
   def initialize links
-  	links = *links
-  	links.each do |link|
-      visit link
+  	@links = *links
+  end
+
+  def spider
+    @links.each do |link|
+      key = Url.new(link).cache_key
+      if !keys.include? key
+        keys << key
+        Spider.perform_async link
+      end
     end
   end
 
-  def visit link
-  	key = Url.new(link).cache_key
-  	if !keys.include? key
-  	  keys << key
-  	  push_job link
-  	end
-  end
-
-  def push_job link
-    Spider.perform_async link
+  def sample
+    @links.each do |link|
+      key = Url.new(link).cache_key
+      if !keys.include? key
+        keys << key
+        Scrimper.perform_async link
+      end
+    end
   end
 
   def keys

@@ -10,13 +10,12 @@ class Crawl
   	Spider.perform_async url
   end
 
-  def sitemapper_url url
-    clear_visited
+  def sitemap_url url
     Sitemapper.perform_async url
   end
 
-  def scrimp_urls urls
-    ap urls
+  def sample_url url
+    Sampler.perform_async url
   end
 
   def clear_visited

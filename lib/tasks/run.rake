@@ -11,7 +11,12 @@ namespace :run do
 
   desc "Run the crawler in sitemapper mode"
   task :sitemapper, [:url] => :environment do |task, args|
-    Crawl.instance.sitemapper_url(args.url)
+    Crawl.instance.sitemap_url(args.url)
+  end
+
+  desc "Run the crawler in sampler mode"
+  task :sampler, [:url] => :environment do |task, args|
+    Crawl.instance.sample_url(args.url)
   end
 
   desc "Run the crawlers"

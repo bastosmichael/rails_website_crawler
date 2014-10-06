@@ -9,15 +9,12 @@ class Sampler < Creeper
     @url = url
     parser.page = scraper.get
     Uploader.perform_async parsed if exists?
+    visit.sample
   rescue Net::HTTP::Persistent::Error
     Sampler.perform_async @url
   end
 
-  def parsed
-    @parsed ||= parser.save if parser.build
-  end
-
-  def exists?
-    parsed.nil? ? false : parsed['type']
+  def visit
+    @visit ||= Visit.new(parser.internal_links)
   end
 end
