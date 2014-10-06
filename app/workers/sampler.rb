@@ -1,5 +1,5 @@
-class Scrimper < Creeper
-  sidekiq_options queue: :scrimper,
+class Sampler < Creeper
+  sidekiq_options queue: :sampler,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -10,7 +10,7 @@ class Scrimper < Creeper
     parser.page = scraper.get
     Uploader.perform_async parsed if exists?
   rescue Net::HTTP::Persistent::Error
-    Scrimper.perform_async @url
+    Sampler.perform_async @url
   end
 
   def parsed

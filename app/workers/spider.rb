@@ -21,7 +21,7 @@ class Spider < Creeper
   end
 
   def scrimp_page
-    Scrimper.perform_async @url, @params, @headers
+    Scrimper.perform_async @url
   end
 
   def visit
