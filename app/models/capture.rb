@@ -61,7 +61,7 @@ class Capture < Url
   end
 
   def temp_path
-  	File.join(Rails.root, 'tmp/cache', cache_image)
+  	File.join(Rails.root, 'tmp/cache', md5)
   end
 
   def image

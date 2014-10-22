@@ -4,8 +4,8 @@ class Scrape < Url
   end
 
   def get
-  	get_with_vcr :new_episodes
-  rescue Psych::SyntaxError
+  # 	get_with_vcr :new_episodes
+  # rescue Psych::SyntaxError
     agent.get(url)
   end
 

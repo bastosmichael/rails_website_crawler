@@ -1,6 +1,6 @@
 class Screener < Worker
   sidekiq_options queue: :screener,
-                  retry: true,
+                  retry: false,
                   backtrace: true,
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
