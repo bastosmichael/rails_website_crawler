@@ -24,6 +24,9 @@ class Parse < Page
 
   def save
     remove_instance_variable(:@page)
+    remove_instance_variable(:@links) if @links
+    remove_instance_variable(:@internal_links) if @internal_links
+    remove_instance_variable(:@external_links) if @external_links
     remove_instance_variable(:@uri) rescue nil
     hash = {}
     instance_variables.each do |var|

@@ -17,6 +17,7 @@ class Results < Url
   end
 
   def update_canonical new_data = {}
+    types
     set_date
     set_screenshot
     metadata.each do |key, value|
@@ -83,7 +84,7 @@ class Results < Url
   end
 
   def types
-    @types ||= metadata['type'].downcase.pluralize
+    @types ||= metadata['type'].downcase.pluralize.gsub(':','')
   end
 
   def cloud

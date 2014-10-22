@@ -12,4 +12,8 @@ class Creeper < Worker
   def exists?
     parsed.nil? ? false : parsed['type']
   end
+
+  def upload
+    Uploader.perform_async parsed if exists?
+  end
 end

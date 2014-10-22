@@ -22,6 +22,9 @@ end
 
 guard 'sidekiq', concurrency: 3 do
   watch(%r{^app/workers/(.+)\.rb$})
+  watch(%r{^app/models/(.+)\.rb$})
+  watch(%r{^app/sites/(.+)\.rb$})
+  watch(%r{^app/helpers/(.+)\.rb$})
 end
 
 guard :test do

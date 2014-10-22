@@ -8,7 +8,7 @@ class Scrimper < Creeper
   def perform url
     @url = url
     parser.page = scraper.get
-    Uploader.perform_async parsed if exists?
+    upload
   rescue Net::HTTP::Persistent::Error
     Scrimper.perform_async @url
   end

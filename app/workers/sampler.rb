@@ -9,7 +9,7 @@ class Sampler < Creeper
     @url = url
     parser.page = scraper.get
     visit.sample
-    Uploader.perform_async parsed if exists?
+    upload
   rescue Net::HTTP::Persistent::Error
     Sampler.perform_async @url
   end

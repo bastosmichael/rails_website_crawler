@@ -9,7 +9,7 @@ class Spider < Creeper
     @url = url
     parser.page = scraper.get
     visit.spider
-    Uploader.perform_async parsed if exists?
+    upload
   rescue Net::HTTP::Persistent::Error
     Spider.perform_async @url
   end
