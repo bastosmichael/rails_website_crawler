@@ -9,6 +9,3 @@
   - [spider, 2]
   - [sitemapper, 1]
   - default
-:limits:
-  screener: 1
-  sitemapper: 1
