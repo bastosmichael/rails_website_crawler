@@ -8,7 +8,7 @@ class Visit
       key = Url.new(link).cache_key
       if !keys.include? key
         keys << key
-        Spider.perform_async link
+        Crawl::Spider.perform_async link
       end
     end
   end
@@ -18,7 +18,7 @@ class Visit
       key = Url.new(link).cache_key
       if !keys.include? key
         keys << key
-        Scrimper.perform_async link
+        Crawl::Scrimper.perform_async link
       end
     end
   end

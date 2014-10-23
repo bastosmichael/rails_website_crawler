@@ -1,5 +1,5 @@
-class Sampler < Creeper
-  sidekiq_options queue: :sampler,
+class Crawl::Spider < Crawl::Base
+  sidekiq_options queue: :spider,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -8,10 +8,10 @@ class Sampler < Creeper
   def perform url
     @url = url
     parser.page = scraper.get
-    visit.sample
+    visit.spider
     upload
   rescue Net::HTTP::Persistent::Error
-    Sampler.perform_async @url
+    Crawl::Spider.perform_async @url
   end
 
   def visit

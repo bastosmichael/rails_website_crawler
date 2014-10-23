@@ -1,4 +1,4 @@
-class Creeper < Worker
+class Crawl::Base < Worker
   def parser
     @parser ||= scraper.name.capitalize.constantize.new(@url)
   rescue NameError
