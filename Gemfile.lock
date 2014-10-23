@@ -237,9 +237,6 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
-    sidekiq-unique-jobs (3.0.2)
-      mock_redis
-      sidekiq (>= 2.6)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -313,7 +310,6 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   selenium-webdriver
   sidekiq
-  sidekiq-unique-jobs
   sinatra
   spring
   sqlite3

@@ -1,6 +1,6 @@
 class Scrimper < Creeper
   sidekiq_options queue: :scrimper,
-                  retry: false,
+                  retry: true,
                   backtrace: true,
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60

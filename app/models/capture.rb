@@ -23,11 +23,12 @@ class Capture < Url
   end
 
   def get_png
-    Headless.ly do
-      driver = Selenium::WebDriver.for :firefox
-      driver.navigate.to @url
-      driver.save_screenshot(png_file_path)
-    end
+    headless = Headless.new
+    headless.start
+    driver = Selenium::WebDriver.for :firefox
+    driver.navigate.to @url
+    driver.save_screenshot(png_file_path)
+    headless.destroy
   end
 
   def check_temp_path

@@ -21,7 +21,6 @@ gem 'redis-objects'
 gem 'redis-rails'
 
 gem 'sidekiq'
-gem 'sidekiq-unique-jobs'
 
 gem 'sinatra', require: false
 

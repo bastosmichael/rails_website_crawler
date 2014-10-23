@@ -11,6 +11,8 @@ class Creeper < Worker
 
   def exists?
     parsed.nil? ? false : parsed['type']
+  rescue
+    false
   end
 
   def upload

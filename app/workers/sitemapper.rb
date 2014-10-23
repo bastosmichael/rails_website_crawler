@@ -19,7 +19,7 @@ class Sitemapper < Worker
   end
 
   def get_page url
-    Scrimper.perform_async url
+    Sampler.perform_async url
   end
 
   def get_sitemap url
