@@ -1,22 +1,23 @@
 namespace :run do
   desc "Run the crawler in spider mode"
   task :spider, [:url] => :environment do |task, args|
-  	Crawl.instance.spider_url(args.url)
+    Redis::List.new('visited').clear
+  	Spider.perform_async args.url
   end
 
   desc "Run the crawler in scrimper mode"
   task :scrimper, [:url] => :environment do |task, args|
-  	Crawl.instance.scrimp_url(args.url)
+  	Scrimper.perform_async args.url
   end
 
   desc "Run the crawler in sitemapper mode"
   task :sitemapper, [:url] => :environment do |task, args|
-    Crawl.instance.sitemap_url(args.url)
+    Sitemapper.perform_async args.url
   end
 
   desc "Run the crawler in sampler mode"
   task :sampler, [:url] => :environment do |task, args|
-    Crawl.instance.sample_url(args.url)
+    Sampler.perform_async args.url
   end
 
   desc "Run the crawlers"
