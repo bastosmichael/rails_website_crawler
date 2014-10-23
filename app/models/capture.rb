@@ -28,6 +28,7 @@ class Capture < Url
     driver = Selenium::WebDriver.for :firefox
     driver.navigate.to @url
     driver.save_screenshot(png_file_path)
+    driver.close
     headless.destroy
   end
 

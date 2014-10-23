@@ -21,6 +21,7 @@ gem 'redis-objects'
 gem 'redis-rails'
 
 gem 'sidekiq'
+gem 'sidekiq-limit_fetch'
 
 gem 'sinatra', require: false
 
