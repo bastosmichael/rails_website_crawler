@@ -10,13 +10,14 @@ namespace :crawl do
   	Crawl::Scrimper.perform_async args.url
   end
 
+  desc "Run the crawler in Crawl::Sampler mode"
+  task :sampler, [:url] => :environment do |task, args|
+    Redis::List.new('visited').clear
+    Crawl::Sampler.perform_async args.url
+  end
+
   desc "Run the crawler in Crawl::Sitemapper mode"
   task :sitemapper, [:url] => :environment do |task, args|
     Crawl::Sitemapper.perform_async args.url
-  end
-
-  desc "Run the crawler in Crawl::Sampler mode"
-  task :sampler, [:url] => :environment do |task, args|
-    Crawl::Sampler.perform_async args.url
   end
 end

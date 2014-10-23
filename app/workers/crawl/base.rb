@@ -16,6 +16,6 @@ class Crawl::Base < Worker
   end
 
   def upload
-    Uploader.perform_async parsed if exists?
+    Record::Uploader.perform_async parsed if exists?
   end
 end

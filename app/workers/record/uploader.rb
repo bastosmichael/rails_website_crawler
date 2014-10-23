@@ -1,4 +1,4 @@
-class Uploader < Worker
+class Record::Uploader < Worker
   sidekiq_options queue: :uploader,
                   retry: true,
                   backtrace: true,
