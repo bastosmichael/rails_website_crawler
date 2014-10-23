@@ -1,4 +1,4 @@
-namespace :run do
+namespace :crawl do
   desc "Run the crawler in Crawl::Spider mode"
   task :spider, [:url] => :environment do |task, args|
     Redis::List.new('visited').clear
