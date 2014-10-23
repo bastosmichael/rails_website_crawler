@@ -11,4 +11,4 @@
   - default
 :limits:
   screener: 1
-  Crawl::Sitemapper: 1
+  sitemapper: 1
