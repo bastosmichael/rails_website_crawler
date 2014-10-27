@@ -27,6 +27,10 @@ class Cloud
     @files ||= update_files
   end
 
+  def keys
+    @keys ||= files.map(&:key)
+  end
+
   def update_files
     files = container.files
     truncated = files.try(:is_truncated)
@@ -67,5 +71,9 @@ class Cloud
 
   def create_container
     @container = storage.directories.create({ :key => bucket, :public => true })
+  end
+
+  def delete_all
+    files.each { |k| k.try(:destroy) }
   end
 end
