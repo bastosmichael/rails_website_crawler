@@ -9,7 +9,7 @@ class Record
   end
 
   def screenshots
-    @screenshots ||= data['screenshot'].map {|key, value| { value => url } }
+    @screenshots ||= data['screenshot'].map {|key, value| { value => url } }.reduce({}, :merge)
   end
 
   def data

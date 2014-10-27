@@ -40,7 +40,7 @@ class Results < Url
             new_hash[date] = value
             if screenshot
               new_data['screenshot'][date] = screenshot
-              Crawl::Screener.perform_async url, date
+              Crawl::Screener.perform_async url, date, screenshot
             end
           end
         end
@@ -50,7 +50,7 @@ class Results < Url
         if screenshot
           if !new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
-            Crawl::Screener.perform_async url, date
+            Crawl::Screener.perform_async url, date, screenshot
           end
         end
       end

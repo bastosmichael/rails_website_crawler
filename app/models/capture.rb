@@ -2,6 +2,8 @@ class Capture < Url
   require 'RMagick'
   include Magick
 
+  attr_accessor :relative_path
+
   PNG = '.png'
   JPG = '.jpg'
 
@@ -59,7 +61,7 @@ class Capture < Url
   end
 
   def jpg_relative_path
-    cache_image + JPG
+    relative_path || cache_image + JPG
   end
 
   def temp_path
