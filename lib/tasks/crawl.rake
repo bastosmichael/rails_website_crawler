@@ -7,6 +7,7 @@ namespace :crawl do
 
   desc "Run the crawler in Crawler::Scrimper mode"
   task :scrimper, [:url] => :environment do |task, args|
+    Redis::List.new('visited').clear
   	Crawler::Scrimper.perform_async args.url
   end
 
@@ -18,6 +19,7 @@ namespace :crawl do
 
   desc "Run the crawler in Crawler::Sitemapper mode"
   task :sitemapper, [:url] => :environment do |task, args|
+    Redis::List.new('visited').clear
     Crawler::Sitemapper.perform_async args.url
   end
 end

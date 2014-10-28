@@ -1,9 +1,4 @@
 class Recorder::Retreader < Recorder::Base
-  sidekiq_options queue: :retreader,
-                  retry: true,
-                  backtrace: true,
-                  unique: true,
-                  unique_job_expiration: 24 * 60 * 60
 
   def perform container
     @container = container
