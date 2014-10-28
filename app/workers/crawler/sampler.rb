@@ -15,6 +15,6 @@ class Crawler::Sampler < Crawler::Base
   end
 
   def visit
-    @visit ||= Visit.new(parser.internal_links)
+    @visit ||= Page::Visit.new(parser.internal_links)
   end
 end

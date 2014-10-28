@@ -27,6 +27,6 @@ class Crawler::Sitemapper < Crawler::Base
   end
 
   def sitemap
-    @sitemap ||= Sitemap.new(@url)
+    @sitemap ||= Crawl::Sitemap.new(@url)
   end
 end

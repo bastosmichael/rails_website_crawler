@@ -1,4 +1,4 @@
-class Record::Upload < Url
+class Record::Upload < Page::Url
   CANONICAL = %i/site_name
                  id
                  url
