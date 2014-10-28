@@ -1,4 +1,4 @@
-class Record::Base < Worker
+class Recorder::Base < Worker
   def cloud
     @cloud ||= Cloud.new(@container)
   end

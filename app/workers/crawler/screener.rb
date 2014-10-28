@@ -1,4 +1,4 @@
-class Crawl::Screener < Worker
+class Crawler::Screener < Worker
   sidekiq_options queue: :screener,
                   retry: true,
                   backtrace: true,

@@ -1,4 +1,4 @@
-class Record::Retreader < Record::Base
+class Recorder::Retreader < Recorder::Base
   sidekiq_options queue: :retreader,
                   retry: true,
                   backtrace: true,
@@ -8,7 +8,7 @@ class Record::Retreader < Record::Base
   def perform container
     @container = container
     records.each do |r|
-      Crawl::Scrimper.perform_async record(r.key).url
+      Crawler::Scrimper.perform_async record(r.key).url
     end
   end
 

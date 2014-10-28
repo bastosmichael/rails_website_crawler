@@ -1,4 +1,4 @@
-class Crawl::Sitemapper < Worker
+class Crawler::Sitemapper < Worker
   sidekiq_options queue: :sitemapper,
                   retry: true,
                   backtrace: true,
@@ -11,7 +11,7 @@ class Crawl::Sitemapper < Worker
     sitemap.site_links.each { |u| get_page u } if sitemap.sites?
     sitemap.index_links.each { |u| get_sitemap u } if sitemap.indexes?
   rescue Net::HTTP::Persistent::Error
-    Crawl::Sitemapper.perform_async @url
+    Crawler::Sitemapper.perform_async @url
   end
 
   def get_xml
@@ -19,11 +19,11 @@ class Crawl::Sitemapper < Worker
   end
 
   def get_page url
-    Crawl::Sampler.perform_async url
+    Crawler::Sampler.perform_async url
   end
 
   def get_sitemap url
-    Crawl::Sitemapper.perform_async url
+    Crawler::Sitemapper.perform_async url
   end
 
   def sitemap

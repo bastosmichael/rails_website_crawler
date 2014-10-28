@@ -1,5 +1,5 @@
-class Crawl::Sampler < Crawl::Base
-  sidekiq_options queue: :sampler,
+class Crawler::Scrimper < Crawler::Base
+  sidekiq_options queue: :scrimper,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -8,13 +8,8 @@ class Crawl::Sampler < Crawl::Base
   def perform url
     @url = url
     parser.page = scraper.get
-    visit.sample
     upload
   rescue Net::HTTP::Persistent::Error
-    Crawl::Sampler.perform_async @url
-  end
-
-  def visit
-    @visit ||= Visit.new(parser.internal_links)
+    Crawler::Scrimper.perform_async @url
   end
 end

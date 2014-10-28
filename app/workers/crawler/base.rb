@@ -1,4 +1,4 @@
-class Crawl::Base < Worker
+class Crawler::Base < Worker
   def parser
     @parser ||= scraper.name.capitalize.constantize.new(@url)
   rescue NameError
@@ -16,6 +16,6 @@ class Crawl::Base < Worker
   end
 
   def upload
-    Record::Uploader.perform_async parsed if exists?
+    Recorder::Uploader.perform_async parsed if exists?
   end
 end
