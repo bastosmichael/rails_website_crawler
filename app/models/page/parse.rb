@@ -1,4 +1,4 @@
-class Parse < Page
+class Page::Parse < Page::Base
   include PageHelper
   include OpenGraphHelper
   include SchemaOrgHelper

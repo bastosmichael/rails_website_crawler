@@ -1,4 +1,4 @@
-class Record
+class Record::Base
   def initialize container, record
     @record = record
     @container = container

@@ -1,4 +1,4 @@
-class Capture < Url
+class Crawl::Capture < Url
   require 'RMagick'
   include Magick
 

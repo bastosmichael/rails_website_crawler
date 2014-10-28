@@ -1,4 +1,4 @@
-class Crawler::Sitemapper < Worker
+class Crawler::Sitemapper < Crawler::Base
   sidekiq_options queue: :sitemapper,
                   retry: true,
                   backtrace: true,

@@ -1,4 +1,4 @@
-class Page < Url
+class Page::Base < Url
   attr_accessor :page
 
   def parser

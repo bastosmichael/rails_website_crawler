@@ -1,4 +1,4 @@
-class Crawler::Screener < Worker
+class Crawler::Screener < Crawler::Base
   sidekiq_options queue: :screener,
                   retry: true,
                   backtrace: true,
@@ -13,6 +13,6 @@ class Crawler::Screener < Worker
   end
 
   def capturer
-    @capturer ||= Capture.new(@url)
+    @capturer ||= Crawl::Capture.new(@url)
   end
 end

@@ -1,8 +1,12 @@
 class Crawler::Base < Worker
+  def scraper
+    @scraper ||= Crawl::Base.new(@url)
+  end
+
   def parser
     @parser ||= scraper.name.capitalize.constantize.new(@url)
   rescue NameError
-    @parser ||= Parse.new(@url)
+    @parser ||= Page::Parse.new(@url)
   end
 
   def parsed

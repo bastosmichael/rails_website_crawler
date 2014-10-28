@@ -13,6 +13,6 @@ class Recorder::Retreader < Recorder::Base
   end
 
   def record record
-    Record.new(@container, record)
+    Record::Base.new(@container, record)
   end
 end

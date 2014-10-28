@@ -1,4 +1,4 @@
-class Scrape < Url
+class Crawl::Base < Url
   def agent
   	@agent ||= defaults
   end

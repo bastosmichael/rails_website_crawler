@@ -7,13 +7,13 @@ class Recorder::Uploader < Recorder::Base
 
   def perform metadata = {}
     if @url = metadata['url']
-      resoluter.id = metadata['id']
-      resoluter.metadata = metadata
-      resoluter.sync
+      uploader.id = metadata['id']
+      uploader.metadata = metadata
+      uploader.sync
     end
   end
 
-  def resoluter
-  	@resoluter ||= Results.new(@url)
+  def uploader
+  	@uploader ||= Record::Upload.new(@url)
   end
 end
