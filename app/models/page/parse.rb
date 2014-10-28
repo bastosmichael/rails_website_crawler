@@ -15,7 +15,7 @@ class Page::Parse < Page::Base
   end
 
   def screenshot
-    @screenshot ||= File.join(md5, date) + '.jpg'
+    @screenshot ||= File.join(@id, date) + '.jpg'
   end
 
   def remove_extras symbol

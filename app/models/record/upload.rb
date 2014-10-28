@@ -40,7 +40,7 @@ class Record::Upload < Page::Url
             new_hash[date] = value
             if screenshot
               new_data['screenshot'][date] = screenshot
-              Crawler::Screener.perform_async url, date, screenshot
+              Crawler::Screener.perform_async url, screenshot
             end
           end
         end
@@ -50,7 +50,7 @@ class Record::Upload < Page::Url
         if screenshot
           if !new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
-            Crawler::Screener.perform_async url, date, screenshot
+            Crawler::Screener.perform_async url, screenshot
           end
         end
       end

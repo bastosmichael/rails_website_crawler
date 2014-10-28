@@ -5,7 +5,7 @@ class Recorder::Rescreener < Recorder::Retreader
     records.each do |r|
       record(r.key).screenshots.each do |key, value|
         unless files.include? key
-          Crawler::Screener.perform_async value, key.split('/').last.gsub('.jpg',''), key
+          Crawler::Screener.perform_async value, key
         end
         files.delete(key)
       end

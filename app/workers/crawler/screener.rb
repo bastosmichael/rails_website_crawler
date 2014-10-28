@@ -5,10 +5,9 @@ class Crawler::Screener < Crawler::Base
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform url, date = nil, path = nil
+  def perform url, path
     @url = url
-    capturer.date = date
-    capturer.relative_path = path if path
+    capturer.relative_path = path
     capturer.screen
   end
 
