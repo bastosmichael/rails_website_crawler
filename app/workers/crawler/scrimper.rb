@@ -1,4 +1,4 @@
-class Crawl::Scrimper < Crawl::Base
+class Crawler::Scrimper < Crawler::Base
   sidekiq_options queue: :scrimper,
                   retry: true,
                   backtrace: true,
@@ -10,6 +10,6 @@ class Crawl::Scrimper < Crawl::Base
     parser.page = scraper.get
     upload
   rescue Net::HTTP::Persistent::Error
-    Crawl::Scrimper.perform_async @url
+    Crawler::Scrimper.perform_async @url
   end
 end

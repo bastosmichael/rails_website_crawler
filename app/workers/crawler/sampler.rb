@@ -1,4 +1,4 @@
-class Crawl::Sampler < Crawl::Base
+class Crawler::Sampler < Crawler::Base
   sidekiq_options queue: :sampler,
                   retry: true,
                   backtrace: true,
@@ -11,10 +11,10 @@ class Crawl::Sampler < Crawl::Base
     visit.sample
     upload
   rescue Net::HTTP::Persistent::Error
-    Crawl::Sampler.perform_async @url
+    Crawler::Sampler.perform_async @url
   end
 
   def visit
-    @visit ||= Visit.new(parser.internal_links)
+    @visit ||= Page::Visit.new(parser.internal_links)
   end
 end

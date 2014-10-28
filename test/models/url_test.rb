@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UrlTest < ActiveSupport::TestCase
   setup do
-    assert @url = Url.new('google.com')
+    assert @url = Page::Url.new('google.com')
     assert @url.date = '2014-08-09'
   end
 

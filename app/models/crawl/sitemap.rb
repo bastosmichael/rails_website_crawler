@@ -1,4 +1,4 @@
-class Sitemap < Url
+class Crawl::Sitemap < Page::Url
   attr_accessor :xml
 
   def parser

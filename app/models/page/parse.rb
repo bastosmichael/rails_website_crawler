@@ -1,4 +1,4 @@
-class Parse < Page
+class Page::Parse < Page::Base
   include PageHelper
   include OpenGraphHelper
   include SchemaOrgHelper
@@ -15,7 +15,7 @@ class Parse < Page
   end
 
   def screenshot
-    @screenshot ||= File.join(md5, date) + '.jpg'
+    @screenshot ||= File.join(@id, date) + '.jpg'
   end
 
   def remove_extras symbol

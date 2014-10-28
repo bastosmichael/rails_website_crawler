@@ -1,4 +1,4 @@
-class Crawl::Spider < Crawl::Base
+class Crawler::Spider < Crawler::Base
   sidekiq_options queue: :spider,
                   retry: true,
                   backtrace: true,
@@ -11,10 +11,10 @@ class Crawl::Spider < Crawl::Base
     visit.spider
     upload
   rescue Net::HTTP::Persistent::Error
-    Crawl::Spider.perform_async @url
+    Crawler::Spider.perform_async @url
   end
 
   def visit
-    @visit ||= Visit.new(parser.internal_links)
+    @visit ||= Page::Visit.new(parser.internal_links)
   end
 end

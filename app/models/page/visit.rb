@@ -1,24 +1,24 @@
-class Visit
+class Page::Visit
   def initialize links
   	@links = *links
   end
 
   def spider
     @links.each do |link|
-      key = Url.new(link).cache_key
+      key = Page::Url.new(link).cache_key
       if !keys.include? key
         keys << key
-        Crawl::Spider.perform_async link
+        Crawler::Spider.perform_async link
       end
     end
   end
 
   def sample
     @links.each do |link|
-      key = Url.new(link).cache_key
+      key = Page::Url.new(link).cache_key
       if !keys.include? key
         keys << key
-        Crawl::Scrimper.perform_async link
+        Crawler::Scrimper.perform_async link
       end
     end
   end

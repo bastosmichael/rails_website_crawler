@@ -1,4 +1,4 @@
-class Capture < Url
+class Crawl::Capture < Page::Url
   require 'RMagick'
   include Magick
 
@@ -8,14 +8,14 @@ class Capture < Url
   JPG = '.jpg'
 
   def screen
-    if !cloud.head jpg_relative_path
+    if !cloud.head relative_path
       check_temp_path
       get_png
       compress_png
-      cloud.sync(jpg_relative_path, jpeg)
+      cloud.sync(relative_path, jpeg)
       delete_images
     end
-    return jpg_relative_path
+    return relative_path
   end
 
   def compress_png
@@ -60,20 +60,12 @@ class Capture < Url
     temp_path + JPG
   end
 
-  def jpg_relative_path
-    relative_path || cache_image + JPG
-  end
-
   def temp_path
   	File.join(Rails.root, 'tmp/cache', md5)
   end
 
   def image
     @image ||= Image.read(png_file_path).first
-  end
-
-  def cache_image
-    File.join(md5, date)
   end
 
   def cloud
