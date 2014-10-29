@@ -8,6 +8,7 @@ gem 'trollop'
 
 gem 'nokogiri'
 gem 'mechanize'
+gem 'social_shares'
 
 gem 'selenium-webdriver'
 gem 'headless'
