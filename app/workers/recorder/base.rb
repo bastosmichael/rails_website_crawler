@@ -12,4 +12,8 @@ class Recorder::Base < Worker
   def records
     @records ||= cloud.files
   end
+
+  def record record
+    Record::Base.new(@container, record)
+  end
 end

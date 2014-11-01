@@ -4,6 +4,10 @@ class Record::Base
     @container = container
   end
 
+  def delete
+    cloud.head(@record).try(:destroy)
+  end
+
   def url
     @url ||= data['url']
   end

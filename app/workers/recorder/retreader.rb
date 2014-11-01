@@ -6,8 +6,4 @@ class Recorder::Retreader < Recorder::Base
       Crawler::Scrimper.perform_async record(r.key).url
     end
   end
-
-  def record record
-    Record::Base.new(@container, record)
-  end
 end
