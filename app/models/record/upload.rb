@@ -40,7 +40,7 @@ class Record::Upload < Page::Url
             new_hash[date] = value
             if screenshot
               new_data['screenshot'][date] = screenshot
-              Crawler::Screener.perform_async url, screenshot
+              launch_screener
             end
           end
         end
@@ -50,7 +50,7 @@ class Record::Upload < Page::Url
         if screenshot
           if !new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
-            Crawler::Screener.perform_async url, screenshot
+            launch_screener
           end
         end
       end
@@ -69,14 +69,20 @@ class Record::Upload < Page::Url
     end
   end
 
-  def data
-    JSON.parse(cloud.get(json_relative_path).try(:body), :quirks_mode => true)
-  rescue
-    {}
+  def launch_screener
+    Crawler::Screener.perform_async url, screenshot
   end
 
-  def data= new_hash = {}
-    cloud.sync json_relative_path, new_hash.to_json
+  def data
+    record.data
+  end
+
+  def data= new_data
+    record.data = new_data
+  end
+
+  def record
+    @data ||= Record::Base.new(container, json_relative_path)
   end
 
   def json_relative_path
@@ -87,7 +93,7 @@ class Record::Upload < Page::Url
     @types ||= metadata['type'].downcase.pluralize.gsub(':','')
   end
 
-  def cloud
-    @cloud ||= Cloud.new(name + '-' + types)
+  def container
+    @container ||= name + '-' + types
   end
 end

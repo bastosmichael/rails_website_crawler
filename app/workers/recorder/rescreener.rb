@@ -1,4 +1,4 @@
-class Recorder::Rescreener < Recorder::Retreader
+class Recorder::Rescreener < Recorder::Base
 
   def perform container, cleanup = false
     @container = container
