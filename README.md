@@ -1,10 +1,11 @@
-rails-sidekiq-mechanize-vcr-semantic-crawler
+Skynet
 ============================================
+Semantic Web Crawler built in Rails using Mechanize, Nokogiri, Rmagick and Sidekiq 
 
 Need to install Image Magick
 
-$ sudo apt-get install imagemagick libmagickwand-dev
+$ sudo apt-get install imagemagick libmagickwand-dev redis-server
 
 Trying something new
 
-$ bundle exec rake run:url[example.com]
+$ bundle exec rake crawl:scrimper[example.com]
