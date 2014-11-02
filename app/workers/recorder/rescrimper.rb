@@ -1,4 +1,4 @@
-class Recorder::Retreader < Recorder::Base
+class Recorder::Recrimper < Recorder::Base
 
   def perform container
     @container = container
