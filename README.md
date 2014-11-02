@@ -4,7 +4,7 @@ Semantic Web Crawler built in Rails using Mechanize, Nokogiri, Rmagick and Sidek
 
 Need to install Image Magick
 
-$ sudo apt-get install imagemagick libmagickwand-dev redis-server firefox
+$ sudo apt-get install imagemagick libmagickwand-dev redis-server firefox xvfb
 
 Trying something new
 
