@@ -10,7 +10,7 @@ class Recorder::Base < Worker
   end
 
   def records
-    @records ||= cloud.files
+    @records ||= cloud.files.map {|f| f unless f.key.starts_with? '_' }.compact
   end
 
   def record record
