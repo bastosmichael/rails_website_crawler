@@ -8,6 +8,11 @@ class Record::Upload < Page::Url
                  image
                  description/.freeze
 
+  EXCLUDE = %i/site_name
+               id
+               type
+               screenshot/.freeze
+
   attr_accessor :metadata
   attr_accessor :id
   attr_accessor :screenshot
@@ -23,6 +28,7 @@ class Record::Upload < Page::Url
     metadata.each do |key, value|
       if CANONICAL.include? key.to_sym
         new_data[key] = value
+        launch_combiner(key, value) unless EXCLUDE.include? key.to_sym
         metadata.delete(key)
       end
     end
@@ -31,6 +37,7 @@ class Record::Upload < Page::Url
 
   def update_metadata new_data = {}
     metadata.each do |key, value|
+      launch_combiner key, value unless EXCLUDE.include? key.to_sym
       if new_data[key]
         original_hash = new_data[key]
         new_hash = {}
@@ -71,6 +78,10 @@ class Record::Upload < Page::Url
 
   def launch_screener
     Crawler::Screener.perform_async url, screenshot
+  end
+
+  def launch_combiner item, value
+    Recorder::Combiner.perform_async container, item, id, value
   end
 
   def data

@@ -3,13 +3,21 @@ class Recorder::Combiner < Recorder::Base
   def perform container, type, id, value
     @container = container
     @type = type
-    combined_record.data = insert(id, value) unless combined_string.include? value
+    @id = id
+    @value = value
+    combined_record.data = insert(id, value) unless combined_string.include? value.to_s
   end
 
   def insert id, value
-    combined_record[id] = value
-  rescue
-    {id => value}
+    hash = combined_record.data
+    # hash.merge(new_hash)
+    # combined_record.data = hash
+  # rescue IndexError
+  #   {id => value}
+  end
+
+  def new_hash
+    {@id => @value}
   end
 
   def combined_string
