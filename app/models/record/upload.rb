@@ -6,7 +6,8 @@ class Record::Upload < Page::Url
                  date
                  name
                  image
-                 description/.freeze
+                 description
+                 tags/.freeze
 
   attr_accessor :metadata
   attr_accessor :id
