@@ -7,7 +7,9 @@ class Record::Upload < Page::Url
                  name
                  image
                  description
-                 tags/.freeze
+                 tags
+                 open_graph
+                 schema_org/.freeze
 
   attr_accessor :metadata
   attr_accessor :id
