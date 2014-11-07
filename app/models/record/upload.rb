@@ -74,7 +74,8 @@ class Record::Upload < Page::Url
   end
 
   def data
-    record.data
+    return record.data if record.data
+    {}
   end
 
   def data= new_data
