@@ -1,6 +1,5 @@
 class Recorder::Rescreener < Recorder::Base
-
-  def perform container, cleanup = false
+  def perform(container, cleanup = false)
     @container = container
     records.each do |r|
       record(r.key).screenshots.each do |key, value|

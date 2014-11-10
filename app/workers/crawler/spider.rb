@@ -5,7 +5,7 @@ class Crawler::Spider < Crawler::Base
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform url
+  def perform(url)
     @url = url
     parser.page = scraper.get
     visit.spider

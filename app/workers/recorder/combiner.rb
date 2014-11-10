@@ -1,15 +1,14 @@
 class Recorder::Combiner < Recorder::Base
-
-  def perform container, type, id, value
+  def perform(container, type, id, value)
     @container = container
     @type = type
     combined_record.data = insert(id, value) unless combined_string.include? value
   end
 
-  def insert id, value
+  def insert(id, value)
     combined_record[id] = value
   rescue
-    {id => value}
+    { id => value }
   end
 
   def combined_string

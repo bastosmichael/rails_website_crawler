@@ -2,11 +2,11 @@ class Crawl::Social < Page::Url
   require 'social_shares'
 
   def shares
-    all.merge({'total_shares' => total})
+    all.merge('total_shares' => total)
   end
 
   def all
-    @all ||= SocialShares.all(url).delete_if { |k, v| v == 0 }.map { |k, v| { k.to_s + '_shares' => v.to_i } }.reduce({}, :merge)
+    @all ||= SocialShares.all(url).delete_if { |_k, v| v == 0 }.map { |k, v| { k.to_s + '_shares' => v.to_i } }.reduce({}, :merge)
   end
 
   def total

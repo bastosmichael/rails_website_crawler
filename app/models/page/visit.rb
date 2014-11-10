@@ -1,12 +1,12 @@
 class Page::Visit
-  def initialize links
-  	@links = *links
+  def initialize(links)
+    @links = *links
   end
 
   def spider
     @links.each do |link|
       key = Page::Url.new(link).cache_key
-      if !keys.include? key
+      unless keys.include? key
         keys << key
         Crawler::Spider.perform_async link
       end
@@ -16,7 +16,7 @@ class Page::Visit
   def sample
     @links.each do |link|
       key = Page::Url.new(link).cache_key
-      if !keys.include? key
+      unless keys.include? key
         keys << key
         Crawler::Scrimper.perform_async link
       end
@@ -24,6 +24,6 @@ class Page::Visit
   end
 
   def keys
-  	@keys ||= Redis::List.new('visited')
+    @keys ||= Redis::List.new('visited')
   end
 end

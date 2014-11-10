@@ -1,5 +1,5 @@
 class Record::Upload < Page::Url
-  CANONICAL = %i/site_name
+  CANONICAL = %i(site_name
                  id
                  url
                  type
@@ -9,7 +9,7 @@ class Record::Upload < Page::Url
                  description
                  tags
                  open_graph
-                 schema_org/.freeze
+                 schema_org).freeze
 
   attr_accessor :metadata
   attr_accessor :id
@@ -19,7 +19,7 @@ class Record::Upload < Page::Url
     self.data = update_metadata(update_canonical(data))
   end
 
-  def update_canonical new_data = {}
+  def update_canonical(new_data = {})
     types
     set_date
     set_screenshot
@@ -29,10 +29,10 @@ class Record::Upload < Page::Url
         metadata.delete(key)
       end
     end
-    return new_data
+    new_data
   end
 
-  def update_metadata new_data = {}
+  def update_metadata(new_data = {})
     metadata.each do |key, value|
       if new_data[key]
         original_hash = new_data[key]
@@ -49,16 +49,16 @@ class Record::Upload < Page::Url
         end
         new_data[key] = original_hash.merge!(new_hash)
       else
-        new_data[key] = {date => value}
+        new_data[key] = { date => value }
         if screenshot
-          if !new_data['screenshot']
+          unless new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
             launch_screener
           end
         end
       end
     end
-    return new_data
+    new_data
   end
 
   def set_date
@@ -81,7 +81,7 @@ class Record::Upload < Page::Url
     {}
   end
 
-  def data= new_data
+  def data=(new_data)
     record.data = new_data
   end
 
@@ -94,7 +94,7 @@ class Record::Upload < Page::Url
   end
 
   def types
-    @types ||= metadata['type'].downcase.pluralize.gsub(':','')
+    @types ||= metadata['type'].downcase.pluralize.gsub(':', '')
   end
 
   def container

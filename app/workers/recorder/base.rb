@@ -10,10 +10,10 @@ class Recorder::Base < Worker
   end
 
   def records
-    @records ||= cloud.files.map {|f| f unless f.key.starts_with? '_' }.compact
+    @records ||= cloud.files.map { |f| f unless f.key.starts_with? '_' }.compact
   end
 
-  def record record
+  def record(record)
     Record::Base.new(@container, record)
   end
 end

@@ -8,14 +8,14 @@ class Crawl::Capture < Page::Url
   JPG = '.jpg'
 
   def screen
-    if !cloud.head relative_path
+    unless cloud.head relative_path
       check_temp_path
       get_png
       compress_png
       cloud.sync(relative_path, jpeg)
       delete_images
     end
-    return relative_path
+    relative_path
   end
 
   def compress_png
@@ -36,7 +36,7 @@ class Crawl::Capture < Page::Url
 
   def check_temp_path
     path = File.dirname temp_path
-    FileUtils::mkdir_p(path) if !File.exist?(path)
+    FileUtils.mkdir_p(path) unless File.exist?(path)
   end
 
   def delete_images
@@ -61,7 +61,7 @@ class Crawl::Capture < Page::Url
   end
 
   def temp_path
-  	File.join(Rails.root, 'tmp/cache', md5)
+    File.join(Rails.root, 'tmp/cache', md5)
   end
 
   def image

@@ -1,6 +1,5 @@
 class Recorder::Mover < Recorder::Base
-
-  def perform from_container, to_container
+  def perform(from_container, to_container)
     @container = from_container
     @to_container = to_container
     records.each do |r|
@@ -16,7 +15,7 @@ class Recorder::Mover < Recorder::Base
     @new_type ||= @to_container.match(/-(.+)/)[1].try(:singularize).try(:capitalize) rescue nil
   end
 
-  def to_record new_record
+  def to_record(new_record)
     Record::Base.new(@to_container, new_record)
   end
 

@@ -1,16 +1,16 @@
 class Cloud
-  MAX_KEYS = 100000000000
+  MAX_KEYS = 100_000_000_000
 
   attr_accessor :bucket
   attr_accessor :provider
 
-  def initialize bucket_name
+  def initialize(bucket_name)
     self.bucket = bucket_name if bucket_name
   end
 
   def after_initialize
-     return unless new_record?
-     self.bucket = 'crawler'
+    return unless new_record?
+    self.bucket = 'crawler'
   end
 
   def storage
@@ -20,7 +20,7 @@ class Cloud
   def container
     @container ||= storage.directories.get(bucket)
     create_container if @container.nil?
-    return @container
+    @container
   end
 
   def files
@@ -35,26 +35,26 @@ class Cloud
     files = container.files
     truncated = files.try(:is_truncated)
     while truncated
-      bucket_object = container.files.all({ marker: files.last.key })
+      bucket_object = container.files.all(marker: files.last.key)
       truncated = bucket_object.is_truncated
       files = files + bucket_object
     end
     files
   end
 
-  def listing prefix
+  def listing(prefix)
     @listing ||= container.files.all delimiter: '/', prefix: prefix
   end
 
-  def head key
+  def head(key)
     container.files.head key
   end
 
-  def get key
+  def get(key)
     container.files.get key
   end
 
-  def sync key, data
+  def sync(key, data)
     if data
       copy key, data
     else
@@ -63,14 +63,14 @@ class Cloud
     end
   end
 
-  def copy key, data
+  def copy(key, data)
     file = container.files.new key: key
     file.body = data
     file.save
   end
 
   def create_container
-    @container = storage.directories.create({ :key => bucket, :public => true })
+    @container = storage.directories.create(key: bucket, public: true)
   end
 
   def delete_all
