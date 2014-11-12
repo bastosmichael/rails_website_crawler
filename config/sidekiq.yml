@@ -1,9 +1,10 @@
 ---
-:concurrency: 1
+:concurrency: 25
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [screener, 32]
-  - [recorder, 16]
+  - [screener, 64]
+  - [recorder, 32]
+  - [mapper, 16]
   - [scrimper, 8]
   - [sampler, 4]
   - [spider, 2]
