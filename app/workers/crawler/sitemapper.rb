@@ -5,7 +5,7 @@ class Crawler::Sitemapper < Crawler::Base
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
-  def perform url
+  def perform(url)
     @url = url
     get_xml
     sitemap.site_links.each { |u| get_page u } if sitemap.sites?
@@ -18,11 +18,11 @@ class Crawler::Sitemapper < Crawler::Base
     sitemap.xml = scraper.get
   end
 
-  def get_page url
+  def get_page(url)
     Crawler::Sampler.perform_async url
   end
 
-  def get_sitemap url
+  def get_sitemap(url)
     Crawler::Sitemapper.perform_async url
   end
 

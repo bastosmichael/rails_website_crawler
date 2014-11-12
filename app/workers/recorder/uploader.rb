@@ -1,6 +1,5 @@
 class Recorder::Uploader < Recorder::Base
-
-  def perform metadata = {}
+  def perform(metadata = {})
     if @url = metadata['url']
       uploader.id = metadata['id']
       uploader.metadata = metadata
@@ -9,6 +8,6 @@ class Recorder::Uploader < Recorder::Base
   end
 
   def uploader
-  	@uploader ||= Record::Upload.new(@url)
+    @uploader ||= Record::Upload.new(@url)
   end
 end

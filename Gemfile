@@ -3,6 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '4.1.4'
 gem 'sqlite3'
 
+gem 'oj'
+gem 'oj_mimic_json'
+
 gem 'awesome_print'
 gem 'trollop'
 

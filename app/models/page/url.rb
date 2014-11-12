@@ -1,11 +1,11 @@
 class Page::Url
-  URI_REGEX = /\A#{URI::regexp(['http', 'https'])}\z/
+  URI_REGEX = /\A#{URI.regexp(%w(http https))}\z/
 
   attr_accessor :date
 
-  def initialize url
+  def initialize(url)
     @url = clean_up_url(url)
-    self.date = Date.today.to_s if self.date.nil?
+    self.date = Date.today.to_s if date.nil?
   end
 
   def cache_key
@@ -36,12 +36,12 @@ class Page::Url
     host.split('.').first
   end
 
-  def get_host_without_www new_uri
+  def get_host_without_www(new_uri)
     host = new_uri.host.downcase
     host.start_with?('www.') ? host[4..-1] : host
   end
 
-  def clean_up_url url
+  def clean_up_url(url)
     url = URI.encode(url)
     url = "http://#{url}" if URI.parse(url).scheme.nil?
     url

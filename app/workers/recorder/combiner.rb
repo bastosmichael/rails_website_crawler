@@ -1,6 +1,5 @@
 class Recorder::Combiner < Recorder::Base
-
-  def perform container, type, id, value
+  def perform(container, type, id, value)
     @container = container
     @type = type
     @id = id

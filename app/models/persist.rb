@@ -1,5 +1,5 @@
 class Persist
-  def initialize cloud
+  def initialize(cloud)
     @cloud = cloud
   end
 
@@ -11,7 +11,7 @@ class Persist
     @cloud.sync(key, content)
   end
 
-  def exists? key
+  def exists?(key)
     @cloud.head(key)
   end
 end

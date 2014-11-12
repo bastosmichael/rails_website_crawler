@@ -5,7 +5,7 @@ class Page::Parse < Page::Base
 
   def build
     parent_build
-    self.methods.grep(/find_/).each { |parse| self.send(parse) } if @type
+    methods.grep(/find_/).each { |parse| send(parse) } if @type
   end
 
   def parent_build
@@ -18,7 +18,7 @@ class Page::Parse < Page::Base
     @screenshot ||= File.join(@id, date) + '.jpg'
   end
 
-  def remove_extras symbol
+  def remove_extras(symbol)
     remove_instance_variable(symbol) rescue nil
   end
 
@@ -31,7 +31,7 @@ class Page::Parse < Page::Base
     hash = {}
     instance_variables.each do |var|
       value = instance_variable_get(var)
-      hash[var.to_s.delete("@")] = value if !value.blank?
+      hash[var.to_s.delete('@')] = value unless value.blank?
     end
     hash
   end
@@ -47,10 +47,10 @@ class Page::Parse < Page::Base
   end
 
   def external_links
-    @external_links ||= links.map { |link| link if !internal? link }.compact
+    @external_links ||= links.map { |link| link unless internal? link }.compact
   end
 
-  def clean_up_link link
+  def clean_up_link(link)
     link_uri = URI.parse(link)
     if link_uri.scheme.nil? && link_uri.host.nil?
       link = (base + link)
@@ -61,7 +61,7 @@ class Page::Parse < Page::Base
     nil
   end
 
-  def remove_hash_bangs link
+  def remove_hash_bangs(link)
     return if link.nil?
     if hash_bang = link.match(/(.+?)\#/)
       hash_bang[1]
@@ -70,7 +70,7 @@ class Page::Parse < Page::Base
     end
   end
 
-  def internal? link
+  def internal?(link)
     get_host_without_www(URI.parse(link)) == host
   rescue
     nil
