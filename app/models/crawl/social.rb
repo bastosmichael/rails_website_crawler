@@ -21,7 +21,7 @@ class Crawl::Social < Page::Url
     @facebook ||= sanitize_facebook JSON.parse(Crawl::Base.new("http://graph.facebook.com/?id=#{@url}").get.try(:body), quirks_mode: true)
   end
 
-  def sanitize_facebook data
+  def sanitize_facebook(data)
     return nil if data['error_message'] || data['error_type'] || data['error_code']
     return nil if data.empty?
     Flattener.new(data).flatten.delete_if { |_k, v| v == 0 || v == @url }.map { |k, v| { 'facebook_' + k.to_s => v.try(:squish) || v } }.reduce({}, :merge)
