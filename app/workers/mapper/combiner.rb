@@ -4,7 +4,7 @@ class Mapper::Combiner < Mapper::Base
     @type = type
     @id = id
     @value = value
-    combined_record.data = insert(id, value) unless combined_string.include? value.to_s && combined_string.include? id.to_s
+    combined_record.data = insert(id, value) unless combined_string.include?(value.to_s) && combined_string.include?(id.to_s)
   end
 
   def insert id, value
