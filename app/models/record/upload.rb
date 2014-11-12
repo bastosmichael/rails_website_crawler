@@ -84,7 +84,7 @@ class Record::Upload < Page::Url
   end
 
   def launch_combiner item, value
-    Recorder::Combiner.perform_async container, item, id, value
+    Mapper::Combiner.perform_async container, item, id, value
   end
 
   def data

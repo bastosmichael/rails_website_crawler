@@ -74,6 +74,6 @@ class Cloud
   end
 
   def delete_all
-    files.each { |k| k.try(:destroy) }
+    files.with_progress.each { |k| k.try(:destroy) }
   end
 end

@@ -1,4 +1,4 @@
-class Recorder::Combiner < Recorder::Base
+class Mapper::Combiner < Recorder::Base
   def perform(container, type, id, value)
     @container = container
     @type = type
