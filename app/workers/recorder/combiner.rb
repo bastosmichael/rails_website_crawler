@@ -8,11 +8,8 @@ class Recorder::Combiner < Recorder::Base
   end
 
   def insert id, value
-    hash = combined_record.data
-    # hash.merge(new_hash)
-    # combined_record.data = hash
-  # rescue IndexError
-  #   {id => value}
+    hash = combined_record.data || {}
+    hash.merge(new_hash)
   end
 
   def new_hash
