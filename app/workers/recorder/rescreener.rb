@@ -1,7 +1,7 @@
 class Recorder::Rescreener < Recorder::Base
   def perform(container, cleanup = false)
     @container = container
-    records.each do |r|
+    records.with_progress.each do |r|
       record(r.key).screenshots.each do |key, value|
         unless files.include? key
           Crawler::Screener.perform_async value, key

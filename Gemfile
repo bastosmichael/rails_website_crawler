@@ -7,7 +7,7 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 gem 'awesome_print'
-gem 'trollop'
+gem 'progress'
 
 gem 'nokogiri'
 gem 'mechanize'

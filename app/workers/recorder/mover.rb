@@ -2,7 +2,7 @@ class Recorder::Mover < Recorder::Base
   def perform(from_container, to_container)
     @container = from_container
     @to_container = to_container
-    records.each do |r|
+    records.with_progress.each do |r|
       from_record = record(r.key)
       old_data = from_record.data
       old_data['type'] = new_type
