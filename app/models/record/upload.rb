@@ -31,7 +31,7 @@ class Record::Upload < Page::Url
     metadata.each do |key, value|
       if CANONICAL.include? key.to_sym
         new_data[key] = value
-        launch_combiner(key, value) unless EXCLUDE.include? key.to_sym
+        # launch_combiner(key, value) unless EXCLUDE.include? key.to_sym
         metadata.delete(key)
       end
     end
@@ -40,7 +40,7 @@ class Record::Upload < Page::Url
 
   def update_metadata(new_data = {})
     metadata.each do |key, value|
-      launch_combiner key, value unless EXCLUDE.include? key.to_sym
+      # launch_combiner key, value unless EXCLUDE.include? key.to_sym
       if new_data[key]
         original_hash = new_data[key]
         new_hash = {}
@@ -83,9 +83,9 @@ class Record::Upload < Page::Url
     Crawler::Screener.perform_async url, screenshot
   end
 
-  def launch_combiner item, value
-    Mapper::Combiner.perform_async container, item, id, value
-  end
+  # def launch_combiner item, value
+  #   Mapper::Combiner.perform_async container, item, id, value
+  # end
 
   def data
     return record.data if record.data
