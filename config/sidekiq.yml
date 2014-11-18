@@ -1,5 +1,5 @@
 ---
-:concurrency: 50
+:concurrency: 25
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [screener, 64]
@@ -13,6 +13,6 @@
 :limits:
   screener: 1
   sitemapper: 1
-  scrimper: 5
-  sampler: 5
-  spider: 5
+  scrimper: 2
+  sampler: 2
+  spider: 2
