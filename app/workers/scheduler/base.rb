@@ -1,3 +1,3 @@
-class Scheduler::Base < Worker
-  include Sidetiq::Schedulable
-end
+# class Scheduler::Base < Worker
+#   include Sidetiq::Schedulable
+# end
