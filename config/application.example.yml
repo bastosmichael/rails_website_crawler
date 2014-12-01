@@ -1,3 +1,7 @@
+redis:
+  address: 127.0.0.1
+  port: 6379
+  database: 0
 fog:
   provider: 'Local'
   local_root: 'tmp/fog'
