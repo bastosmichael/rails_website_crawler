@@ -6,11 +6,11 @@ class Crawl::Sitemap < Page::Url
   end
 
   def index_links
-    @index_links ||= parser.css('//sitemap/loc').map(&:text).compact.uniq.sort
+    @index_links ||= parser.css('//sitemap/loc').map(&:text).compact.uniq.shuffle
   end
 
   def site_links
-    @site_links ||= parser.css('//url/loc').map(&:text).compact.uniq.sort
+    @site_links ||= parser.css('//url/loc').map(&:text).compact.uniq.shuffle
   end
 
   def base
