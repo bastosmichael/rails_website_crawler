@@ -10,7 +10,7 @@ class Crawler::Base < Worker
   end
 
   def parsed
-    @parsed ||= parser.save.merge(social.shares) if parser.build
+    @parsed ||= parser.save if parser.build
   end
 
   def exists?
@@ -20,10 +20,12 @@ class Crawler::Base < Worker
   end
 
   def upload
-    Recorder::Uploader.perform_async parsed if exists?
+    Recorder::Uploader.perform_async parsed.merge(social.shares) if exists?
   end
 
   def social
     @social ||= Crawl::Social.new(@url)
+  rescue
+    {}
   end
 end

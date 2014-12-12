@@ -2,7 +2,7 @@ class Crawl::Social < Page::Url
   require 'social_shares'
 
   def shares
-    all.merge('total_shares' => total).merge(facebook)
+    all.merge('total_shares' => total).merge(facebook).delete_if { |_k, v| v == 0 }
   end
 
   def all
@@ -19,6 +19,8 @@ class Crawl::Social < Page::Url
 
   def facebook
     @facebook ||= sanitize_facebook JSON.parse(Crawl::Base.new("http://graph.facebook.com/?id=#{@url}").get.try(:body), quirks_mode: true)
+  rescue
+    {}
   end
 
   def sanitize_facebook(data)
