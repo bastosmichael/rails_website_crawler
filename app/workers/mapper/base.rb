@@ -10,7 +10,11 @@ class Mapper::Base < Worker
   end
 
   def records
-    @records ||= cloud.files.map { |f| f unless f.key.starts_with? '_' }.compact
+    @records ||= cloud.files.select { |f| f unless f.key.starts_with? '_' }
+  end
+
+  def indexes
+    @records ||= cloud.files.select { |f| f if f.key.starts_with? '_' }
   end
 
   def record(record)

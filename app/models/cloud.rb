@@ -76,4 +76,8 @@ class Cloud
   def delete_all
     files.with_progress.each { |k| k.try(:destroy) }
   end
+
+  def count
+    files.count
+  end
 end
