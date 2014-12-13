@@ -48,7 +48,7 @@ class Record::Upload < Page::Url
         last_key = original_hash.keys.last
         original_hash.each do |k, v|
           if k == last_key && v != value
-            unless k.include? '_shares'
+            if !k.include? '_shares'
               new_hash[date] = value
               if screenshot
                 new_data['screenshot'][date] = screenshot
