@@ -1,50 +1,50 @@
 class Record::Export
 
-  def initialize container
+  def initialize container, headers = { 'name' => nil , 'url' => nil }
     @container = container
+    @headers = headers
+    process_master_hash
   end
 
   def csv
     require 'csv'
-      keys = []
-      all_records = records.with_progress.map do |r|
-        data = record(r.key).data
-        if id = data['id']
-          new_data = data.map do |k, v|
-            value = v.is_a?(Hash) ? v.values.last : v
-            keys << k.to_sym unless keys.include? k.to_sym
-            {k.to_sym => value}
-          end.compact.reduce({}, :merge)
+      rowid = -1
+      CSV.open('test.csv', 'w') do |csv|
+        master_hash.values.each do |hsh|
+          rowid += 1
+          if rowid == 0
+            csv << ['id'] + @headers.keys # adding header row (column labels)
+          else
+            csv << hsh.values
+          end # of if/else inside hsh
+        end # of hsh's (rows)
+      end # of csv open
+  end
+
+  def master_hash
+    @master_hash ||= {}
+  end
+
+  def process_master_hash
+    @headers.each do |header, value|
+      hash = record('_' + header.pluralize + '.json').data
+      hash.each do |k,v|
+        if master_hash.keys.include?(k)
+          master_hash[k][header] = v
+        else
+          master_hash[k] = { 'id' => k }.merge(@headers)
+          master_hash[k][header] = v
         end
-      end.compact
-
-      # test = all_records.map do |r|
-      #   keys.each do |k|
-      #     r[k.to_sym] = '' unless r.keys.include? k.to_sym
-      #   end
-      #   r.sort
-      # end
-
-
-      # rowid = -1
-      # CSV.open('test.csv', 'w') do |csv|
-      #   test.each do |hsh|
-      #     rowid += 1
-      #     if rowid == 0
-      #       csv << hsh.keys# adding header row (column labels)
-      #     else
-      #       csv << hsh.values
-      #     end# of if/else inside hsh
-      #   end# of hsh's (rows)
-      # end# of csv open
+      end
+    end
   end
 
   def cloud
     @cloud ||= Cloud.new(@container)
   end
 
-  def records
-    @records ||= cloud.files.map { |f| f unless f.key.starts_with? '_' }.compact
+  def indexes
+    @records ||= cloud.files.select { |f| f if f.key.starts_with? '_' }
   end
 
   def record(record)
