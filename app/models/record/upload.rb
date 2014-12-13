@@ -48,17 +48,12 @@ class Record::Upload < Page::Url
         last_key = original_hash.keys.last
         original_hash.each do |k, v|
           if k == last_key && v != value
-            if !k.include? '_shares'
-              new_hash[date] = value
-              if screenshot
-                new_data['screenshot'][date] = screenshot
-                launch_screener
-              end
-              launch_combiner key, value unless EXCLUDE.include? key.to_sym
-            elsif value > v
-              new_hash[date] = value
-              launch_combiner key, value unless EXCLUDE.include? key.to_sym
+            new_hash[date] = value
+            if screenshot
+              new_data['screenshot'][date] = screenshot
+              launch_screener
             end
+            launch_combiner key, value unless EXCLUDE.include? key.to_sym
           end
         end
         new_data[key] = original_hash.merge!(new_hash)
