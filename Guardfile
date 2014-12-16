@@ -20,7 +20,7 @@ end
 #  - :timeout
 #  - :environment (corresponds to RAILS_ENV for the Sidekiq worker)
 
-guard 'sidekiq', concurrency: 3 do
+guard 'sidekiq', concurrency: 1 do
   watch(%r{^app/workers/(.+)\.rb$})
   watch(%r{^app/models/(.+)\.rb$})
   watch(%r{^app/sites/(.+)\.rb$})
