@@ -19,7 +19,7 @@ class Crawler::Sitemapper < Crawler::Base
   end
 
   def get_page(url)
-    Crawler::Sampler.perform_async url
+    Crawler::Scrimper.perform_async url
   end
 
   def get_sitemap(url)
