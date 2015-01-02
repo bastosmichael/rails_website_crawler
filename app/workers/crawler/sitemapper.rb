@@ -8,8 +8,8 @@ class Crawler::Sitemapper < Crawler::Base
   def perform(url)
     @url = url
     get_xml
-    sitemap.site_links.each { |u| get_page u } if sitemap.sites?
-    sitemap.index_links.each { |u| get_sitemap u } if sitemap.indexes?
+    sitemap.site_links.with_progress.each { |u| get_page u } if sitemap.sites?
+    sitemap.index_links.with_progress.each { |u| get_sitemap u } if sitemap.indexes?
   rescue Net::HTTP::Persistent::Error
     Crawler::Sitemapper.perform_async @url
   end
