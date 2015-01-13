@@ -10,9 +10,10 @@
   - [sampler, 2]
   - [spider, 1]
   - default
-:limits:
-  screener: 1
+:process_limits:
   sitemapper: 1
+  screener: 1
   scrimper: 2
   sampler: 2
   spider: 2
+  mapper: 5

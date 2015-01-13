@@ -2,7 +2,7 @@ class Crawl::Sitemap < Page::Url
   attr_accessor :xml
 
   def parser
-    xml.xml
+    @parser ||= Nokogiri::XML.parse(xml.body)
   end
 
   def index_links
