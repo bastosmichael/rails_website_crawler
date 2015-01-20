@@ -20,7 +20,7 @@ class Crawler::Base < Worker
   end
 
   def upload
-    Recorder::Uploader.perform_async parsed.merge(social.shares) if exists?
+    Recorder::Uploader.perform_async parsed if exists?
   end
 
   def social
