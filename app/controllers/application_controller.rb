@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    render text: "#{api_json}"
+    render json: api_json.to_json
   end
 
   private
