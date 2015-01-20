@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_filter :restrict_access
-  after_filter :track_usage
   respond_to :json
 
   def index
@@ -9,29 +8,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def track_usage
-    if api_json['last_used'] == Date.today.to_s
-      api_json['api_usage'] = api_json['api_usage'] + 1
-    else
-      api_json['last_used'] = Date.today.to_s
-      api_json['api_usage'] = 0
-    end
-    api_record.data = api_json
-  end
-
   def check_partner(access_token)
     @api_key = access_token
-    return true if api_json['active'] == true && api_usage <= api_usage_cap
+    return true if api_json['active'] == true
   rescue
     return false
-  end
-
-  def api_usage_cap
-    api_json['api_usage_cap']
-  end
-
-  def api_usage
-    api_json['api_usage']
   end
 
   def api_json
