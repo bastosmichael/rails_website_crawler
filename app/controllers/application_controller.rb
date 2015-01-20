@@ -10,11 +10,9 @@ class ApplicationController < ActionController::Base
 
   def check_partner(access_token)
     @api_key = access_token
-    if api_json['active'] == true
-      true
-    else
-      false
-    end
+    return true if api_json['active'] == true
+  rescue
+    return false
   end
 
   def api_json
