@@ -9,12 +9,16 @@ class ApplicationController < ActionController::Base
   private
 
   def check_partner(access_token)
-    @api_json ||= Record::Base.new('api-keys', access_token).data
-    # api_json[:active] == true
+    @api_key = access_token
+    if api_json['active'] == true
+      true
+    else
+      false
+    end
   end
 
   def api_json
-    @api_json
+    @api_json ||= Record::Base.new('api-keys', api_key).data
   end
 
   def api_key
@@ -22,15 +26,9 @@ class ApplicationController < ActionController::Base
   end
 
   def restrict_access
-    @api_key = params[:access_token]
+    return if check_partner params[:access_token] if params[:access_token]
     authenticate_or_request_with_http_token do |token, _options|
-      if check_partner
-        return true
-      elsif check_partner token
-        return true
-      else
-        false
-      end
+      return if check_partner token
     end
   end
 end
