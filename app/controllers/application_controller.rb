@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    render json: api_json.to_json
+    render json: api_json.merge(counts: Counts.visible_counts).to_json
   end
 
   private
