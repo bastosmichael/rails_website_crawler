@@ -23,9 +23,7 @@ class ApplicationController < ActionController::Base
     @api_record ||= Record::Base.new('api-keys', api_key)
   end
 
-  def api_key
-    @api_key
-  end
+  attr_reader :api_key
 
   def restrict_access
     return if check_partner params[:access_token] if params[:access_token]

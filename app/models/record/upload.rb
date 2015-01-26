@@ -11,10 +11,10 @@ class Record::Upload < Page::Url
                  open_graph
                  schema_org).freeze
 
-  EXCLUDE = %i/site_name
+  EXCLUDE = %i(site_name
                id
                type
-               screenshot/.freeze
+               screenshot).freeze
 
   attr_accessor :metadata
   attr_accessor :id
@@ -86,7 +86,7 @@ class Record::Upload < Page::Url
     Crawler::Screener.perform_async url, screenshot
   end
 
-  def launch_combiner item, value
+  def launch_combiner(item, value)
     Mapper::Combiner.perform_async container, item, id, value
   end
 

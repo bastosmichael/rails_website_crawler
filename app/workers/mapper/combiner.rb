@@ -7,13 +7,13 @@ class Mapper::Combiner < Mapper::Base
     combined_record.data = insert(id, value) unless combined_string.include?(value.to_s) && combined_string.include?(id.to_s)
   end
 
-  def insert id, value
+  def insert(_id, _value)
     hash = combined_record.data || {}
     hash.merge(new_hash)
   end
 
   def new_hash
-    {@id => @value}
+    { @id => @value }
   end
 
   def combined_string

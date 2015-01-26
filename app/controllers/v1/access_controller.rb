@@ -1,5 +1,4 @@
 class V1::AccessController < ApplicationController
-
   private
 
   def track_usage
