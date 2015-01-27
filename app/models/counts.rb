@@ -20,7 +20,7 @@ class Counts
   end
 
   def self.visible_counts
-    @visible_counts ||= Rails.cache.fetch(directories, expires_at: 12.hours) do
+    @visible_counts ||= Rails.cache.fetch(visible_directories, expires_at: 12.hours) do
       hash = {}
       visible_directories.map { |c| hash[c] = Cloud.new(c).count }
       return hash

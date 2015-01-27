@@ -24,8 +24,7 @@ gem 'fog'
 gem 'redis-objects'
 gem 'redis-rails'
 
-gem 'memcached'
-gem 'libmemcached_store'
+gem 'dalli'
 
 gem 'sidekiq'
 gem 'sidekiq-limit_fetch'

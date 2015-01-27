@@ -47,6 +47,7 @@ GEM
     coderay (1.1.0)
     connection_pool (2.0.0)
     daemons (1.1.9)
+    dalli (2.7.2)
     debug_inspector (0.0.2)
     domain_name (0.5.20)
       unf (>= 0.0.5, < 1.0.0)
@@ -112,8 +113,6 @@ GEM
     ipaddress (0.8.0)
     json (1.8.1)
     kgio (2.9.2)
-    libmemcached_store (0.7.1)
-      memcached
     listen (2.7.11)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -131,7 +130,6 @@ GEM
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
-    memcached (1.8.0)
     meta_request (0.3.4)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (~> 1.1)
@@ -304,15 +302,14 @@ DEPENDENCIES
   awesome_print
   better_errors
   binding_of_caller
+  dalli
   fog
   guard-livereload
   guard-rails
   guard-sidekiq
   guard-test
   headless
-  libmemcached_store
   mechanize
-  memcached
   meta_request
   nokogiri
   oj

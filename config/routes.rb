@@ -5,5 +5,6 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: 'json' } do
     get '/', to: 'access#index'
+    get 'counts', to: 'access#counts'
   end
 end
