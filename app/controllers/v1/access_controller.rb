@@ -1,9 +1,5 @@
 class V1::AccessController < ApplicationController
 
-  def counts
-    render json: Counts.visible_counts.to_json
-  end
-
   private
 
   def track_usage

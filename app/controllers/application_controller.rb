@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     render json: api_json.to_json
   end
 
+  def counts
+    render json: Counts.visible_counts.to_json
+  end
+
   private
 
   def check_partner(access_token)

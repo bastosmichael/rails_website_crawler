@@ -54,6 +54,10 @@ class Cloud
     container.files.get key
   end
 
+  def get_url(key)
+    container.files.get_https_url(key, 300)
+  end
+
   def sync(key, data)
     if data
       copy key, data
