@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   end
 
   def counts
-    render json: Counts.visible_counts.to_json
+    render json: Counts.instance.visible_counts.to_json
   end
 
   private
