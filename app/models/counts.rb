@@ -15,9 +15,9 @@ class Counts
 
   def visible_counts
     hash = { available: {},
-             actively_mapping: Sidekiq::Queue.new('mapper').size,
-             currently_processing: Sidekiq::Queue.new('scrimper').size,
-             still_in_sitemaps: Sidekiq::Queue.new('sitemapper').size * 50_000 }
+             mapping: Sidekiq::Queue.new('mapper').size,
+             processing: Sidekiq::Queue.new('scrimper').size,
+             pending: Sidekiq::Queue.new('sitemapper').size * 50_000 }
     visible_directories.map { |c| hash[:available][c] = Record::Base.new(c, '_names.json').data.keys.count }
     return hash
   end
