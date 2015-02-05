@@ -33,7 +33,8 @@ class Record::Base
 
   def historical_data
     old_data = data
-    new_data = {id: old_data['id']}
+    new_data = { id: old_data['id'],
+                 name: old_data['name']}
     old_data.with_progress.each do |k, v|
       new_data[k] = v if v.is_a?(Hash)
     end if old_data['id']
