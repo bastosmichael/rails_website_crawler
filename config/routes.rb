@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get '/processing', to: 'counts#processing'
     get '/pending', to: 'counts#pending'
     get '/:container/count', to: 'counts#count'
+    get '/:container/:record_id/history', to: 'record#history'
     get '/:container/:record_id/:screenshot_id', to: 'record#screenshot'
     get '/:container/:record_id', to: 'record#record'
   end

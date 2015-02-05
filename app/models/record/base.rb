@@ -31,6 +31,15 @@ class Record::Base
     new_data
   end
 
+  def historical_data
+    old_data = data
+    new_data = {id: old_data['id']}
+    old_data.with_progress.each do |k, v|
+      new_data[k] = v if v.is_a?(Hash)
+    end if old_data['id']
+    new_data
+  end
+
   def data=(new_hash = {})
     cloud.sync @record, new_hash.to_json
   end
