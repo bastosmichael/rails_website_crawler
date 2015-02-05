@@ -3,11 +3,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    render json: api_json.to_json
-  end
-
-  def counts
-    render json: Counts.instance.visible_counts.to_json
+    render json: api_json.merge(available: Counts.instance.visible_directories).to_json
   end
 
   private
