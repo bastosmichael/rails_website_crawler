@@ -1,4 +1,4 @@
-class Recorder::Resampler < Recorder::Base
+class Syncer::Resampler < Syncer::Base
   def perform(container)
     @container = container
     records.with_progress.each do |r|

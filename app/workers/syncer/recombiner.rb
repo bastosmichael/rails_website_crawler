@@ -1,4 +1,4 @@
-class Mapper::Reader < Mapper::Base
+class Syncer::Recombiner < Syncer::Base
   EXCLUDE = %i(site_name
                id
                type

@@ -1,4 +1,4 @@
-class Recorder::Rescreener < Recorder::Base
+class Syncer::Rescreener < Syncer::Base
   def perform(container, cleanup = false)
     @container = container
     records.with_progress.each do |r|

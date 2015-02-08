@@ -1,4 +1,4 @@
-class Recorder::Mover < Recorder::Base
+class Syncer::Mover < Syncer::Base
   def perform(from_container, to_container)
     @container = from_container
     @to_container = to_container
