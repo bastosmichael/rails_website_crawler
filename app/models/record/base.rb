@@ -23,8 +23,7 @@ class Record::Base
   end
 
   def current_data
-    old_data = data
-    return { error: 'not available'} if old_data.nil?
+    return { error: 'not available'} unless old_data = data
     new_data = {}
     old_data.with_progress.each do |k, v|
       new_data[k] = v.is_a?(Hash) ? v.values.last : v
@@ -33,8 +32,7 @@ class Record::Base
   end
 
   def historical_data
-    old_data = data
-    return { error: 'not available'} if old_data.nil?
+    return { error: 'not available'} unless old_data = data
     new_data = { id: old_data['id'],
                  name: old_data['name']}
     old_data.with_progress.each do |k, v|
