@@ -9,7 +9,14 @@ class V1::RecordController < V1::AccessController
   end
 
   def screenshot
-    render json: params.to_json
+    if match = params[:container].match(/(.+?)-/)
+      params[:container] = match[1] + '-screenshots'
+    end
+    if screenshot = Cloud.new(params[:container]).get(params[:record_id] + '/' + params[:screenshot_id] + '.jpg')
+      render json: {id: params[:record_id], screenshot_url: screenshot.url(Date.tomorrow.to_time.to_i)}.to_json
+    else
+      render json: {error: 'screenshot not available'}.to_json
+    end
   end
 
 end
