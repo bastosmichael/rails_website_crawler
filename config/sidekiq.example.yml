@@ -4,11 +4,11 @@
 :queues:
   #- [screener, 264]
   - [recorder, 128]
-  - [mapper, 64]
-  - [slider, 32]
-  #- [scrimper, 16]
-  #- [sampler, 8]
-  #- [spider, 4]
+  # - [mapper, 64]
+  # - [slider, 32]
+  # - [scrimper, 16]
+  # - [sampler, 8]
+  # - [spider, 4]
   #- [sitemapper, 2]
   #- [syncer, 1]
   - default
