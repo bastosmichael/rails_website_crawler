@@ -6,6 +6,10 @@ gem 'sqlite3'
 gem 'oj'
 gem 'oj_mimic_json'
 
+gem 'amatch'
+gem 'jaccard'
+gem 'tokenizer'
+
 gem 'awesome_print'
 gem 'progress'
 

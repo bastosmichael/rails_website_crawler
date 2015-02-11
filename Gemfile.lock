@@ -27,6 +27,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    amatch (0.3.0)
+      tins (~> 1.0)
     arel (5.0.1.20140414130214)
     ast (2.0.0)
     astrolabe (1.3.0)
@@ -111,6 +113,7 @@ GEM
     i18n (0.6.11)
     inflecto (0.0.2)
     ipaddress (0.8.0)
+    jaccard (1.0.2)
     json (1.8.1)
     kgio (2.9.2)
     listen (2.7.11)
@@ -277,6 +280,8 @@ GEM
     tilt (1.4.1)
     timers (4.0.0)
       hitimes
+    tins (1.3.4)
+    tokenizer (0.1.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -299,6 +304,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amatch
   awesome_print
   better_errors
   binding_of_caller
@@ -309,6 +315,7 @@ DEPENDENCIES
   guard-sidekiq
   guard-test
   headless
+  jaccard
   mechanize
   meta_request
   nokogiri
@@ -334,6 +341,7 @@ DEPENDENCIES
   spring
   sqlite3
   thin
+  tokenizer
   typhoeus
   unicorn
   vcr
