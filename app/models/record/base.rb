@@ -28,6 +28,7 @@ class Record::Base
     old_data.with_progress.each do |k, v|
       new_data[k] = v.is_a?(Hash) ? v.values.last : v
     end if old_data['id']
+    Crawler::Slider.perform_async(old_data['url']) if old_data['url']
     new_data
   end
 
