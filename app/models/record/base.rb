@@ -22,13 +22,15 @@ class Record::Base
     {}
   end
 
-  def current_data
+  def current_data social = false
     return { error: 'not available'} unless old_data = data
     new_data = {}
     old_data.with_progress.each do |k, v|
       new_data[k] = v.is_a?(Hash) ? v.values.last : v
     end if old_data['id']
-    Crawler::Slider.perform_async(old_data['url']) if old_data['url']
+    if old_data['url']
+      # social ? Crawler::Socializer.perform_async(old_data['url']) : Crawler::Slider.perform_async(old_data['url'])
+    end
     new_data
   end
 

@@ -7,8 +7,8 @@
   - [mapper, 64]
   - [slider, 32]
   - [scrimper, 16]
-  - [sampler, 8]
-  - [spider, 4]
-  #- [sitemapper, 2]
-  #- [syncer, 1]
+  - [socializer, 8]
+  - [sampler, 4]
+  - [spider, 2]
+  #- [sitemapper, 1]
   - default
