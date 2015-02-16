@@ -1,6 +1,4 @@
 class Record::Match < Record::Base
-  require 'amatch'
-  include Amatch
 
   def initialize(container, metadata = 'name')
     @container = container
