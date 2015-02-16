@@ -1,22 +1,29 @@
 class V1::RecordController < V1::AccessController
-
   def record
-    render json: Record::Base.new(params[:container], params[:record_id] + '.json').current_data.to_json
+    record = Record::Base.new(params[:container], params[:record_id] + '.json').current_data
+    respond_to do |format|
+      format.json { render :json => record.to_json }
+      format.xml { render :xml => record.to_xml }
+    end
   end
 
   def history
-    render json: Record::Base.new(params[:container], params[:record_id] + '.json').historical_data.to_json
+    history = Record::Base.new(params[:container], params[:record_id] + '.json').historical_data
+    respond_to do |format|
+      format.json { render :json => history.to_json }
+      format.xml { render :xml => history.to_xml }
+      format.csv do
+        csv_string =
+      end
+    end
   end
 
   def screenshot
-    if match = params[:container].match(/(.+?)-/)
-      params[:container] = match[1] + '-screenshots'
-    end
-    if screenshot = Cloud.new(params[:container]).get(params[:record_id] + '/' + params[:screenshot_id] + '.jpg')
-      render json: {id: params[:record_id], screenshot_url: screenshot.url(Date.tomorrow.to_time.to_i)}.to_json
-    else
-      render json: {error: 'screenshot not available'}.to_json
+    screenshot = Record::Screenshot.new(params[:container], params[:record_id], params[:screenshot_id])
+    respond_to do |format|
+      format.json { render :json => screenshot.data.to_json }
+      format.xml { render :xml => screenshot.data.to_xml }
+      format.jpg { redirect_to screenshot.link }
     end
   end
-
 end

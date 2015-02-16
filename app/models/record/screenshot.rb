@@ -15,11 +15,11 @@ class Record::Screenshot < Record::Base
     screenshot.url(Date.tomorrow.to_time.to_i)
   end
 
-  def json
+  def data
     if screenshot
-      {id: @record_id, screenshot_url: link}.to_json
+      {id: @record_id, screenshot_url: link}
     else
-      {error: 'screenshot not available'}.to_json
+      {error: 'screenshot not available'}
     end
   end
 end
