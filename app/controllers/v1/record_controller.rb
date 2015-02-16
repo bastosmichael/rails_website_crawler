@@ -13,7 +13,8 @@ class V1::RecordController < V1::AccessController
       format.json { render :json => history.to_json }
       format.xml { render :xml => history.to_xml }
       format.csv do
-        csv_string =
+        csv_string = history.first.collect { |k, _v| k }.join(',') + "\n" + history.collect { |node| "#{node.collect { |_k, v| v }.join(',')}\n" }.join
+        send_data csv_string, type: 'text/csv; charset=iso-8859-1; header=present', disposition: 'attachment;data=historical_data.csv'
       end
     end
   end
