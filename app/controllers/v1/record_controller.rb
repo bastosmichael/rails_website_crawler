@@ -27,4 +27,12 @@ class V1::RecordController < V1::AccessController
       format.jpg { redirect_to screenshot.link }
     end
   end
+
+  def exact_match
+    nil
+  end
+
+  def best_match
+    nil
+  end
 end

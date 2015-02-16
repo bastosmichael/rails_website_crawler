@@ -29,7 +29,7 @@ class Record::Base
       new_data[k] = v.is_a?(Hash) ? v.values.last : v
     end if old_data['id']
     if old_data['url']
-      # social ? Crawler::Socializer.perform_async(old_data['url']) : Crawler::Slider.perform_async(old_data['url'])
+      social ? Crawler::Socializer.perform_async(old_data['url']) : Crawler::Slider.perform_async(old_data['url'])
     end
     new_data
   end
