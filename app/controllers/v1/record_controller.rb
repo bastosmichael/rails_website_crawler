@@ -29,10 +29,16 @@ class V1::RecordController < V1::AccessController
   end
 
   def exact_match
-    nil
+    respond_to do |format|
+      format.json { render :json => params.to_json }
+      format.xml { render :xml => params.to_xml }
+    end
   end
 
   def best_match
-    nil
+    respond_to do |format|
+      format.json { render :json => params.to_json }
+      format.xml { render :xml => params.to_xml }
+    end
   end
 end
