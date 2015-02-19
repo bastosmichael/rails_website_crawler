@@ -17,3 +17,4 @@
 /app/sites
 /config/application.yml
 /config/sidekiq.yml
+/config/config.yml

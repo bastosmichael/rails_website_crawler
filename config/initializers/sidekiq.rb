@@ -2,13 +2,13 @@ require 'sidekiq'
 require 'sidekiq/web'
 
 Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-  [user, password] == %w(admin password)
+  [user, password] == %w(Rails.configuration.config['admin']['username'] Rails.configuration.config['admin']['password'])
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://#{SETTINGS[:redis][:address]}:#{SETTINGS[:redis][:port]}/#{SETTINGS[:redis][:database]}", namespace: 'crawler' }
+  config.redis = { url: "redis://#{Rails.configuration.config['redis']['address']}:#{Rails.configuration.config['redis']['port']}/#{Rails.configuration.config['redis']['database']}", namespace: 'crawler' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://#{SETTINGS[:redis][:address]}:#{SETTINGS[:redis][:port]}/#{SETTINGS[:redis][:database]}", namespace: 'crawler' }
+  config.redis = { url: "redis://#{Rails.configuration.config['redis']['address']}:#{Rails.configuration.config['redis']['port']}/#{Rails.configuration.config['redis']['database']}", namespace: 'crawler' }
 end

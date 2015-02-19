@@ -2,7 +2,7 @@ class Counts
   include Singleton
 
   def storage
-    @storage ||= Fog::Storage.new(SETTINGS[:fog])
+    @storage ||= Fog::Storage.new(Rails.configuration.config['fog'].symbolize_keys!)
   end
 
   def directories
