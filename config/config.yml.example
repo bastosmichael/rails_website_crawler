@@ -6,6 +6,7 @@ default: &default
   elasticsearch:
     host: 127.0.0.1
     port: 9200
+    protocol: http
   fog:
     provider: 'Local'
     local_root: 'tmp/fog'
