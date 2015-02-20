@@ -27,6 +27,7 @@ gem 'fog'
 
 gem 'redis-objects'
 gem 'redis-rails'
+gem 'elasticsearch-model'
 
 gem 'dalli'
 
