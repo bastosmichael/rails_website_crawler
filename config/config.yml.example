@@ -1,12 +1,11 @@
 default: &default
   redis:
-    address: 127.0.0.1
+    host: 127.0.0.1
     port: 6379
     database: 0
   elasticsearch:
-    address: 127.0.0.1
+    host: 127.0.0.1
     port: 9200
-    database: 0
   fog:
     provider: 'Local'
     local_root: 'tmp/fog'
