@@ -29,9 +29,21 @@ class V1::RecordController < V1::AccessController
   end
 
   def search
+    container = Record::Match.new(params[:container])
+    new_params = params
+    new_params.delete(:container)
+    new_params.delete(:action)
+    new_params.delete(:controller)
+    new_params.delete(:format)
+    new_params.delete(:access_token) if params[:access_token]
+    if new_params.empty?
+      results = { error: 'no results found' }
+    else
+      results = container.search(new_params, {mapping: true})
+    end
     respond_to do |format|
-      format.json { render :json => params.to_json }
-      format.xml { render :xml => params.to_xml }
+      format.json { render :json => results.to_json }
+      format.xml { render :xml => results.to_xml }
     end
   end
 end
