@@ -4,7 +4,7 @@ class Recorder::Uploader < Recorder::Base
       uploader.id = metadata['id']
       uploader.metadata = metadata
       uploader.sync
-    end
+    end unless metadata.nil?
   end
 
   def uploader
