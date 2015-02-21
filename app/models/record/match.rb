@@ -1,48 +1,44 @@
 class Record::Match < Record::Base
-
-  def initialize(container, metadata = 'name')
-    @container = container
-    @record = "_#{metadata.pluralize}.json"
+  def search query_hash = {}, mapping = false, results = 1
+    @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
+    @results = results
+    @mapping = mapping
+    sanitize_results
   end
 
-  def find_key search
-    @search =  Tokenizer::Tokenizer.new.tokenize(search.downcase)
-    return key if exact
-    return key if best
+  def results
+    Elasticsearch::Model.client.search(index: @container, body: query).deep_symbolize_keys!
   end
 
-  def find_record search
-    find_key(search) ? Record::Base.new(@container, key + '.json').current_data : {error: 'no match found'}
-  end
-
-  def exact
-    @key = match_hash.key(@search)
-  end
-
-  def best
-    match_hash.each do |k,v|
-      value = Jaccard.coefficient(@search, v)
-      if value > max
-        @max = value
-        @key = k
-      end
-    end
-    return key
-  end
-
-  def match_hash
-    @match_hash ||= Rails.cache.fetch('record_matcher_' + @container + @record, expires_in: 12.hours) do
-      new_data = data
-      new_data.each {|k,v| new_data[k] =  Tokenizer::Tokenizer.new.tokenize(v.downcase) }
-      new_data
+  def sanitize_results
+    results[:hits][:hits].map do |result|
+      @record = result[:_id] + '.json'
+      new_data = current_data @mapping
+      @record = nil
+      new_data.merge(score: result[:_score])
     end
   end
 
-  def max
-    @max ||= 0.0001
+  def query
+    @query = {
+      query: {
+        bool: {
+          should: flt_fields
+        }
+      },
+      size: @results
+    }
   end
 
-  def key
-    @key ||= nil
+  def flt_fields
+    @query_hash.map do |k, v|
+      {
+        flt_field: {
+          k => {
+            like_text: v
+          }
+        }
+      }
+    end
   end
 end
