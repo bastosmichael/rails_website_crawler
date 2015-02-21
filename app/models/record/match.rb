@@ -2,7 +2,6 @@ class Record::Match < Record::Base
   def search query_hash = {}, options = { mapping: false, social: false, results: 1 }
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
     @options = options
-    limit_results
     sanitize_results
   end
 
@@ -26,7 +25,7 @@ class Record::Match < Record::Base
           should: flt_fields
         }
       },
-      size: @results
+      size: limit_results
     }
   end
 
@@ -43,10 +42,12 @@ class Record::Match < Record::Base
   end
 
   def limit_results
-    if @options[:results] && @options[:results] > 10
-      @options[:results] = 10
+    if !@options[:results]
+      1
+    elsif @options[:results] > 10
+      10
     else
-      @options[:results] = 1
+      @options[:results]
     end
   end
 end
