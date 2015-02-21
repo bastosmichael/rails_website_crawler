@@ -1,19 +1,19 @@
 class Record::Match < Record::Base
-  def search query_hash = {}, mapping = false, results = 1
+  def search query_hash = {}, options = { mapping: false, social: false, results: 1 }
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
-    @results = results
-    @mapping = mapping
+    @options = options
+    limit_results
     sanitize_results
   end
 
-  def results
+  def elasticsearch_results
     Elasticsearch::Model.client.search(index: @container, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
-    results[:hits][:hits].map do |result|
+    elasticsearch_results[:hits][:hits].map do |result|
       @record = result[:_id] + '.json'
-      new_data = current_data @mapping
+      new_data = current_data @options
       @record = nil
       new_data.merge(score: result[:_score])
     end
@@ -39,6 +39,14 @@ class Record::Match < Record::Base
           }
         }
       }
+    end
+  end
+
+  def limit_results
+    if @options[:results] && @options[:results] > 10
+      @options[:results] = 10
+    else
+      @options[:results] = 1
     end
   end
 end
