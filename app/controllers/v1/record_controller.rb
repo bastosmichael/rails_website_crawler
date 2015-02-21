@@ -28,14 +28,7 @@ class V1::RecordController < V1::AccessController
     end
   end
 
-  def exact_match
-    respond_to do |format|
-      format.json { render :json => params.to_json }
-      format.xml { render :xml => params.to_xml }
-    end
-  end
-
-  def best_match
+  def search
     respond_to do |format|
       format.json { render :json => params.to_json }
       format.xml { render :xml => params.to_xml }
