@@ -8,7 +8,7 @@ class Record::Search < Record::Match
           k => {
             like_text: v,
             analyzer: 'snowball',
-            fuzziness: 0.4
+            fuzziness: 0.6
           }
         }
       }

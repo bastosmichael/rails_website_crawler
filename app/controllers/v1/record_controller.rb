@@ -28,18 +28,29 @@ class V1::RecordController < V1::AccessController
     end
   end
 
-  def search
+  def best_match
     container = Record::Match.new(params[:container])
     new_params = params
-    new_params.delete(:container)
-    new_params.delete(:action)
-    new_params.delete(:controller)
-    new_params.delete(:format)
-    new_params.delete(:access_token) if params[:access_token]
+    new_params.delete(:container) if params[:container]
     if new_params.empty?
       results = { error: 'no results found' }
     else
-      results = container.search(new_params, {mapping: true})
+      results = container.best(new_params, {crawl: params[:crawl]})
+    end
+    respond_to do |format|
+      format.json { render :json => results.to_json }
+      format.xml { render :xml => results.to_xml }
+    end
+  end
+
+  def search
+    container = Record::Search.new(params[:container])
+    new_params = params
+    new_params.delete(:container) if params[:container]
+    if new_params.empty?
+      results = { error: 'no results found' }
+    else
+      results = container.search(new_params, {crawl: params[:crawl]})
     end
     respond_to do |format|
       format.json { render :json => results.to_json }

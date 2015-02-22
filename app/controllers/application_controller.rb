@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :restrict_access
+  before_filter :remove_params
   respond_to :json
 
   def index
@@ -7,6 +8,13 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def remove_params
+    params.delete(:action)
+    params.delete(:controller)
+    params.delete(:format)
+    params.delete(:access_token) if params[:access_token]
+  end
 
   def check_partner(access_token)
     @api_key = access_token
