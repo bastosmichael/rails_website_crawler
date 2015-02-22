@@ -1,6 +1,7 @@
 class Record::Match < Record::Base
-  def search query_hash = {}, options = { mapping: false, social: false, results: 1 }
+  def best query_hash = {}, options = { crawl: false, social: false, results: 10 }
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
+    @container = '_all' if @container.nil?
     @options = options
     sanitize_results
   end
@@ -11,10 +12,7 @@ class Record::Match < Record::Base
 
   def sanitize_results
     elasticsearch_results[:hits][:hits].map do |result|
-      @record = result[:_id] + '.json'
-      new_data = current_data @options
-      @record = nil
-      new_data.merge(score: result[:_score])
+      Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(score: result[:_score])
     end
   end
 
@@ -22,20 +20,18 @@ class Record::Match < Record::Base
     @query = {
       query: {
         bool: {
-          should: flt_fields
+          should: match_query
         }
       },
       size: limit_results
     }
   end
 
-  def flt_fields
+  def match_query
     @query_hash.map do |k, v|
       {
-        flt_field: {
-          k => {
-            like_text: v
-          }
+        match: {
+          k => v
         }
       }
     end
@@ -43,9 +39,9 @@ class Record::Match < Record::Base
 
   def limit_results
     if !@options[:results]
-      1
-    elsif @options[:results] > 10
       10
+    elsif @options[:results] > 25
+      25
     else
       @options[:results]
     end
