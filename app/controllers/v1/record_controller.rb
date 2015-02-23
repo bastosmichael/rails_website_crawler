@@ -50,7 +50,7 @@ class V1::RecordController < V1::AccessController
     if new_params.empty?
       results = { error: 'no results found' }
     else
-      results = container.search(new_params, {crawl: params[:crawl]})
+      results = container.search(new_params, {crawl: params[:crawl], social: true})
     end
     respond_to do |format|
       format.json { render :json => results.to_json }

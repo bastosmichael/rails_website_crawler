@@ -1,5 +1,5 @@
 class Record::Match < Record::Base
-  def best query_hash = {}, options = { crawl: false, social: false, results: 10 }
+  def best query_hash = {}, options = { crawl: false, social: false, results: 1 }
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
     @container = '_all' if @container.nil?
     @options = options
