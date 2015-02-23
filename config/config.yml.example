@@ -16,6 +16,8 @@ default: &default
   admin:
     username: admin
     password: password
+    api_containers:
+      -
 
 development:
   <<: *default

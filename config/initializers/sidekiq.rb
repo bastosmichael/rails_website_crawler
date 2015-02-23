@@ -7,9 +7,9 @@ Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: "redis://#{Rails.configuration.config['redis']['host']}:#{Rails.configuration.config['redis']['port']}/#{Rails.configuration.config['redis']['database']}", namespace: 'crawler' }
+  config.redis = { url: "redis://#{Rails.configuration.config[:redis][:host]}:#{Rails.configuration.config[:redis][:port]}/#{Rails.configuration.config[:redis][:database]}", namespace: 'crawler' }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: "redis://#{Rails.configuration.config['redis']['host']}:#{Rails.configuration.config['redis']['port']}/#{Rails.configuration.config['redis']['database']}", namespace: 'crawler' }
+  config.redis = { url: "redis://#{Rails.configuration.config[:redis][:host]}:#{Rails.configuration.config[:redis][:port]}/#{Rails.configuration.config[:redis][:database]}", namespace: 'crawler' }
 end

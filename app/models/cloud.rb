@@ -14,7 +14,7 @@ class Cloud
   end
 
   def storage
-    @storage ||= Fog::Storage.new(Rails.configuration.config['fog'].symbolize_keys!)
+    @storage ||= Fog::Storage.new(Rails.configuration.config[:fog])
   end
 
   def container

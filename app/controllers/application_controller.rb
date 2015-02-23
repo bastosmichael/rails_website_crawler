@@ -4,10 +4,17 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    render json: api_json.merge(available: Counts.instance.visible_directories).to_json
+    render json: api_json.merge(counts).to_json
   end
 
   private
+
+  def counts
+    { available: Rails.configuration.config[:admin][:api_containers],
+      mapping: Sidekiq::Queue.new('mapper').size,
+      processing: Sidekiq::Queue.new('scrimper').size,
+      pending: (Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000 }
+  end
 
   def remove_params
     params.delete(:action)

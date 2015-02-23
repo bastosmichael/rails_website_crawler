@@ -6,12 +6,8 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: 'json' } do
     get '/', to: 'access#index'
-    get '/mapping', to: 'counts#mapping'
-    get '/processing', to: 'counts#processing'
-    get '/pending', to: 'counts#pending'
     get '/best_match', to: 'record#best_match'
     get '/search', to: 'record#search'
-    get '/:container/count', to: 'counts#count'
     get '/:container/best_match', to: 'record#best_match'
     get '/:container/search', to: 'record#search'
     get '/:container/:record_id/history', to: 'record#history'
