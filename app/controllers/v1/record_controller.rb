@@ -35,7 +35,7 @@ class V1::RecordController < V1::AccessController
     if new_params.empty?
       results = { error: 'no results found' }
     else
-      results = container.best(new_params, {crawl: params[:crawl]})
+      results = container.best(new_params, {crawl: params[:crawl] || true})
     end
     respond_to do |format|
       format.json { render :json => results.to_json }
@@ -50,7 +50,7 @@ class V1::RecordController < V1::AccessController
     if new_params.empty?
       results = { error: 'no results found' }
     else
-      results = container.search(new_params, {crawl: params[:crawl], social: true})
+      results = container.search(new_params, {crawl: params[:crawl] || true, social: true})
     end
     respond_to do |format|
       format.json { render :json => results.to_json }
