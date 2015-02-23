@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
 
   def counts
     { available: Rails.configuration.config[:admin][:api_containers],
-      mapping: Sidekiq::Queue.new('mapper').size,
+      indexing: Sidekiq::Queue.new('mapper').size,
       processing: Sidekiq::Queue.new('scrimper').size,
       pending: (Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000 }
   end
