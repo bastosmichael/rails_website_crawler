@@ -23,7 +23,7 @@ class V1::RecordController < V1::AccessController
     screenshot = Record::Screenshot.new(params[:container], params[:record_id], params[:screenshot_id])
     respond_to do |format|
       format.json { json_response(screenshot.data) }
-      format.xml { xml_response(screenshot.data }
+      format.xml { xml_response(screenshot.data) }
       format.jpg { redirect_to screenshot.link }
     end
   end
@@ -39,7 +39,7 @@ class V1::RecordController < V1::AccessController
     end
     respond_to do |format|
       format.json { json_response(results) }
-      format.xml { json_responseresults) }
+      format.xml { xml_response(results) }
     end
   end
 
