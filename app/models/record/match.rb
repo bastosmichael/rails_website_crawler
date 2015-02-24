@@ -1,7 +1,7 @@
 class Record::Match < Record::Base
   def best query_hash = {}, options = { crawl: true, social: false, results: 1 }
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
-    @container = '_all' if @container.nil?
+    @container = Rails.configuration.config[:admin][:api_containers] if @container.nil?
     @options = options
     { results: sanitize_results }
   end
