@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include CountsHelper
   before_filter :restrict_access
   before_filter :remove_params
   respond_to :json
@@ -10,10 +11,10 @@ class ApplicationController < ActionController::Base
   private
 
   def counts
-    { available: Rails.configuration.config[:admin][:api_containers].map {|c| { c => count_containers(c) } }.inject(:merge),
-      indexing: Sidekiq::Queue.new('mapper').size,
-      processing: Sidekiq::Queue.new('scrimper').size,
-      pending: (Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000 }
+    { available: Rails.configuration.config[:admin][:api_containers].map {|c| { c => pretty_integer(count_containers(c)) } }.inject(:merge),
+      indexing: pretty_integer(Sidekiq::Queue.new('mapper').size),
+      processing: pretty_integer(Sidekiq::Queue.new('scrimper').size),
+      pending: pretty_integer((Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000) }
   end
 
   def count_containers container
