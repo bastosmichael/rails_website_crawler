@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    render json: api_json.merge(counts).to_json
+    json_response(200, api_json.merge(counts))
   end
 
   private
@@ -50,5 +50,30 @@ class ApplicationController < ActionController::Base
     authenticate_or_request_with_http_token do |token, _options|
       return if check_partner token
     end
+  end
+
+  def errors_response(error_messages)
+    error_messages = Array(error_messages)
+    {
+      error: {
+        messages: error_messages.map { |message| { message: message }}
+      }
+    }
+  end
+
+  def json_response(status_code, json = {})
+    render json: {
+      response: {
+        status: status_code,
+      }
+    }.merge!(json), status: status_code
+  end
+
+  def xml_response(status_code, xml = {})
+    render xml: {
+      response: {
+        status: status_code,
+      }
+    }.merge!(xml), status: status_code
   end
 end
