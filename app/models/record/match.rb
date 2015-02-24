@@ -3,7 +3,7 @@ class Record::Match < Record::Base
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
     @container = '_all' if @container.nil?
     @options = options
-    sanitize_results
+    { results: sanitize_results }
   end
 
   def elasticsearch_results
