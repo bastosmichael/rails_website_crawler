@@ -5,7 +5,11 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   def index
-    json_response(200, api_json.merge(counts))
+    respond_to do |format|
+      format.json { json_response(200, api_data.merge(counts)) }
+      format.xml { xml_response(200, api_data.merge(counts)) }
+    end
+
   end
 
   private
@@ -30,13 +34,13 @@ class ApplicationController < ActionController::Base
 
   def check_partner(access_token)
     @api_key = access_token
-    return true if api_json['active'] == true
+    return true if api_data['active'] == true
   rescue
     return false
   end
 
-  def api_json
-    @api_json ||= api_record.data
+  def api_data
+    @api_data ||= api_record.data
   end
 
   def api_record
