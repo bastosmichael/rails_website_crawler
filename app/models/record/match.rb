@@ -11,8 +11,11 @@ class Record::Match < Record::Base
   end
 
   def sanitize_results
-    elasticsearch_results[:hits][:hits].map do |result|
-      Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(container: result[:_index],match_score: result[:_score])
+    original_results = elasticsearch_results[:hits][:hits]
+    uniq_results = original_results.map {|e| {_index: e[:_index], _id: e[:_id] } }.uniq
+
+    uniq_results.map do |result|
+      Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(container: result[:_index])#,match_score: result[:_score])
     end
   end
 
