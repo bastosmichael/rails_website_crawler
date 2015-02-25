@@ -65,6 +65,6 @@ class V1::RecordController < V1::AccessController
   private
 
   def default_options
-    {crawl: params[:crawl] || true, social: params[:social] || false}
+    {crawl: params[:fetch] || true, social: params[:social] || false}
   end
 end
