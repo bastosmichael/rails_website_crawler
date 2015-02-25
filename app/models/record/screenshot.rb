@@ -17,7 +17,7 @@ class Record::Screenshot < Record::Base
 
   def data
     if screenshot
-      {id: @record_id, screenshot_url: link}
+      {id: @record_id, redirect_url: link}
     else
       {error: 'screenshot not available'}
     end
