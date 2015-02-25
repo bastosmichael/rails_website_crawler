@@ -42,7 +42,7 @@ class Record::Match < Record::Base
 
   def limit_results
     if !@options[:results]
-      10
+      1
     elsif @options[:results] > 25
       25
     else
