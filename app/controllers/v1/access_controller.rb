@@ -1,6 +1,34 @@
 class V1::AccessController < ApplicationController
+  include CountsHelper
+  before_filter :restrict_access
+  before_filter :remove_params
+
+  def index
+    respond_to do |format|
+      format.json { json_response(200, api_data.merge(counts)) }
+      format.xml { xml_response(200, api_data.merge(counts)) }
+    end
+  end
 
   private
+
+  def counts
+    { available: Rails.configuration.config[:admin][:api_containers].map {|c| { c => pretty_integer(count_containers(c)) } }.inject(:merge),
+      indexing: pretty_integer(Sidekiq::Queue.new('mapper').size),
+      processing: pretty_integer(Sidekiq::Queue.new('scrimper').size),
+      pending: pretty_integer((Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000) }
+  end
+
+  def count_containers container
+    Elasticsearch::Model.client.search(index: container, body: { aggs: { names_count: { value_count: { field: 'name' } } } })['aggregations']['names_count']['value']
+  end
+
+  def remove_params
+    params.delete(:action)
+    params.delete(:controller)
+    params.delete(:format)
+    params.delete(:access_token) if params[:access_token]
+  end
 
   def track_usage
     if api_data['api_last_used'] == Date.today.to_s

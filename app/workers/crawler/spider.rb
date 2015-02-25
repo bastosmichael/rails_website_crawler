@@ -3,7 +3,7 @@ class Crawler::Spider < Crawler::Base
                   retry: true,
                   backtrace: true,
                   unique: true,
-                  unique_job_expiration: 24 * 60 * 60
+                  unique_job_expiration: 24 * 60
 
   def perform(url)
     @url = url

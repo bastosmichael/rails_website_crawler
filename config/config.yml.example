@@ -16,6 +16,7 @@ default: &default
   admin:
     username: admin
     password: password
+    docs: https://github.com/bastosmichael/skynet
     api_containers:
       -
 
