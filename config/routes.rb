@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: { format: 'json' } do
     get '/', to: 'access#index'
-    get '/match', to: 'record#best_match'
+    get '/match', to: 'record#best_match', results: 10
     get '/search/:query', to: 'record#search'
     get '/:container/match', to: 'record#best_match'
     get '/:container/search/:query', to: 'record#search'
