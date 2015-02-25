@@ -36,7 +36,7 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.best(new_params, default_options)
+      results = container.best(new_params, default_options.merge(results: params[:results] || 1))
       status = 200
     end
     respond_to do |format|
