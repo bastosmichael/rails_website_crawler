@@ -1,6 +1,6 @@
 class V1::RecordController < V1::AccessController
   def record
-    record = Record::Base.new(params[:container], params[:record_id] + '.json').current_data
+    record = Record::Base.new(params[:container], params[:record_id] + '.json').current_data default_options
     respond_to do |format|
       format.json { json_response(200, record) }
       format.xml { xml_response(200, record) }
@@ -8,10 +8,10 @@ class V1::RecordController < V1::AccessController
   end
 
   def history
-    history = Record::Base.new(params[:container], params[:record_id] + '.json').historical_data
+    history = Record::Base.new(params[:container], params[:record_id] + '.json').historical_data default_options
     respond_to do |format|
       format.json { json_response(200, history) }
-      format.xml { xml_response(200, history) }
+      # format.xml { xml_response(200, history) }
       # format.csv do
       #   csv_string = history.first.collect { |k, _v| k }.join(',') + "\n" + history.collect { |node| "#{node.collect { |_k, v| v }.join(',')}\n" }.join
       #   send_data csv_string, type: 'text/csv; charset=iso-8859-1; header=present', disposition: 'attachment;data=historical_data.csv'
@@ -36,7 +36,7 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.best(new_params, {crawl: params[:crawl] || true})
+      results = container.best(new_params, default_options)
       status = 200
     end
     respond_to do |format|
@@ -53,12 +53,18 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.search(new_params, {crawl: params[:crawl] || true, social: true})
+      results = container.search(new_params, default_options)
       status = 200
     end
     respond_to do |format|
       format.json { json_response(status, results) }
       format.xml { xml_response(status, results) }
     end
+  end
+
+  private
+
+  def default_options
+    {crawl: params[:crawl] || true, social: params[:social] || false}
   end
 end
