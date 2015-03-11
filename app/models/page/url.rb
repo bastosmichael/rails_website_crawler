@@ -38,7 +38,11 @@ class Page::Url
 
   def get_host_without_www(new_uri)
     host = new_uri.host.downcase
-    host.start_with?('www.') ? host[4..-1] : host
+    begin
+      host.split(/\./)[1] + '.' + host.split(/\./)[2]
+    rescue
+      host.start_with?('www.') ? host[4..-1] : host
+    end
   end
 
   def clean_up_url(url)
