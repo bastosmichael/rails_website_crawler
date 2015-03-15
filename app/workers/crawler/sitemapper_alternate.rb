@@ -8,6 +8,8 @@ class Crawler::SitemapperAlternate < Crawler::Base
   def perform(url, type = 'Scrimper')
     @url = url
     @type = type
+    @name = Page::Url.new(url).name
+
     get_xml
 
     sitemap.site_links.with_progress.each do |u|
