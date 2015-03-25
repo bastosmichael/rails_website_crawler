@@ -21,7 +21,7 @@ class Crawler::Sitemapper < Crawler::Base
     end if sitemap.indexes?
 
   rescue Net::HTTP::Persistent::Error
-    Crawler::Sitemapper.perform_async @url, @scrimp
+    Crawler::Sitemapper.perform_async @url, @type
   end
 
   def get_xml
@@ -33,7 +33,7 @@ class Crawler::Sitemapper < Crawler::Base
   end
 
   def get_sitemap(url)
-    Crawler::Sitemapper.perform_async url, @scrimp
+    Crawler::Sitemapper.perform_async url, @type
   end
 
   def sitemap

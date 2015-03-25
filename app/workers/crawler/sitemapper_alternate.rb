@@ -1,4 +1,4 @@
-class Crawler::SitemapperAlternate < Crawler::Base
+class Crawler::SitemapperAlternate < Crawler::Sitemapper
   sidekiq_options queue: :sitemapper_alternate,
                   retry: true,
                   backtrace: true,
@@ -21,22 +21,10 @@ class Crawler::SitemapperAlternate < Crawler::Base
     end if sitemap.indexes?
 
   rescue Net::HTTP::Persistent::Error
-    Crawler::SitemapperAlternate.perform_async @url
-  end
-
-  def get_xml
-    sitemap.xml = scraper.get
-  end
-
-  def get_page(url)
-    ('Crawler::' + @type).constantize.perform_async url
+    Crawler::SitemapperAlternate.perform_async @url, @type
   end
 
   def get_sitemap(url)
-    Crawler::SitemapperAlternate.perform_async url
-  end
-
-  def sitemap
-    @sitemap ||= Crawl::Sitemap.new(@url)
+    Crawler::SitemapperAlternate.perform_async url, @type
   end
 end
