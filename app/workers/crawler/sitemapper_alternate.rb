@@ -5,7 +5,7 @@ class Crawler::SitemapperAlternate < Crawler::Base
                   unique: true,
                   unique_job_expiration: 24 * 60
 
-  def perform(url, type = 'Scrimper')
+  def perform(url, type = 'ScrimperAlternate')
     @url = url
     @type = type
     @name = Page::Url.new(url).name
