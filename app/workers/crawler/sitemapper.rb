@@ -9,11 +9,12 @@ class Crawler::Sitemapper < Crawler::Base
     @url = url
     @type = type
     @name = Page::Url.new(url).name
+    @container = Rails.configuration.config[:admin][:api_containers].select {|c| c.include?(@name) }.first
 
     get_xml
 
     sitemap.site_links.with_progress.each do |u|
-      get_page(u)
+      check_page(u)
     end if sitemap.sites?
 
     sitemap.index_links.with_progress.each do |u|
@@ -26,6 +27,13 @@ class Crawler::Sitemapper < Crawler::Base
 
   def get_xml
     sitemap.xml = scraper.get
+  end
+
+  def check_page(url)
+    id = @name.capitalize.constantize.find_id url
+    get_page(url) unless Elasticsearch::Model.client.indices.exists index: @container, type: id
+  rescue NoMethodError => e
+    get_page(url)
   end
 
   def get_page(url)

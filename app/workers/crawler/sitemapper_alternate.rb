@@ -9,11 +9,12 @@ class Crawler::SitemapperAlternate < Crawler::Sitemapper
     @url = url
     @type = type
     @name = Page::Url.new(url).name
+    @container = Rails.configuration.config[:admin][:api_containers].select {|c| c.include?(@name) }.first
 
     get_xml
 
     sitemap.site_links.with_progress.each do |u|
-      get_page(u)
+      check_page(u)
     end if sitemap.sites?
 
     sitemap.index_links.with_progress.each do |u|
