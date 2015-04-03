@@ -231,6 +231,7 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
+    mock_redis (0.14.0)
     multi_json (1.10.1)
     multipart-post (2.0.0)
     nenv (0.2.0)
@@ -420,6 +421,7 @@ DEPENDENCIES
   jaccard
   mechanize
   meta_request
+  mock_redis
   nokogiri
   oj
   oj_mimic_json

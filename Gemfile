@@ -63,6 +63,7 @@ group :development do
   gem 'guard-rails', require: false
   gem 'guard-sidekiq', require: false
   gem 'rack-livereload'
+  gem 'mock_redis'
 end
 
 group :production do
