@@ -31,7 +31,7 @@ class Crawler::Sitemapper < Crawler::Base
 
   def check_page(url)
     id = @name.capitalize.constantize.find_id url
-    get_page(url) unless Elasticsearch::Model.client.indices.exists index: @container, type: id
+    get_page(url) unless Cloud.new(@container).head id + '.json'
   rescue NoMethodError => e
     get_page(url)
   end
