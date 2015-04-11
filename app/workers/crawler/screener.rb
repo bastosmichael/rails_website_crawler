@@ -1,14 +1,14 @@
 class Crawler::Screener < Crawler::Base
   sidekiq_options queue: :screener,
                   retry: true,
-                  backtrace: true,
-                  unique: true,
-                  unique_job_expiration: 24 * 60
+                  backtrace: true
 
   def perform(url, path)
     @url = url
     capturer.relative_path = path
     capturer.screen
+  rescue ChildProcess::TimeoutError => e
+    Crawler::Screener.perform_async url, path
   end
 
   def capturer
