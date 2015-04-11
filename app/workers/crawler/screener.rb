@@ -7,6 +7,8 @@ class Crawler::Screener < Crawler::Base
     @url = url
     capturer.relative_path = path
     capturer.screen
+  rescue Net::ReadTimeout => e
+    Crawler::Screener.perform_async url, path
   rescue ChildProcess::TimeoutError => e
     Crawler::Screener.perform_async url, path
   rescue Selenium::WebDriver::Error::WebDriverError => e
