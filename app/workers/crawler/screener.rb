@@ -9,6 +9,8 @@ class Crawler::Screener < Crawler::Base
     capturer.screen
   rescue ChildProcess::TimeoutError => e
     Crawler::Screener.perform_async url, path
+  rescue Selenium::WebDriver::Error::WebDriverError => e
+    Crawler::Screener.perform_async url, path
   end
 
   def capturer
