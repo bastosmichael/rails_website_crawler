@@ -10,8 +10,10 @@ class Crawler::Sampler < Crawler::Base
     parser.page = scraper.get
     visit.sample
     upload
-  rescue Net::HTTP::Persistent::Error
+  rescue Net::HTTP::Persistent::Error => e
     Crawler::Sampler.perform_async @url
+  rescue Mechanize::RedirectLimitReachedError => e
+    nil
   end
 
   def visit

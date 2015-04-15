@@ -9,8 +9,10 @@ class Crawler::Socializer < Crawler::Base
     @url = url
     parser.page = scraper.get
     upload
-  rescue Net::HTTP::Persistent::Error
+  rescue Net::HTTP::Persistent::Error => e
     Crawler::Socializer.perform_async @url
+  rescue Mechanize::RedirectLimitReachedError => e
+    nil
   end
 
   def upload

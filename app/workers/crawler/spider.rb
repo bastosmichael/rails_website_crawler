@@ -10,8 +10,10 @@ class Crawler::Spider < Crawler::Base
     parser.page = scraper.get
     visit.spider
     upload
-  rescue Net::HTTP::Persistent::Error
+  rescue Net::HTTP::Persistent::Error => e
     Crawler::Spider.perform_async @url
+  rescue Mechanize::RedirectLimitReachedError => e
+    nil
   end
 
   def visit
