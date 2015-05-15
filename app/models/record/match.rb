@@ -14,9 +14,19 @@ class Record::Match < Record::Base
     original_results = elasticsearch_results[:hits][:hits]
     uniq_results = original_results.map {|e| {_index: e[:_index], _id: e[:_id] } }.uniq
 
-    uniq_results.map do |result|
-      Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(container: result[:_index])#,match_score: result[:_score])
+    threads = uniq_results.map do |result|
+      Thread.new(result) do |result|
+        results << Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(container: result[:_index])#,match_score: result[:_score])
+      end
     end
+
+    threads.map {|t| t.join}
+
+    results
+  end
+
+  def results
+    @results ||= []
   end
 
   def query
