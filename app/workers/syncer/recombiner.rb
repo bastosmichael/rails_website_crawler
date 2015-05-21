@@ -11,7 +11,10 @@ class Syncer::Recombiner < Syncer::Base
       if id = data['id']
         data.with_progress.each do |k, v|
           value = v.is_a?(Hash) ? v.values.last : v
-          launch_combiner(k, id, value) unless EXCLUDE.include? k.to_sym
+          unless EXCLUDE.include? k.to_sym
+            launch_combiner(k, id, value)
+            launch_combiner(k + '_count', id, v.count)
+          end
         end
       end
     end
