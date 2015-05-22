@@ -13,7 +13,7 @@ class Syncer::Recombiner < Syncer::Base
           value = v.is_a?(Hash) ? v.values.last : v
           unless EXCLUDE.include? k.to_sym
             launch_combiner(k, id, value)
-            launch_combiner(k + '_count', id, v.count)
+            launch_combiner(k + '_history', id, v.count)
           end
         end
       end
