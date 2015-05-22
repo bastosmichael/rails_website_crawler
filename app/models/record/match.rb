@@ -15,9 +15,9 @@ class Record::Match < Record::Base
   end
 
   def sanitize_results
-    elasticsearch_results[:hits][:hits].map {|e| { id: e[:_source],
-                                                   score: e[:_score],
-                                                   container: e[:_type]
+    elasticsearch_results[:hits][:hits].map {|e| { id: e[:_id],
+                                                   container: e[:_type],
+                                                   score: e[:_score]
                                                  }.merge(e[:_source]) }
   end
 
