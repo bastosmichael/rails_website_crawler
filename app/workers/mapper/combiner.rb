@@ -5,7 +5,7 @@ class Mapper::Combiner < Mapper::Base
       source = Elasticsearch::Model.client.get_source index: index, type: container, id: id
       Elasticsearch::Model.client.index index: index, type: container, id: id, body: source.merge({ type => value })
     else
-      Elasticsearch::Model.client.index index: index, type: container, id: id, body: { id: id, type => value }
+      Elasticsearch::Model.client.index index: index, type: container, id: id, body: { type => value }
     end
   end
 end
