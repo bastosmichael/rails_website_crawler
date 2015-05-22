@@ -1,5 +1,11 @@
 class Mapper::Combiner < Mapper::Base
   def perform(container, type, id, value)
-    Elasticsearch::Model.client.index index: Rails.env + '-' + container, type: container, id: id, body: { id: id, type => value }
+    index = Rails.env + '-' + container
+    if Elasticsearch::Model.client.exists? index: index, type: container, id: id
+      source = Elasticsearch::Model.client.get_source index: index, type: container, id: id
+      Elasticsearch::Model.client.index index: index, type: container, id: id, body: source.merge({ type => value })
+    else
+      Elasticsearch::Model.client.index index: index, type: container, id: id, body: { id: id, type => value }
+    end
   end
 end
