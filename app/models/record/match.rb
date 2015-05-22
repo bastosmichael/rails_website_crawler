@@ -1,5 +1,6 @@
 class Record::Match < Record::Base
   def best query_hash = {}, options = { crawl: true, social: false, results: 1 }
+    @options = options
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
     if !@container.nil? && !@container.include?(Rails.env)
       @container = Rails.env + '-' + @container
@@ -15,10 +16,13 @@ class Record::Match < Record::Base
   end
 
   def sanitize_results
-    elasticsearch_results[:hits][:hits].map {|e| { id: e[:_id],
-                                                   container: e[:_type],
-                                                   score: e[:_score]
-                                                 }.merge(e[:_source]) }
+    elasticsearch_results[:hits][:hits].map do |e|
+      recrawl(e[:_source][:url], @options) if e[:_source][:url]
+      { id: e[:_id],
+        container: e[:_type],
+        score: e[:_score]
+      }.merge(e[:_source])
+    end
   end
 
   def query
