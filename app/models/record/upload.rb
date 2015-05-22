@@ -56,7 +56,7 @@ class Record::Upload < Page::Url
 
             unless EXCLUDE.include? key.to_sym
               launch_combiner key, value
-              launch_combiner key + '_count', v.count
+              launch_combiner key + '_history', v.count
             end
           end
         end
@@ -73,7 +73,7 @@ class Record::Upload < Page::Url
 
         unless EXCLUDE.include? key.to_sym
           launch_combiner key, value
-          launch_combiner key + '_count', 1
+          launch_combiner key + '_history', 1
         end
       end
     end
