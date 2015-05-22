@@ -1,7 +1,12 @@
 class Record::Match < Record::Base
   def best query_hash = {}, options = { crawl: true, social: false, results: 1 }
+    @options = options
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
-    @container = Rails.configuration.config[:admin][:api_containers] if @container.nil?
+    if !@container.nil? && !@container.include?(Rails.env)
+      @container = Rails.env + '-' + @container
+    elsif @container.nil?
+      @types = Rails.configuration.config[:admin][:api_containers].map {|c| Rails.env + '-' + c }
+    end
     @options = options
     { results: sanitize_results }
   end
@@ -11,22 +16,13 @@ class Record::Match < Record::Base
   end
 
   def sanitize_results
-    original_results = elasticsearch_results[:hits][:hits]
-    uniq_results = original_results.map {|e| {_index: e[:_index], _id: e[:_id] } }.uniq
-
-    threads = uniq_results.map do |result|
-      Thread.new(result) do |result|
-        results << Record::Base.new(result[:_index], result[:_id] + '.json').current_data(@options).merge(container: result[:_index])#,match_score: result[:_score])
-      end
+    elasticsearch_results[:hits][:hits].map do |e|
+      recrawl(e[:_source][:url], @options) if e[:_source][:url]
+      { id: e[:_id],
+        container: e[:_type],
+        score: e[:_score]
+      }.merge(e[:_source])
     end
-
-    threads.map {|t| t.join}
-
-    results
-  end
-
-  def results
-    @results ||= []
   end
 
   def query

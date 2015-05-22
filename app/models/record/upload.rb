@@ -53,19 +53,28 @@ class Record::Upload < Page::Url
               new_data['screenshot'][date] = screenshot
               launch_screener
             end
-            launch_combiner key, value unless EXCLUDE.include? key.to_sym
+
+            unless EXCLUDE.include? key.to_sym
+              launch_combiner key, value
+              launch_combiner key + '_history', v.count
+            end
           end
         end
         new_data[key] = original_hash.merge!(new_hash)
       else
         new_data[key] = { date => value }
+
         if screenshot
           unless new_data['screenshot']
             new_data['screenshot'] = { date => screenshot }
             launch_screener
           end
         end
-        launch_combiner key, value unless EXCLUDE.include? key.to_sym
+
+        unless EXCLUDE.include? key.to_sym
+          launch_combiner key, value
+          launch_combiner key + '_history', 1
+        end
       end
     end
     new_data
