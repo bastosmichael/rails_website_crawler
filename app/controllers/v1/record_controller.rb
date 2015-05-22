@@ -29,7 +29,7 @@ class V1::RecordController < V1::AccessController
   end
 
   def best_match
-    container = Record::Match.new(params[:container])
+    container = Record::Match.new(Rails.env + '-' + params[:container])
     new_params = params
     new_params.delete(:container) if params[:container]
     if new_params.empty?
@@ -46,7 +46,7 @@ class V1::RecordController < V1::AccessController
   end
 
   def search
-    container = Record::Search.new(params[:container])
+    container = Record::Search.new(Rails.env + '-' + params[:container])
     new_params = params
     new_params.delete(:container) if params[:container]
     if new_params.empty?
