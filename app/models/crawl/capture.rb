@@ -1,5 +1,5 @@
 class Crawl::Capture < Page::Url
-  require 'RMagick'
+  require 'rmagick'
   include Magick
 
   attr_accessor :relative_path
