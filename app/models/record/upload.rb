@@ -56,7 +56,7 @@ class Record::Upload < Page::Url
 
             unless EXCLUDE.include? key.to_sym
               launch_combiner key, value
-              launch_combiner(key + '_history', v.count) if v.count > 1
+              launch_combiner(key + '_history', v.count)
             end
           end
         end
