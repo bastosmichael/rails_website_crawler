@@ -13,14 +13,14 @@ class V1::AccessController < ApplicationController
   private
 
   def counts
-    { available: Rails.configuration.config[:admin][:api_containers].map {|c| { c => pretty_integer(count_containers(c)) } }.inject(:merge),
+    { available: Rails.configuration.config[:admin][:api_containers].map {|c| { c => pretty_integer(count_containers(Rails.env + '-' + c)) } }.inject(:merge),
       indexing: pretty_integer(Sidekiq::Queue.new('mapper').size),
-      processing: pretty_integer(Sidekiq::Queue.new('scrimper').size),
+      processing: pretty_integer(Sidekiq::Queue.new('scrimper').size + Sidekiq::Queue.new('scrimper_alternate').size),
       pending: pretty_integer((Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000) }
   end
 
   def count_containers container
-    Elasticsearch::Model.client.search(index: container, body: { aggs: { names_count: { value_count: { field: 'name' } } } })['aggregations']['names_count']['value']
+    Elasticsearch::Model.client.count(index: container)['count']
   end
 
   def remove_params
