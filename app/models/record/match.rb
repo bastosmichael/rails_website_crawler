@@ -21,7 +21,7 @@ class Record::Match < Record::Base
       { id: e[:_id],
         container: e[:_type],
         score: e[:_score]
-      }.merge(e[:_source])
+      }.merge(e[:_source].sort.to_h)
     end
   end
 
