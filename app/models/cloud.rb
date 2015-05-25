@@ -37,7 +37,7 @@ class Cloud
     while truncated
       bucket_object = container.files.all(marker: files.last.key)
       truncated = bucket_object.is_truncated
-      files = files + bucket_object
+      files += bucket_object
     end
     files
   end

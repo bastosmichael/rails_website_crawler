@@ -9,7 +9,7 @@ class Crawler::SitemapperAlternate < Crawler::Sitemapper
     @url = url
     @type = type
     @name = Page::Url.new(url).name
-    @container = Rails.configuration.config[:admin][:api_containers].select {|c| c.include?(@name) }.first
+    @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
 
     get_xml
 

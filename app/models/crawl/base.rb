@@ -10,7 +10,7 @@ class Crawl::Base < Page::Url
   end
 
   def post(params, headers = '')
-    # TODO change it back to cache_key when built
+    # TODO: change it back to cache_key when built
     VCR.use_cassette(File.join(cache_vcr, params.to_query + headers), record: :new_episodes) do
       # Rails.cache.fetch(build_path, params.to_query + headers) do
       @agent = defaults
@@ -21,7 +21,7 @@ class Crawl::Base < Page::Url
   private
 
   def get_with_vcr(record)
-    # TODO change it back to cache_key when built
+    # TODO: change it back to cache_key when built
     VCR.use_cassette(cache_vcr, record: record) do
       # Rails.cache.fetch(build_path) do
       @agent = defaults

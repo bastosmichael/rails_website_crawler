@@ -1,11 +1,11 @@
 class Record::Match < Record::Base
-  def best query_hash = {}, options = { crawl: true, social: false, results: 1 }
+  def best(query_hash = {}, options = { crawl: true, social: false, results: 1 })
     @options = options
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
     if !@container.nil? && !@container.include?(Rails.env)
       @container = Rails.env + '-' + @container
     elsif @container.nil?
-      @types = Rails.configuration.config[:admin][:api_containers].map {|c| Rails.env + '-' + c }
+      @types = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c }
     end
     @options = options
     { results: sanitize_results }

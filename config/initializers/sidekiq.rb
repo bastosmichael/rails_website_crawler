@@ -1,7 +1,7 @@
 require 'sidekiq'
 require 'sidekiq/web'
 
-Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
+Sidekiq::Web.use(Rack::Auth::Basic) do |_user, _password|
   user = Rails.configuration.config[:admin][:username]
   password = Rails.configuration.config[:admin][:password]
 end

@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     error_messages = Array(error_messages)
     {
       error: {
-        messages: error_messages.map { |message| { message: message }}
+        messages: error_messages.map { |message| { message: message } }
       }
     }
   end
@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   def json_response(status_code, json = {})
     render json: {
       response: {
-        status: status_code,
+        status: status_code
       }
     }.merge!(json), status: status_code
   end
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
   def xml_response(status_code, xml = {})
     render xml: {
       response: {
-        status: status_code,
+        status: status_code
       }
     }.merge!(xml), status: status_code
   end

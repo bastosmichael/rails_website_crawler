@@ -3,9 +3,7 @@ class Syncer::Rescreener < Syncer::Base
     @container = container
     records.with_progress.each do |r|
       record(r.key).screenshots.each do |key, value|
-        unless files.include? key
-          Crawler::Screener.perform_async value, key
-        end
+        Crawler::Screener.perform_async value, key unless files.include? key
         files.delete(key)
       end
     end if screenshots_cloud
