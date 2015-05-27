@@ -19,8 +19,8 @@ class Record::Search < Record::Match
   def cleanup_query
     if @query_hash[:query]
       @query_hash[:name] = @query_hash[:query]
-      @query_hash[:description] = @query_hash[:query]
-      @query_hash[:tags] = @query_hash[:query]
+      # @query_hash[:description] = @query_hash[:query]
+      # @query_hash[:tags] = @query_hash[:query]
       @query_hash.delete(:query)
     end
   end
