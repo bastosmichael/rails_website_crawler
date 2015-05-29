@@ -1,13 +1,21 @@
 class Recorder::Uploader < Recorder::Base
   def perform(metadata = {})
-    if @url = metadata['url']
+    if url = metadata['url']
+      uploader = Record::Upload.new(url)
       uploader.id = metadata['id']
       uploader.metadata = metadata
-      uploader.sync
-    end unless metadata.nil?
-  end
+      new_data = {}
 
-  def uploader
-    @uploader ||= Record::Upload.new(@url)
+      uploader.sync.with_progress.each do |k, v|
+        unless Record::Upload::EXCLUDE.include? k.to_sym
+          new_data[k] = v.is_a?(Hash) ? v.values.last : v
+          new_data[k + '_history'] = v.count if v.is_a?(Hash) && v.count > 1
+        end
+      end
+
+      Mapper::Combiner.perform_async uploader.container,
+                                     uploader.id,
+                                     new_data
+    end unless metadata.nil?
   end
 end
