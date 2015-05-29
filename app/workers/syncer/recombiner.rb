@@ -1,40 +1,21 @@
 class Syncer::Recombiner < Syncer::Base
-  CANONICAL = %i(site_name
-                 id
-                 url
-                 type
-                 date
-                 name
-                 image
-                 description
-                 tags
-                 open_graph
-                 schema_org).freeze
-
-  EXCLUDE = %i(site_name
-               id
-               type
-               screenshot).freeze
-
   def perform(container)
     @container = container
     records.with_progress.each do |r|
       data = record(r.key).data
-      if id = data['id']
-        data.with_progress.each do |k, v|
-          value = v.is_a?(Hash) ? v.values.last : v
-          unless EXCLUDE.include? k.to_sym
-            launch_combiner(k, id, value)
-            unless CANONICAL.include? k.to_sym
-              launch_combiner(k + '_history', id, v.count) if v.count > 1
-            end
-          end
+      id = data['id']
+      new_data = {}
+      record(r.key).data.with_progress.each do |k, v|
+        unless Record::Upload::EXCLUDE.include? k.to_sym
+          new_data[k] = v.is_a?(Hash) ? v.values.last : v
+          new_data[k + '_history'] = v.count if v.is_a?(Hash) && v.count > 1
         end
       end
+      launch_combiner(id, new_data)
     end
   end
 
-  def launch_combiner(item, id, value)
-    Mapper::Combiner.perform_async @container, item, id, value
+  def launch_combiner(id, hash = {})
+    Mapper::Combiner.perform_async @container, id, hash
   end
 end
