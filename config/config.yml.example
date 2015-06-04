@@ -19,6 +19,8 @@ default: &default
     docs: https://github.com/bastosmichael/skynet
     api_containers:
       -
+  app:
+    name: crawler
 
 development:
   <<: *default

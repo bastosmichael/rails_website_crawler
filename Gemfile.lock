@@ -464,3 +464,6 @@ DEPENDENCIES
   typhoeus
   unicorn
   vcr
+
+BUNDLED WITH
+   1.10.0
