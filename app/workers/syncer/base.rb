@@ -10,7 +10,7 @@ class Syncer::Base < Worker
   end
 
   def records
-    @records ||= cloud.files.map { |f| f unless f.key.starts_with? '_' }.compact
+    @records ||= cloud.files
   end
 
   def record(record)
