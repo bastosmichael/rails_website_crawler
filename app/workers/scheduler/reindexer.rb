@@ -1,5 +1,5 @@
 class Scheduler::Reindexer < Scheduler::Base
-  recurrence { weekly }
+  recurrence { daily }
 
   def perform
     containers = Rails.configuration.config[:admin][:api_containers]
