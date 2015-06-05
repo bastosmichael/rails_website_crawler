@@ -11,5 +11,7 @@ class Mapper::Indexer < Mapper::Base
     end
 
     Elasticsearch::Model.client.index index: index, type: container, id: id, body: new_hash.sort.to_h
+
+    Elasticsearch::Model.client.indices.refresh index: index
   end
 end
