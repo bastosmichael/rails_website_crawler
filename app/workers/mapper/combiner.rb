@@ -3,7 +3,7 @@ class Mapper::Combiner < Mapper::Base
     index = Rails.env + '-' + container
     new_hash = {}
 
-    hash.with_progress.each do |k, v|
+    hash.with_progress("Mapping #{index}: #{id}").each do |k, v|
       unless Record::Upload::EXCLUDE.include? k.to_sym
         new_hash[k] = v.is_a?(Hash) ? v.values.last : v
         new_hash[k + '_history'] = v.count if v.is_a?(Hash) && v.count > 1

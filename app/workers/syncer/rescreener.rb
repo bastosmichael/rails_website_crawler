@@ -1,7 +1,7 @@
 class Syncer::Rescreener < Syncer::Base
   def perform(container, cleanup = false)
     @container = container
-    records.with_progress.each do |r|
+    records.with_progress("Rescreen Crawling #{container}").each do |r|
       record(r.key).screenshots.each do |key, value|
         Crawler::Screener.perform_async value, key unless files.include? key
         files.delete(key)

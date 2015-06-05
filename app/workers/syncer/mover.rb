@@ -2,7 +2,7 @@ class Syncer::Mover < Syncer::Base
   def perform(from_container, to_container)
     @container = from_container
     @to_container = to_container
-    records.with_progress.each do |r|
+    records.with_progress("Move from #{from_container} to #{to_container}").each do |r|
       from_record = record(r.key)
       old_data = from_record.data
       old_data['type'] = new_type

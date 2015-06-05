@@ -13,11 +13,11 @@ class Crawler::Sitemapper < Crawler::Base
 
     get_xml
 
-    sitemap.site_links.with_progress.each do |u|
+    sitemap.site_links.with_progress("Processing Urls from #{url}").each do |u|
       check_page(u)
     end if sitemap.sites?
 
-    sitemap.index_links.with_progress.each do |u|
+    sitemap.index_links.with_progress("Processing Sitemaps from #{url}").each do |u|
       get_sitemap u
     end if sitemap.indexes?
 

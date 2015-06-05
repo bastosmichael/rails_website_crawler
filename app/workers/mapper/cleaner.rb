@@ -1,7 +1,7 @@
 class Mapper::Cleaner < Mapper::Base
   def perform(container, _standard = [])
     @container = container
-    records.with_progress.each do |r|
+    records.with_progress{"Cleaning #{container}"}.each do |r|
       data = record(r.key).data
       new_data = parse_record data
       record(r.key).data = new_data unless data == new_data
@@ -10,7 +10,7 @@ class Mapper::Cleaner < Mapper::Base
 
   def parse_record(data)
     if id = data['id']
-      data.with_progress.each do |k, v|
+      data.with_progress("Parsing #{id}").each do |k, v|
         ap 'KEY'
         ap k
         if v.is_a?(Hash)

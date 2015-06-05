@@ -1,7 +1,7 @@
 class Syncer::Recrimper < Syncer::Base
   def perform(container)
     @container = container
-    records.with_progress.each do |r|
+    records.with_progress("Rescrimp Crawling #{container}").each do |r|
       Crawler::Scrimper.perform_async record(r.key).url
     end
   end
