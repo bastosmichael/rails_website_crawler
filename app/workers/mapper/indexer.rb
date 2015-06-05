@@ -1,4 +1,4 @@
-class Mapper::Combiner < Mapper::Base
+class Mapper::Indexer < Mapper::Base
   def perform(container, id, hash = {})
     index = Rails.env + '-' + container
     new_hash = {}

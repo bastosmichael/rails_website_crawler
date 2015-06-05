@@ -6,7 +6,7 @@ class Recorder::Uploader < Recorder::Base
       uploader.metadata = metadata
       hash = uploader.sync
 
-      Mapper::Combiner.perform_async uploader.container,
+      Mapper::Indexer.perform_async uploader.container,
                                      uploader.id,
                                      hash
     end unless metadata.nil?
