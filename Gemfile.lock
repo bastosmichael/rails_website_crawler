@@ -213,6 +213,7 @@ GEM
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
+    ice_cube (0.11.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
     jaccard (1.0.2)
@@ -373,6 +374,10 @@ GEM
       sidekiq (>= 2.6.5, < 4.0)
     sidekiq-unique-jobs (3.0.13)
       sidekiq (>= 2.6)
+    sidetiq (0.6.3)
+      celluloid (>= 0.14.1)
+      ice_cube (= 0.11.1)
+      sidekiq (>= 3.0.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -455,6 +460,7 @@ DEPENDENCIES
   sidekiq
   sidekiq-limit_fetch
   sidekiq-unique-jobs
+  sidetiq
   sinatra
   social_shares
   spring
