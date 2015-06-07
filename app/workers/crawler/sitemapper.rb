@@ -10,6 +10,7 @@ class Crawler::Sitemapper < Crawler::Base
     @type = type
     @name = Page::Url.new(url).name
     @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
+    @index = Rails.env + '-' + @container
 
     get_xml
 
@@ -31,7 +32,7 @@ class Crawler::Sitemapper < Crawler::Base
 
   def check_page(url)
     id = @name.capitalize.constantize.find_id url
-    get_page(url) unless Cloud.new(@container).head id + '.json'
+    get_page(url) unless Elasticsearch::Model.client.exists? index: @index, type: @container, id: id
   rescue NoMethodError => e
     get_page(url)
   end
