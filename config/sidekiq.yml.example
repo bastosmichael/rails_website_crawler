@@ -4,13 +4,13 @@
 :queues:
   - [screener, 512]
   - [recorder, 256]
-  - [mapper, 128]
+  #- [mapper, 128]
   - [slider, 64]
   - [socializer, 32]
   - [scrimper, 16]
   - [scrimper_alternate, 8]
   - [sampler, 4]
   - [spider, 2]
-  #- [sitemapper, 1]
-  #- [sitemapper_alternate, 1]
+  - [sitemapper, 1]
+  - [sitemapper_alternate, 1]
   - default
