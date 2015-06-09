@@ -11,6 +11,6 @@
   - [scrimper_alternate, 8]
   - [sampler, 4]
   - [spider, 2]
-  - [sitemapper, 1]
-  - [sitemapper_alternate, 1]
+  #- [sitemapper, 1]
+  #- [sitemapper_alternate, 1]
   - default
