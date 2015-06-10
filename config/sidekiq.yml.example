@@ -1,5 +1,5 @@
 ---
-:concurrency: 1
+:concurrency: 100
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 2048]
@@ -12,6 +12,6 @@
   - [sampler, 16]
   - [spider, 8]
   #- [sitemapper, 4]
-  - [sitemapper_alternate, 2]
+  #- [sitemapper_alternate, 2]
   - [syncer, 1]
   - default
