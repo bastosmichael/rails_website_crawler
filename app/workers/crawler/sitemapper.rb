@@ -31,8 +31,8 @@ class Crawler::Sitemapper < Crawler::Base
   end
 
   def check_page(url)
-    id = @name.capitalize.constantize.find_id url
-    get_page(url) unless Elasticsearch::Model.client.exists? index: @index, type: @container, id: id
+    # id = @name.capitalize.constantize.find_id url
+    get_page(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
   rescue NoMethodError => e
     get_page(url)
   end
