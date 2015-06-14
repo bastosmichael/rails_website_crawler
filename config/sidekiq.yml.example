@@ -12,6 +12,6 @@
   - [sampler, 16]
   - [spider, 8]
   - [syncer, 4]
-  - [sitemapper, 2]
-  - [sitemapper_alternate, 1]
+  #- [sitemapper, 2]
+  #- [sitemapper_alternate, 1]
   - default
