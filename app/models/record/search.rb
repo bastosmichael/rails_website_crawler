@@ -9,7 +9,7 @@ class Record::Search < Record::Match
           k => {
             like_text: v,
             analyzer: 'snowball',
-            fuzziness: 0.6
+            fuzziness: 0.7
           }
         }
       }
@@ -20,7 +20,6 @@ class Record::Search < Record::Match
     if @query_hash[:query]
       @query_hash[:name] = @query_hash[:query]
       @query_hash[:description] = @query_hash[:query]
-      @query_hash[:tags] = @query_hash[:query]
       @query_hash.delete(:query)
     end
   end
