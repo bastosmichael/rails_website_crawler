@@ -22,7 +22,7 @@ class Record::Match < Record::Base
         container: e[:_type],
         score: e[:_score]
       }.merge(e[:_source])
-    end
+    end.sort_by {|h| h[:date] && h[:score] }.reverse
   end
 
   def query
