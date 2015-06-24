@@ -3,7 +3,7 @@
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 2048]
-  #- [recorder, 1024]
+  - [recorder, 1024]
   - [mapper, 512]
   - [slider, 256]
   - [socializer, 128]
