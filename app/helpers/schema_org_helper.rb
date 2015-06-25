@@ -51,7 +51,7 @@ module SchemaOrgHelper
 
   def schema_org_tags
     tags = parser.css("meta[@name='keywords']").first['content'].split(/ |,/)
-    tags.delete_if { |x| x.match(/and|for|more/) }
+    tags.delete_if { |x| x.match(/and|for|more/) || x.squish.blank? }
     @tags = tags.reject(&:empty?).uniq
   end
 
