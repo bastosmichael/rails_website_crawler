@@ -15,7 +15,7 @@ class Recorder::Fixer < Recorder::Base
       end
 
       Record::Base.new(container, record).data = new_hash
-      Crawler::Slider.perform_async new_hash['url']
+      Crawler::Scrimper.perform_async new_hash['url']
     end
   end
 end
