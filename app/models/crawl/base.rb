@@ -1,4 +1,6 @@
 class Crawl::Base < Page::Url
+  require 'user_agent_randomizer'
+
   def agent
     @agent ||= defaults
   end
@@ -35,7 +37,7 @@ class Crawl::Base < Page::Url
 
   def defaults
     agent = Mechanize.new
-    agent.user_agent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36'
+    agent.user_agent = UserAgentRandomizer::UserAgent.fetch(type: "desktop_browser").string
     agent.html_parser = Nokogiri::HTML
     # agent.ssl_version = 'SSLv3'
     agent.open_timeout = 300

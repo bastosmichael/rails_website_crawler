@@ -7,15 +7,13 @@ gem 'sqlite3'
 gem 'oj'
 gem 'oj_mimic_json'
 
-gem 'jaccard'
-gem 'tokenizer'
-
 gem 'awesome_print'
 gem 'progress'
 
 gem 'nokogiri'
 gem 'mechanize'
 gem 'social_shares'
+gem 'user-agent-randomizer'
 
 gem 'selenium-webdriver'
 gem 'headless'

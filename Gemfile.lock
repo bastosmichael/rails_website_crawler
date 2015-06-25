@@ -216,7 +216,6 @@ GEM
     ice_cube (0.11.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
-    jaccard (1.0.2)
     json (1.8.3)
     kgio (2.9.3)
     listen (2.10.1)
@@ -405,7 +404,6 @@ GEM
     tilt (2.0.1)
     timers (4.0.1)
       hitimes
-    tokenizer (0.1.1)
     typhoeus (0.7.1)
       ethon (>= 0.7.1)
     tzinfo (1.2.2)
@@ -417,6 +415,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    user-agent-randomizer (0.2.0)
     vcr (2.9.3)
     webrobots (0.1.1)
     websocket (1.2.2)
@@ -436,7 +435,6 @@ DEPENDENCIES
   guard-sidekiq
   guard-test
   headless
-  jaccard
   mechanize
   meta_request
   mock_redis
@@ -466,7 +464,7 @@ DEPENDENCIES
   spring
   sqlite3
   thin
-  tokenizer
   typhoeus
   unicorn
+  user-agent-randomizer
   vcr
