@@ -8,6 +8,7 @@ class Record::Upload < Page::Url
                  image
                  description
                  tags
+                 categories
                  open_graph
                  schema_org).freeze
 
