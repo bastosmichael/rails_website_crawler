@@ -3,7 +3,12 @@ class Record::Search < Record::Match
 
   def match_query
     cleanup_query
-    @query_hash.map do |k, v|
+    @query_hash.flat_map do |k, v|
+      [{
+        match: {
+          k => v
+        }
+      },
       {
         flt_field: {
           k => {
@@ -12,7 +17,7 @@ class Record::Search < Record::Match
             fuzziness: 0.7
           }
         }
-      }
+      }]
     end
   end
 
@@ -20,6 +25,9 @@ class Record::Search < Record::Match
     if @query_hash[:query]
       @query_hash[:name] = @query_hash[:query]
       @query_hash[:description] = @query_hash[:query]
+      @query_hash[:url] = @query_hash[:query]
+      @query_hash[:tags] = @query_hash[:query]
+      @query_hash[:categories] = @query_hash[:query]
       @query_hash.delete(:query)
     end
   end
