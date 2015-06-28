@@ -5,14 +5,19 @@ class Record::Search < Record::Match
     cleanup_query
     @query_hash.map do |k, v|
       {
-        flt_field: {
-          k => {
-            like_text: v,
-            analyzer: 'snowball',
-            fuzziness: 0.7
-          }
+        match: {
+          k => v
         }
       }
+      # {
+      #   flt_field: {
+      #     k => {
+      #       like_text: v,
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.7
+      #     }
+      #   }
+      # }
     end
   end
 
@@ -20,6 +25,9 @@ class Record::Search < Record::Match
     if @query_hash[:query]
       @query_hash[:name] = @query_hash[:query]
       @query_hash[:description] = @query_hash[:query]
+      @query_hash[:url] = @query_hash[:query]
+      @query_hash[:tags] = @query_hash[:query]
+      @query_hash[:categories] = @query_hash[:query]
       @query_hash.delete(:query)
     end
   end
