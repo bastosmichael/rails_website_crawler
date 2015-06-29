@@ -10,6 +10,12 @@ class Crawler::Sampler < Crawler::Base
     parser.page = scraper.get
     visit.sample
     upload
+  rescue Mechanize::ResponseCodeError => e
+    if e.response_code == '404'
+      Recorder::Deleter.perform_async url
+    else
+      raise
+    end
   rescue Net::HTTP::Persistent::Error => e
     Crawler::Sampler.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e

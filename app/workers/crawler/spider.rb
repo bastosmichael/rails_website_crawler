@@ -10,6 +10,12 @@ class Crawler::Spider < Crawler::Base
     parser.page = scraper.get
     visit.spider
     upload
+  rescue Mechanize::ResponseCodeError => e
+    if e.response_code == '404'
+      Recorder::Deleter.perform_async url
+    else
+      raise
+    end
   rescue Net::HTTP::Persistent::Error => e
     Crawler::Spider.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
