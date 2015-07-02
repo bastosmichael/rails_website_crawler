@@ -1,5 +1,5 @@
-class Crawler::Spider < Crawler::Base
-  sidekiq_options queue: :spider,
+class Crawler::ScrimperThree < Crawler::Base
+  sidekiq_options queue: :scrimper_three,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -8,7 +8,6 @@ class Crawler::Spider < Crawler::Base
   def perform(url)
     @url = url
     parser.page = scraper.get
-    visit.spider
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' || e.response_code == '520'
@@ -17,12 +16,8 @@ class Crawler::Spider < Crawler::Base
       raise
     end
   rescue Net::HTTP::Persistent::Error => e
-    Crawler::Spider.perform_async @url
+    Crawler::ScrimperThree.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
-  end
-
-  def visit
-    @visit ||= Page::Visit.new(parser.internal_links)
   end
 end

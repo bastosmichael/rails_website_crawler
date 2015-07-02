@@ -1,5 +1,5 @@
-class Crawler::ScrimperAlternate < Crawler::Base
-  sidekiq_options queue: :scrimper_alternate,
+class Crawler::ScrimperOne < Crawler::Base
+  sidekiq_options queue: :scrimper_one,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -10,13 +10,13 @@ class Crawler::ScrimperAlternate < Crawler::Base
     parser.page = scraper.get
     upload
   rescue Mechanize::ResponseCodeError => e
-    if e.response_code == '404'
+    if e.response_code == '404' || e.response_code == '520'
       Recorder::Deleter.perform_async url
     else
       raise
     end
   rescue Net::HTTP::Persistent::Error => e
-    Crawler::ScrimperAlternate.perform_async @url
+    Crawler::ScrimperOne.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
   end

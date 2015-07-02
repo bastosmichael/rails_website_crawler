@@ -1,11 +1,11 @@
-class Crawler::SitemapperAlternate < Crawler::Sitemapper
-  sidekiq_options queue: :sitemapper_alternate,
+class Crawler::SitemapperTwo < Crawler::Sitemapper
+  sidekiq_options queue: :sitemapper_two,
                   retry: true,
                   backtrace: true,
                   unique: true,
                   unique_job_expiration: 24 * 60
 
-  def perform(url, type = 'ScrimperAlternate')
+  def perform(url, type = 'ScrimperTwo')
     @url = url
     @type = type
     @name = Page::Url.new(url).name
@@ -23,10 +23,10 @@ class Crawler::SitemapperAlternate < Crawler::Sitemapper
     end if sitemap.indexes?
 
   rescue Net::HTTP::Persistent::Error
-    Crawler::SitemapperAlternate.perform_async @url, @type
+    Crawler::SitemapperTwo.perform_async @url, @type
   end
 
   def get_sitemap(url)
-    Crawler::SitemapperAlternate.perform_async url, @type
+    Crawler::SitemapperTwo.perform_async url, @type
   end
 end
