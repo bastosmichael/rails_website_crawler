@@ -15,8 +15,26 @@ class V1::AccessController < ApplicationController
   def counts
     { available: Rails.configuration.config[:admin][:api_containers].map { |c| { c => pretty_integer(count_containers(Rails.env + '-' + c)) } }.inject(:merge),
       indexing: pretty_integer(Sidekiq::Queue.new('mapper').size),
-      processing: pretty_integer(Sidekiq::Queue.new('scrimper').size + Sidekiq::Queue.new('scrimper_alternate').size),
-      pending: pretty_integer((Sidekiq::Queue.new('sitemapper').size + Sidekiq::Queue.new('sitemapper_alternate').size) * 50_000) }
+      processing: pretty_integer(count_scrimpers),
+      pending: pretty_integer((count_sitemappers) * 50_000) }
+  end
+
+  def count_scrimpers
+    Sidekiq::Queue.new('scrimper').size +
+      Sidekiq::Queue.new('scrimper_one').size +
+      Sidekiq::Queue.new('scrimper_two').size +
+      Sidekiq::Queue.new('scrimper_three').size +
+      Sidekiq::Queue.new('scrimper_four').size +
+      Sidekiq::Queue.new('scrimper_five').size
+  end
+
+  def count_sitemappers
+    Sidekiq::Queue.new('sitemapper').size +
+      Sidekiq::Queue.new('sitemapper_one').size +
+      Sidekiq::Queue.new('sitemapper_two').size +
+      Sidekiq::Queue.new('sitemapper_three').size +
+      Sidekiq::Queue.new('sitemapper_four').size +
+      Sidekiq::Queue.new('sitemapper_five').size
   end
 
   def count_containers(container)
