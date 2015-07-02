@@ -10,7 +10,7 @@ class Crawler::ScrimperOne < Crawler::Base
     parser.page = scraper.get
     upload
   rescue Mechanize::ResponseCodeError => e
-    if e.response_code == '404' || e.response_code == '520'
+    if e.response_code == '404'
       Recorder::Deleter.perform_async url
     else
       raise
