@@ -1,4 +1,4 @@
-class Syncer::Recrimper < Syncer::Base
+class Syncer::Rescrimper < Syncer::Base
   def perform(container)
     @container = container
     records.with_progress("Rescrimp Crawling #{container}").each do |r|
