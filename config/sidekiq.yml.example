@@ -1,5 +1,5 @@
 ---
-:concurrency: 1
+:concurrency: 15
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 2048]
@@ -15,11 +15,11 @@
   - [scrimper_five, 32]
   - [sampler, 16]
   - [spider, 8]
-  - [syncer, 4]
-  - [sitemapper, 2]
-  - [sitemapper_one, 1]
-  - [sitemapper_two, 1]
-  - [sitemapper_three, 1]
-  - [sitemapper_four, 1]
-  - [sitemapper_five, 1]
+  #- [syncer, 4]
+  #- [sitemapper, 2]
+  #- [sitemapper_one, 1]
+  #- [sitemapper_two, 1]
+  #- [sitemapper_three, 1]
+  #- [sitemapper_four, 1]
+  #- [sitemapper_five, 1]
   - default
