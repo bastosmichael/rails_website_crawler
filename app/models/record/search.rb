@@ -4,20 +4,20 @@ class Record::Search < Record::Match
   def match_query
     cleanup_query
     @query_hash.map do |k, v|
-      {
-        match: {
-          k => v
-        }
-      }
       # {
-      #   flt_field: {
-      #     k => {
-      #       like_text: v,
-      #       analyzer: 'snowball',
-      #       fuzziness: 0.7
-      #     }
+      #   match: {
+      #     k => v
       #   }
       # }
+      {
+        flt_field: {
+          k => {
+            like_text: v,
+            analyzer: 'snowball',
+            fuzziness: 0.7
+          }
+        }
+      }
     end
   end
 

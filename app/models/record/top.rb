@@ -1,7 +1,7 @@
-class Record::Match < Record::Base
-  def best(query_hash = {}, options = { crawl: true, social: false, results: 1 })
+class Record::Top < Record::Base
+  def find(query_array = ['date'], options = { crawl: true, social: true, results: 10 })
     @options = options
-    @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
+    @query_array = query_array
     if !@container.nil? && !@container.include?(Rails.env)
       @container = Rails.env + '-' + @container
     elsif @container.nil?
@@ -16,31 +16,31 @@ class Record::Match < Record::Base
   end
 
   def sanitize_results
-    elasticsearch_results[:hits][:hits].map do |e|
+    elasticsearch_results[:hits][:hits].each_with_index.map do |e, index|
       recrawl(e[:_source][:url], @options) if e[:_source][:url]
       { id: e[:_id],
         container: e[:_type],
-        score: e[:_score]
+        score: index + 1
       }.merge(e[:_source])
-    end.sort_by {|h| [h[:date],h[:score]] }.reverse
+    end
   end
 
   def query
-    @query = {
-      query: {
-        bool: {
-          should: match_query
-        }
+    @query =
+    {
+      filter: {
+        match_all: { }
       },
+      sort: sort_query,
       size: limit_results
     }
   end
 
-  def match_query
-    @query_hash.map do |k, v|
+  def sort_query
+    @query_array.map do |n|
       {
-        match: {
-          k => v
+        n => {
+          order: "desc"
         }
       }
     end
