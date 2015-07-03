@@ -62,6 +62,21 @@ class V1::RecordController < V1::AccessController
     end
   end
 
+  def top
+    container = Record::Top.new(params[:container])
+    if params[:array].empty?
+      results = errors_response('no results found')
+      status = 404
+    else
+      results = container.sort(params[:array].split(','), default_options.merge(social: params[:social] || true))
+      status = 200
+    end
+    respond_to do |format|
+      format.json { json_response(status, results) }
+      format.xml { xml_response(status, results) }
+    end
+  end
+
   private
 
   def default_options

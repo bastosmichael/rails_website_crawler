@@ -1,5 +1,5 @@
 class Record::Top < Record::Base
-  def find(query_array = ['date'], options = { crawl: true, social: true, results: 10 })
+  def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10 })
     @options = options
     @query_array = query_array
     if !@container.nil? && !@container.include?(Rails.env)
