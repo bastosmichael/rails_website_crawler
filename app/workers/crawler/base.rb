@@ -13,14 +13,10 @@ class Crawler::Base < Worker
     @parsed ||= parser.save if parser.build
   end
 
-  def exists?
-    parsed.nil? ? false : parsed['type']
-  rescue
-    false
-  end
-
   def upload
-    Recorder::Uploader.perform_async parsed if exists?
+    if parsed['type']
+      Recorder::Uploader.perform_async parsed
+    end
   end
 
   def social
