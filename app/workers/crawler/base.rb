@@ -9,12 +9,9 @@ class Crawler::Base < Worker
     @parser ||= Page::Parse.new(@url)
   end
 
-  def parsed
-    @parsed ||= parser.save if parser.build
-  end
-
   def upload
-    if parsed['type']
+    parsed = parser.save if parser.build
+    if parsed && parsed['type']
       Recorder::Uploader.perform_async parsed
     end
   end

@@ -16,6 +16,9 @@ class Crawler::Socializer < Crawler::Base
   end
 
   def upload
-    Recorder::Uploader.perform_async parsed.merge(social.shares) if exists?
+    parsed = parser.save if parser.build
+    if parsed && parsed['type']
+      Recorder::Uploader.perform_async parsed.merge(social.shares)
+    end
   end
 end
