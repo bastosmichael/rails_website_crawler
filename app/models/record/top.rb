@@ -48,7 +48,7 @@ class Record::Top < Record::Base
 
   def limit_results
     if !@options[:results]
-      1
+      10
     elsif @options[:results] > 25
       25
     else
