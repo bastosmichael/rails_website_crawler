@@ -2,33 +2,108 @@ class Record::Search < Record::Match
   alias_method :search, :best
 
   def match_query
-    cleanup_query
-    @query_hash.map do |k, v|
+    [
       {
         match: {
-          k => v
+          name: @query_hash[:query]
         }
-      }
+      },
+      {
+        match: {
+          description: @query_hash[:query]
+        }
+      },
+      {
+        match: {
+          url: @query_hash[:query]
+        }
+      },
+      {
+        match: {
+          tags: @query_hash[:query]
+        }
+      },
+      {
+        match: {
+          categories: @query_hash[:query]
+        }
+      },
       # {
       #   flt_field: {
-      #     k => {
-      #       like_text: v,
+      #     name: {
+      #       like_text: @query_hash[:query],
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.9,
+      #       boost: 5
+      #     }
+      #   }
+      # },
+      # {
+      #   flt_field: {
+      #     description: {
+      #       like_text: @query_hash[:query],
       #       analyzer: 'snowball',
       #       fuzziness: 0.7
       #     }
       #   }
-      # }
-    end
+      # },
+      # {
+      #   flt_field: {
+      #     url: {
+      #       like_text: @query_hash[:query],
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.8
+      #     }
+      #   }
+      # },
+      # {
+      #   flt_field: {
+      #     tags: {
+      #       like_text: @query_hash[:query],
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.5
+      #     }
+      #   }
+      # },
+      # {
+      #   flt_field: {
+      #     categories: {
+      #       like_text: @query_hash[:query],
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.6
+      #     }
+      #   }
+      # },
+    ]
+
+
+    # cleanup_query
+    # @query_hash.map do |k, v|
+    #   {
+    #     match: {
+    #       k => v
+    #     }
+    #   }
+    #   # {
+    #   #   flt_field: {
+    #   #     k => {
+    #   #       like_text: v,
+    #   #       analyzer: 'snowball',
+    #   #       fuzziness: 0.7
+    #   #     }
+    #   #   }
+    #   # }
+    # end
   end
 
-  def cleanup_query
-    if @query_hash[:query]
-      @query_hash[:name] = @query_hash[:query]
-      @query_hash[:description] = @query_hash[:query]
-      @query_hash[:url] = @query_hash[:query]
-      @query_hash[:tags] = @query_hash[:query]
-      @query_hash[:categories] = @query_hash[:query]
-      @query_hash.delete(:query)
-    end
-  end
+  # def cleanup_query
+  #   if @query_hash[:query]
+  #     @query_hash[:name] = @query_hash[:query]
+  #     @query_hash[:description] = @query_hash[:query]
+  #     @query_hash[:url] = @query_hash[:query]
+  #     @query_hash[:tags] = @query_hash[:query]
+  #     @query_hash[:categories] = @query_hash[:query]
+  #     @query_hash.delete(:query)
+  #   end
+  # end
 end
