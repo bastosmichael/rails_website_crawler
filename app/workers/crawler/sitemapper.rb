@@ -31,10 +31,11 @@ class Crawler::Sitemapper < Crawler::Base
   end
 
   def check_page(url)
-    # id = @name.capitalize.constantize.find_id url
-    get_page(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
+    if new_url = @name.capitalize.constantize.sanitize_url(url)
+      get_page(new_url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
+    end
   rescue NoMethodError => e
-    get_page(url)
+    get_page(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
   end
 
   def get_page(url)
