@@ -2,7 +2,18 @@ class Crawl::Sitemap < Page::Url
   attr_accessor :xml
 
   def parser
-    @parser ||= Nokogiri::XML.parse(xml.body)
+    @parser ||= begin
+      if uri.to_s.ends_with?('.gz')
+        require 'zlib'
+        require 'stringio'
+        gz = Zlib::GzipReader.new(StringIO.new(xml.body.to_s))
+        Nokogiri::XML.parse(gz.read)
+      else
+        Nokogiri::XML.parse(xml.body)
+      end
+    rescue Zlib::GzipFile::Error
+      Nokogiri::XML.parse(xml.body)
+    end
   end
 
   def index_links
