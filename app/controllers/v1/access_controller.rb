@@ -13,7 +13,7 @@ class V1::AccessController < ApplicationController
   private
 
   def counts
-    { available: Rails.configuration.config[:admin][:api_containers].map { |c| { c => count_containers(Rails.env + '-' + c) } }.inject(:merge).sort_by {|k,v| v }.reverse,
+    { available: Rails.configuration.config[:admin][:api_containers].map { |c| { c => count_containers(Rails.env + '-' + c) } }.inject(:merge),
       indexing: Sidekiq::Queue.new('mapper').size,
       processing: count_scrimpers,
       pending: (count_sitemappers * 50_000) }
