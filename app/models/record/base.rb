@@ -29,7 +29,7 @@ class Record::Base
       new_data[k] = v.is_a?(Hash) ? v.values.last : v
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
-    new_data
+    new_data.deep_symbolize_keys!
   end
 
   def historical_data(options = { crawl: true, social: false })
@@ -40,7 +40,7 @@ class Record::Base
       new_data[k] = v if v.is_a?(Hash) && v.count > 1
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
-    new_data
+    new_data.deep_symbolize_keys!
   end
 
   def data=(new_hash = {})

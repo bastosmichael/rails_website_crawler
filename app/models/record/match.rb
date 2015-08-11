@@ -8,7 +8,7 @@ class Record::Match < Record::Base
       @container = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c }
     end
     @options = options
-    { results: sanitize_results }
+    sanitize_results
   end
 
   def elasticsearch_results container

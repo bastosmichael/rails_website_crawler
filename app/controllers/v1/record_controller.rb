@@ -1,6 +1,6 @@
 class V1::RecordController < V1::AccessController
   def record
-    record = Record::Base.new(params[:container], params[:record_id] + '.json').current_data default_options
+    record = Record::Addons.insert(Record::Base.new(params[:container], params[:record_id] + '.json').current_data(default_options).merge(container: params[:container]))
     respond_to do |format|
       format.json { json_response(200, record) }
       format.xml { xml_response(200, record) }
@@ -36,7 +36,7 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.best(new_params, default_options.merge(results: params[:results] || 1))
+      results = {results: container.best(new_params, default_options.merge(results: params[:results] || 1)).map {|h| Record::Addons.insert h } }
       status = 200
     end
     respond_to do |format|
@@ -53,7 +53,7 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.search(new_params, default_options.merge(results: params[:results] || 10))
+      results = {results: container.search(new_params, default_options.merge(results: params[:results] || 10)).map {|h| Record::Addons.insert h } }
       status = 200
     end
     respond_to do |format|
@@ -68,7 +68,7 @@ class V1::RecordController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = container.sort(params[:array].split(','), default_options.merge(social: params[:social] || true))
+      results = {results: container.sort(params[:array].split(','), default_options.merge(social: params[:social] || true)).map {|h| Record::Addons.insert h } }
       status = 200
     end
     respond_to do |format|

@@ -19,6 +19,7 @@ default: &default
     docs: https://github.com/bastosmichael/skynet
     api_containers:
       -
+    url_addons: {}
   app:
     name: crawler
 
