@@ -23,6 +23,6 @@ class Crawler::Spider < Crawler::Base
   end
 
   def visit
-    @visit ||= Page::Visit.new(parser.internal_links, self.class.underscore)
+    @visit ||= Page::Visit.new(parser.internal_links, self.class.name.underscore)
   end
 end
