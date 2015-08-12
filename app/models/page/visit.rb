@@ -1,29 +1,25 @@
 class Page::Visit
-  def initialize(links)
+  def initialize(links, type)
     @links = *links
+    @type = type
   end
 
-  def spider
+  def cache
     @links.each do |link|
       key = Page::Url.new(link).cache_key
       unless keys.include? key
         keys << key
-        Crawler::Spider.perform_async link
+        ap "#{list}: #{keys.count}"
+        ('Crawler::' + @type).constantize.perform_async link
       end
     end
   end
 
-  def sample
-    @links.each do |link|
-      key = Page::Url.new(link).cache_key
-      unless keys.include? key
-        keys << key
-        Crawler::Scrimper.perform_async link
-      end
-    end
+  def list
+    @type.underscore + '_visited'
   end
 
   def keys
-    @keys ||= Redis::List.new('visited')
+    @keys ||= Redis::List.new(list)
   end
 end

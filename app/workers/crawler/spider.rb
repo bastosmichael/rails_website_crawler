@@ -8,7 +8,7 @@ class Crawler::Spider < Crawler::Base
   def perform(url)
     @url = url
     parser.page = scraper.get
-    visit.spider
+    visit.cache
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404'
@@ -23,6 +23,6 @@ class Crawler::Spider < Crawler::Base
   end
 
   def visit
-    @visit ||= Page::Visit.new(parser.internal_links)
+    @visit ||= Page::Visit.new(parser.internal_links, self.class.underscore)
   end
 end
