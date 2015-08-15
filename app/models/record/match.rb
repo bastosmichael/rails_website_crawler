@@ -24,7 +24,7 @@ class Record::Match < Record::Base
           score: e[:_score]
         }.merge(e[:_source]).merge(placement: index)
       end
-    end.sort_by {|h| h[:score] }.reverse
+    end.sort_by {|h| h[:placement] }
   end
 
   def query
