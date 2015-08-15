@@ -1,5 +1,5 @@
-class Crawler::Sampler < Crawler::Base
-  sidekiq_options queue: :sampler,
+class Crawler::SpiderOne < Crawler::Spider
+  sidekiq_options queue: :spider_one,
                   retry: true,
                   backtrace: true,
                   unique: true,
@@ -17,12 +17,8 @@ class Crawler::Sampler < Crawler::Base
       raise
     end
   rescue Net::HTTP::Persistent::Error => e
-    Crawler::Sampler.perform_async @url
+    Crawler::SpiderOne.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
-  end
-
-  def visit
-    @visit ||= Page::Visit.new(parser.internal_links, self.class.name.underscore)
   end
 end
