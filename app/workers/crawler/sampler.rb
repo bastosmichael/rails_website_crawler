@@ -23,6 +23,6 @@ class Crawler::Sampler < Crawler::Base
   end
 
   def visit
-    @visit ||= Page::Visit.new(parser.internal_links, self.class.name.underscore)
+    @visit ||= Page::Visit.new(parser.internal_links, self.class.name.split('::').last)
   end
 end
