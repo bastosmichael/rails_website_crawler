@@ -8,8 +8,9 @@ class Crawler::SpiderThree < Crawler::Spider
   def perform(url)
     @url = url
     parser.page = scraper.get
-    visit.cache
+    internal_links
     upload
+    visit.cache
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404'
       Recorder::Deleter.perform_async url

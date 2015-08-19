@@ -10,7 +10,11 @@ class Page::Visit
       unless keys.include? key
         keys << key
         ap "#{list}: #{keys.count}"
-        ('Crawler::' + @type).constantize.perform_async link
+        if @type == 'Sampler'
+          Crawler::Scrimper.constantize.perform_async link
+        else
+          ('Crawler::' + @type).constantize.perform_async link
+        end
       end
     end
   end
