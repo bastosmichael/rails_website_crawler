@@ -1,5 +1,6 @@
 class Crawl::Base < Page::Url
   require 'user_agent_randomizer'
+  require 'timeout'
 
   def agent
     @agent ||= defaults
@@ -8,7 +9,9 @@ class Crawl::Base < Page::Url
   def get
     # 	get_with_vcr :new_episodes
     # rescue Psych::SyntaxError
-    agent.get(url)
+    Timeout::timeout(120) {
+      agent.get(url)
+    }
   end
 
   def post(params, headers = '')

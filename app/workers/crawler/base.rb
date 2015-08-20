@@ -21,4 +21,12 @@ class Crawler::Base < Worker
   rescue
     {}
   end
+
+  def internal_links
+    @internal_links ||= parser.internal_links
+  end
+
+  def visit
+    @visit ||= Page::Visit.new(internal_links, self.class.name.split('::').last)
+  end
 end
