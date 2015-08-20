@@ -32,6 +32,7 @@ gem 'dalli'
 gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
 gem 'sidetiq'
+gem 'sidekiq-statistic'
 
 gem 'sinatra', require: false
 

@@ -1,7 +1,7 @@
 class Crawler::Slider < Crawler::Base
   sidekiq_options queue: :slider,
                   retry: true,
-                  backtrace: true
+                  backtrace: true,
                   unique: true,
                   unique_job_expiration: 24 * 60 * 60
 
