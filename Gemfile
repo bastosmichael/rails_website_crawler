@@ -31,7 +31,6 @@ gem 'dalli'
 
 gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
-gem 'sidekiq-limit_fetch'
 gem 'sidetiq'
 
 gem 'sinatra', require: false

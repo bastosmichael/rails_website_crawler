@@ -2,8 +2,8 @@ class Crawler::Slider < Crawler::Base
   sidekiq_options queue: :slider,
                   retry: true,
                   backtrace: true
-                  # unique: true,
-                  # unique_job_expiration: 24 * 60
+                  unique: true,
+                  unique_job_expiration: 24 * 60 * 60
 
   def perform(url)
     @url = url

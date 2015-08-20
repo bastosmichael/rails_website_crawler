@@ -3,7 +3,7 @@ class Crawler::ScrimperThree < Crawler::Base
                   retry: true,
                   backtrace: true,
                   unique: true,
-                  unique_job_expiration: 24 * 60
+                  unique_job_expiration: 24 * 60 * 60
 
   def perform(url)
     @url = url
