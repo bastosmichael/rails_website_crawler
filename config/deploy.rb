@@ -89,6 +89,7 @@ task :deploy => :environment do
       # invoke :"sidekiq:restart"
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      invoke :'puma:phased_restart'
     end
   end
 end
