@@ -217,7 +217,6 @@ GEM
     inflecto (0.0.2)
     ipaddress (0.8.0)
     json (1.8.3)
-    kgio (2.9.3)
     listen (2.10.1)
       celluloid (~> 0.16.0)
       rb-fsevent (>= 0.9.3)
@@ -245,7 +244,10 @@ GEM
     mina (0.3.7)
       open4 (~> 1.3.4)
       rake
-    mina-unicorn (0.3.0)
+    mina-puma (0.2.0)
+      mina
+    mina-sidekiq (0.3.1)
+      mina
     mini_portile (0.6.2)
     minitest (5.8.0)
     mock_redis (0.14.1)
@@ -278,6 +280,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (2.13.4)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -315,7 +318,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
-    raindrops (0.13.0)
     rake (10.4.2)
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
@@ -414,10 +416,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (4.9.0)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     user-agent-randomizer (0.2.0)
     vcr (2.9.3)
     webrobots (0.1.1)
@@ -441,13 +439,15 @@ DEPENDENCIES
   mechanize
   meta_request
   mina
-  mina-unicorn
+  mina-puma
+  mina-sidekiq
   mock_redis
   nokogiri
   oj
   oj_mimic_json
   progress
   pry-rails
+  puma
   quiet_assets
   rack-livereload
   rails (= 4.2.3)
@@ -469,6 +469,5 @@ DEPENDENCIES
   sqlite3
   thin
   typhoeus
-  unicorn
   user-agent-randomizer
   vcr

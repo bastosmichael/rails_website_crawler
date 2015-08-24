@@ -5,7 +5,8 @@ gem 'responders'
 gem 'sqlite3'
 
 gem 'mina'
-gem 'mina-unicorn'
+gem 'mina-puma', :require => false
+gem 'mina-sidekiq'
 
 gem 'oj'
 gem 'oj_mimic_json'
@@ -66,5 +67,5 @@ group :development do
 end
 
 group :production do
-  gem 'unicorn'
+  gem 'puma'
 end

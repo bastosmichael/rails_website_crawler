@@ -1,8 +1,9 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-require 'mina/unicorn'
 require 'mina/rvm'
+require 'mina_sidekiq/tasks'
+require 'mina/puma'
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -14,6 +15,7 @@ set :domain, ENV['DOMAIN']
 set :deploy_to, '/home/ubuntu/skynet'
 set :repository, 'git@github.com:bastosmichael/skynet.git'
 set :branch, 'master'
+set :rails_env, 'production'
 
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
@@ -53,6 +55,15 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_parnth}/tmp/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/pids"]
+
   queue! %[touch "#{deploy_to}/#{shared_path}/config/sidekiq.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/config.yml"]
 
@@ -68,16 +79,16 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
+    invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    invoke :'rails:db_migrate'
-    invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
+      # invoke :"sidekiq:restart"
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
-      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
   end
 end
