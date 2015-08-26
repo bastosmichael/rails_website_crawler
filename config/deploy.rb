@@ -3,7 +3,7 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
 require 'mina_sidekiq/tasks'
-# require 'mina/puma'
+require 'mina/unicorn'
 
 set :user, 'ubuntu'
 set :domain, ENV['DOMAIN']
@@ -66,7 +66,6 @@ task :deploy => :environment do
       # invoke :"sidekiq:restart"
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      invoke :'puma:restart'
     end
   end
 end
@@ -77,23 +76,3 @@ end
 #  - http://nadarei.co/mina/tasks
 #  - http://nadarei.co/mina/settings
 #  - http://nadarei.co/mina/helpers
-
-namespace :puma do
-  desc "Start the application"
-  task :start do
-    queue 'echo "-----> Start Puma"'
-    queue "cd #{app_path} && RAILS_ENV=#{rails_env} && bin/puma.sh start", :pty => false
-  end
-
-  desc "Stop the application"
-  task :stop do
-    queue 'echo "-----> Stop Puma"'
-    queue "cd #{app_path} && RAILS_ENV=#{rails_env} && bin/puma.sh stop"
-  end
-
-  desc "Restart the application"
-  task :restart do
-    queue 'echo "-----> Restart Puma"'
-    queue "cd #{app_path} && RAILS_ENV=#{rails_env} && bin/puma.sh restart"
-  end
-end
