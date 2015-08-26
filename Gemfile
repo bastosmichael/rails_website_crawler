@@ -5,7 +5,7 @@ gem 'responders'
 gem 'sqlite3'
 
 gem 'mina'
-gem 'mina-puma', :require => false
+# gem 'mina-puma', :require => false
 gem 'mina-sidekiq'
 
 gem 'oj'
