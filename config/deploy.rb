@@ -64,7 +64,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      invoke :'sidekiq:restart'
+      # invoke :'sidekiq:restart'
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       invoke :'unicorn:restart'
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
