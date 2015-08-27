@@ -60,7 +60,7 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    invoke :'assets:precompile'
+    invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
