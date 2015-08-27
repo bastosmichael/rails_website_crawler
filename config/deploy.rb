@@ -60,10 +60,11 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'assets:precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
-      # invoke :"sidekiq:restart"
+      invoke :'sidekiq:restart'
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       invoke :'unicorn:restart'
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
