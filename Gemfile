@@ -4,9 +4,9 @@ gem 'rails', '4.2.3'
 gem 'responders'
 gem 'sqlite3'
 
-gem 'mina'
-gem 'mina-sidekiq'
-gem 'mina-unicorn'
+gem 'mina', :require => false
+gem 'mina-sidekiq', :require => false
+gem 'mina-unicorn', :require => false
 
 gem 'oj'
 gem 'oj_mimic_json'
