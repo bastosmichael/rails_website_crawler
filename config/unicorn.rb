@@ -4,7 +4,7 @@ working_directory "#{app_path}/current"
 pid "#{app_path}/current/tmp/pids/unicorn.pid"
 
 # listen
-listen "#{app_path}/current/tmp/sockets/unicorn.sock", backlog: 1024
+listen "#{app_path}/current/tmp/sockets/unicorn.sock", backlog: 64
 
 user 'ubuntu'
 
