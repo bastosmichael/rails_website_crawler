@@ -3,7 +3,7 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'
 require 'mina_sidekiq/tasks'
-require 'mina/puma'
+require 'mina/unicorn'
 
 set :user, 'ubuntu'
 set :domain, ENV['DOMAIN']
@@ -60,13 +60,14 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
+    invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
-      # invoke :"sidekiq:restart"
-      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      # invoke :'sidekiq:restart'
+      # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      invoke :'unicorn:restart'
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      invoke :'puma:phased_restart'
     end
   end
 end

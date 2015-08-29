@@ -4,9 +4,9 @@ gem 'rails', '4.2.3'
 gem 'responders'
 gem 'sqlite3'
 
-gem 'mina'
-gem 'mina-puma', :require => false
-gem 'mina-sidekiq'
+gem 'mina', :require => false
+gem 'mina-sidekiq', :require => false
+gem 'mina-unicorn', :require => false
 
 gem 'oj'
 gem 'oj_mimic_json'
@@ -67,5 +67,5 @@ group :development do
 end
 
 group :production do
-  gem 'puma'
+  gem 'unicorn'
 end
