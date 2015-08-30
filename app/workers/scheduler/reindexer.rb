@@ -1,10 +1,10 @@
-class Scheduler::Reindexer < Scheduler::Base
-  recurrence { daily }
+# class Scheduler::Reindexer < Scheduler::Base
+#   recurrence { daily }
 
-  def perform
-    containers = Rails.configuration.config[:admin][:api_containers]
-    if containers.any?
-      containers.each {|c| Syncer::Reindexer.perform_async c }
-    end if Rails.env.production?
-  end
-end
+#   def perform
+#     containers = Rails.configuration.config[:admin][:api_containers]
+#     if containers.any?
+#       containers.each {|c| Syncer::Reindexer.perform_async c }
+#     end if Rails.env.production?
+#   end
+# end
