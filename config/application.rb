@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Crawler
   class Application < Rails::Application
     config.config = config_for(:config).deep_symbolize_keys!
-    require_relative 'app/sites/initializer.rb' if File.exists?('app/sites/initializer.rb')
+    require_relative '../app/sites/initializer.rb' if File.exists?('../app/sites/initializer.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'sites', '{**}')]
     config.autoload_paths += %W(#{config.root}/helpers)
   end
