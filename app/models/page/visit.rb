@@ -16,7 +16,7 @@ class Page::Visit
   def check_elasticsearch(url)
     if new_url = @name.capitalize.constantize.sanitize_url(url)
       if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
-        check_redis(new_url)
+        check_redis(url)
       end
     end
   rescue NoMethodError => e
