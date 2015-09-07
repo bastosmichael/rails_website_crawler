@@ -26,16 +26,16 @@ class Page::Visit
   end
 
   def check_redis(url)
-    key = Page::Url.new(url).cache_key
-    unless keys.include? key
-      keys << key
-      ap "#{list}: #{keys.count}"
+    # key = Page::Url.new(url).cache_key
+    # unless keys.include? key
+    #   keys << key
+    #   ap "#{list}: #{keys.count}"
       if @type == 'Sampler'
         Crawler::Scrimper.constantize.perform_async url
       else
         ('Crawler::' + @type).constantize.perform_async url
       end
-    end
+    # end
   end
 
   def list
