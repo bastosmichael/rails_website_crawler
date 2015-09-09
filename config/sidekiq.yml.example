@@ -3,11 +3,11 @@
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 16384]
+  - [scrimper, 16384]
   - [mapper, 8192]
   - [recorder, 4096]
   - [slider, 2048]
   - [socializer, 1024]
-  - [scrimper, 512]
   - [scrimper_one, 128]
   - [scrimper_two, 128]
   - [scrimper_three, 128]
