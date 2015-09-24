@@ -1,13 +1,14 @@
 ---
-:concurrency: 20
+:concurrency: 30
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 8192]
+  - [scrimper, 8192]
   - [mapper, 4096]
   - [recorder, 2048]
   - [slider, 1024]
   - [socializer, 512]
-  - [scrimper, 256]
+ # - [scrimper, 256]
   - [scrimper_one, 128]
   - [scrimper_two, 128]
   - [scrimper_three, 128]
