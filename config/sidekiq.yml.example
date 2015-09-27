@@ -1,5 +1,5 @@
 ---
-:concurrency: 20
+:concurrency: 30
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 8192]
@@ -25,7 +25,7 @@
   - [spider_three, 8]
   - [spider_four, 8]
   - [spider_five, 8]
-  #- [sitemapper, 4]
+  - [sitemapper, 4]
   - [sitemapper_one, 2]
   - [sitemapper_two, 2]
   - [sitemapper_three, 2]
