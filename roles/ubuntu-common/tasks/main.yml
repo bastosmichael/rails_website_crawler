@@ -1,0 +1,25 @@
+---
+- name: set locale
+  template: src=locale
+            dest=/etc/default/locale
+
+- name: set timezone
+  file: src=/usr/share/zoneinfo/{{ common_timezone }}
+        dest=/etc/localtime
+        force=yes
+        state=link
+
+- name: update source.list
+  template: src=sources.list
+            dest=/etc/apt/sources.list
+
+- name: update apt cache
+  apt: update_cache=yes
+       cache_valid_time={{ common_apt_cache_time }}
+
+- name: install common packages
+  apt: pkg={{ item }}
+       state=present
+  with_items:
+    - build-essential
+    - git

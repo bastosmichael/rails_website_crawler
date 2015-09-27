@@ -1,0 +1,21 @@
+---
+- hosts: all
+  user: ubuntu
+  sudo: yes
+  roles:
+    - ubuntu-common
+    - chruby
+    - role: nginx-unicorn
+      nginx_sites:
+        - name: 'production'
+          server_name: '_'
+          access_log:
+            format: 'production'
+          # ssl:
+          #   certificate: /etc/ssl/localcerts/my_app1.pem
+          #   certificate_key: /etc/ssl/localcerts/my_app1.key
+          #   sensitive_uris:
+          #     - ^/user/sign_in(.*)
+          #     - ^/user/password(.*)
+            access_log:
+              format: 'production'

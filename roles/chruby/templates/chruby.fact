@@ -1,0 +1,1 @@
+{"version": "{{ installed_chruby_version.stdout }}"}

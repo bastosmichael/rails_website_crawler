@@ -1,0 +1,10 @@
+---
+- name: Update/Install nginx
+  yum: name=nginx state=latest
+
+- name: Generate site configurations
+  template: src=nginx-site.j2 dest=/etc/nginx/conf.d/{{ item.name }}.conf owner=root group=root mode=0644
+  notify:
+    - reload nginx
+  with_items: nginx_sites
+

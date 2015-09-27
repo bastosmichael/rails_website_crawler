@@ -1,0 +1,135 @@
+{% set app = item.root | default('/var/www/' + item.name + '/current') %}
+{% set root = app + '/public' %}
+{% set ssl_only = ('ssl' in item) and ('ssl_only' in item.ssl) and item.ssl.ssl_only %}
+upstream unicorn_{{ item.name }} {
+    server unix:{{ app }}/tmp/sockets/unicorn.sock;
+}
+
+server {
+    listen {{ item.listen | default('80') }};
+    server_name {{ item.server_name }};
+
+    root {{ root }};   # <--- be sure to point to 'public'!
+
+    client_max_body_size {{item.client_max_body_size | default('5M')}};
+
+    # Send sensitive stuff via https
+{% if ssl_only %}
+    return 301 https://$server_name$request_uri;
+{% else %}
+{% if 'ssl' in item %}
+{% for uri in item.ssl.sensitive_uris %}
+    rewrite {{ uri }} https://$server_name$request_uri? permanent;
+{% endfor %}
+{% endif %}
+
+    location / {
+        if (-f $document_root/system/maintenance.html) {
+          return 503;
+        }
+        try_files $uri/index.html $uri.html $uri @cluster;
+    }
+
+{% if ('gzip_assets' in item) and item.gzip_assets %}
+    location ~ ^/assets/ {
+        gzip_static on;
+
+        add_header Cache-Control public;
+        expires 16w;
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_disable "MSIE [1-6]\.";
+        gzip_comp_level 6;
+        gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
+    }
+{% endif %}
+
+    location @cluster {
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://unicorn_{{ item.name }};
+        break;
+    }
+
+    error_page 503 @maintenance;
+    location @maintenance {
+        rewrite  ^(.*)$  /system/maintenance.html break;
+    }
+
+    access_log {{ item.get('access_log', {}).path | default('/var/log/nginx/' + item.name + '.access.log') }} {{ item.get('access_log', {}).format | default('') }};
+    error_log {{ item.get('error_log', {}).path | default('/var/log/nginx/' + item.name + '.error.log') }} {{ item.get('error_log', {}).format | default('') }};
+{% endif %}
+}
+
+{% if 'ssl' in item %}
+server {
+    listen 443 ssl {% if (('spdy' in item.ssl) and ( item.ssl.spdy )) %}spdy{% endif %};
+    server_name {{ item.server_name }};
+
+    root {{ root }};   # <--- be sure to point to 'public'!
+
+    ssl on;
+
+    ssl_certificate {{ item.ssl.certificate }};
+    ssl_certificate_key {{ item.ssl.certificate_key }};
+
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 30m;
+
+    proxy_redirect off;
+
+{% if not ssl_only %}
+    # When we're back to non-sensitive things, send back to http
+    rewrite ^/$ http://$server_name$request_uri? permanent;
+    add_header Strict-Transport-Security max-age=0;
+{% else %}
+    # config to enable HSTS(HTTP Strict Transport Security) https://developer.mozilla.org/en-US/docs/Security/HTTP_Strict_Transport_Security
+    # to avoid ssl stripping https://en.wikipedia.org/wiki/SSL_stripping#SSL_stripping
+    add_header Strict-Transport-Security max-age=31536000;
+{% endif %}
+
+{% if ('gzip_assets' in item) and item.gzip_assets %}
+    location ~ ^/assets/ {
+        gzip_static on;
+
+        add_header Cache-Control public;
+        expires 16w;
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_disable "MSIE [1-6]\.";
+        gzip_comp_level 6;
+        gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
+    }
+{% endif %}
+
+    location / {
+        if (-f $document_root/system/maintenance.html) {
+          return 503;
+        }
+        try_files $uri/index.html $uri.html $uri @cluster;
+    }
+
+    location @cluster {
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://unicorn_{{ item.name }};
+        break;
+    }
+
+    error_page 503 @maintenance;
+    location @maintenance {
+        rewrite  ^(.*)$  /system/maintenance.html break;
+    }
+
+    access_log {{ item.ssl.get('access_log', {}).path | default('/var/log/nginx/' + item.name + '-ssl.access.log') }} {{ item.ssl.get('access_log', {}).format | default('') }};
+    error_log {{ item.ssl.get('error_log', {}).path | default('/var/log/nginx/' + item.name + '-ssl.error.log') }} {{ item.ssl.get('error_log', {}).format | default('') }};
+}
+{% endif %}
