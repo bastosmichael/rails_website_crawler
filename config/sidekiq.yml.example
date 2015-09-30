@@ -33,3 +33,5 @@
   - [sitemapper_five, 2]
   - [syncer, 1]
   - default
+:limits:
+    mapper: 200
