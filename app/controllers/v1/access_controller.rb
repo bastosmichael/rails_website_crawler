@@ -14,7 +14,7 @@ class V1::AccessController < ApplicationController
 
   def counts
     { available: count_indexes,
-      indexing: pretty_integer(Sidekiq::Queue.new('mapper').size),
+      indexing: pretty_integer(count_mappers),
       processing: pretty_integer(count_scrimpers),
       pending: pretty_integer((count_sitemappers) * 50_000) }
   end
@@ -26,6 +26,12 @@ class V1::AccessController < ApplicationController
           .map {|array| { array.first => pretty_integer(array.last) } }.inject(:merge)
   end
 
+  def count_mappers
+    Sidekiq::Queue.new('mapper').size
+  rescue Redis::CannotConnectError => e
+    0
+  end
+
   def count_scrimpers
     Sidekiq::Queue.new('scrimper').size +
       Sidekiq::Queue.new('scrimper_one').size +
@@ -33,6 +39,8 @@ class V1::AccessController < ApplicationController
       Sidekiq::Queue.new('scrimper_three').size +
       Sidekiq::Queue.new('scrimper_four').size +
       Sidekiq::Queue.new('scrimper_five').size
+  rescue Redis::CannotConnectError => e
+    0
   end
 
   def count_sitemappers
@@ -42,10 +50,14 @@ class V1::AccessController < ApplicationController
       Sidekiq::Queue.new('sitemapper_three').size +
       Sidekiq::Queue.new('sitemapper_four').size +
       Sidekiq::Queue.new('sitemapper_five').size
+  rescue Redis::CannotConnectError => e
+    0
   end
 
   def count_containers(container)
     Elasticsearch::Model.client.count(index: container)['count']
+  rescue Elasticsearch::Transport::Transport::Errors => e
+    0
   end
 
   def remove_params
