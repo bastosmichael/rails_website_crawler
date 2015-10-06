@@ -13,8 +13,10 @@ set :repository, 'git@github.com:bastosmichael/skynet.git'
 set :branch, 'master'
 set :forward_agent, true
 set :rails_env, 'production'
+set :keep_releases, 5
 
-set :shared_paths, ['config/sidekiq.yml',
+set :shared_paths, ['public/static',
+                    'config/sidekiq.yml',
                     'config/config.yml',
                     'app/sites',
                     'tmp/sockets',
@@ -26,6 +28,12 @@ task :environment do
 end
 
 task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/public"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public"]
+
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/public/static"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public/static"]
+
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
 
@@ -53,10 +61,12 @@ task :deploy => :environment do
   to :before_hook do
     # Put things to run locally before ssh
   end
+
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
-    invoke :'sidekiq:quiet'
+    # invoke :'rvm:use[ruby-2.2.2]'
+    # invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
