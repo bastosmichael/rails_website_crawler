@@ -1,8 +1,8 @@
 class Mapper::Indexer < Mapper::Base
-  def perform(container, id, hash = nil)
+  def perform(container, id, types, hash = nil)
     @container = container
     hash = record(id + '.json').data if hash.nil?
-    index = Rails.env + '-' + container
+    index = Rails.env + '-' + types
     new_hash = {}
 
     hash.with_progress("Mapping #{index}: #{id}").each do |k, v|
