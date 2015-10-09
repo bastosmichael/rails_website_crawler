@@ -55,8 +55,8 @@ class V1::AccessController < ApplicationController
   end
 
   def count_containers(container)
-    Elasticsearch::Model.client.count(index: container)['count']
-  rescue Elasticsearch::Transport::Transport::Errors => e
+  #   Elasticsearch::Model.client.count(index: container)['count']
+  # rescue Elasticsearch::Transport::Transport::Errors => e
     0
   end
 

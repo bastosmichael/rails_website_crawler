@@ -4,7 +4,8 @@ class Page::Visit
     @type = type
     @name = Page::Url.new(@links.first).name
     @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
-    @index = Rails.env + '-' + @container
+    types = @container.split('-').last.pluralize.gsub(':', '')
+    @index = Rails.env + '-' + types
   end
 
   def cache
