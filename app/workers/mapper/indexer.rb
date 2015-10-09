@@ -1,6 +1,7 @@
 class Mapper::Indexer < Mapper::Base
-  def perform(container, id, types, hash = nil)
+  def perform(container, id, hash = nil)
     @container = container
+    types = container.split('-').last.pluralize.gsub(':', '')
     hash = record(id + '.json').data if hash.nil?
     index = Rails.env + '-' + types
     new_hash = {}

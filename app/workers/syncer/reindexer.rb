@@ -7,7 +7,7 @@ class Syncer::Reindexer < Syncer::Base
     records.with_progress("Remapping #{container}").each do |r|
       id = r.key.tr('.json','')
       unless Elasticsearch::Model.client.exists? index: index, type: container, id: id
-        Mapper::Indexer.perform_async @container, id, types
+        Mapper::Indexer.perform_async @container, id
       end
     end
   end

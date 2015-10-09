@@ -8,7 +8,6 @@ class Recorder::Uploader < Recorder::Base
 
       Mapper::Indexer.perform_async uploader.container,
                                     uploader.id,
-                                    uploader.types,
                                     hash
     end unless metadata.nil?
   end
