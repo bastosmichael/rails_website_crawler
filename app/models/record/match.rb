@@ -14,28 +14,18 @@ class Record::Match < Record::Base
     sanitize_results
   end
 
-  def elasticsearch_results container
+  def elasticsearch_results
     Elasticsearch::Model.client.search(index: @index, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
-    elasticsearch_results(container)[:hits][:hits].map do |e|
+    elasticsearch_results[:hits][:hits].map do |e|
       recrawl(e[:_source][:url], @options) if e[:_source][:url]
       { id: e[:_id],
         container: e[:_type],
         score: e[:_score]
       }.merge(e[:_source])
     end
-
-    # @container.flat_map do |container|
-    #   elasticsearch_results(container)[:hits][:hits].each_with_index.map do |e, index|
-    #     recrawl(e[:_source][:url], @options) if e[:_source][:url]
-    #     { id: e[:_id],
-    #       container: e[:_type],
-    #       score: e[:_score]
-    #     }.merge(e[:_source]).merge(placement: index)
-    #   end
-    # end.sort_by {|h| h[:placement] }
   end
 
   def query
