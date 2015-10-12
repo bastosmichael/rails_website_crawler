@@ -21,7 +21,7 @@ class V1::AccessController < ApplicationController
 
   def count_indexes
     Rails.configuration.config[:admin][:api_containers]
-      .map { |c| [c, count_containers(Rails.env + '-' + c) ] }
+      .map { |c| [c, count_containers(c) ] }
         .sort_by {|array| array.last }.reverse
           .map {|array| { array.first => pretty_integer(array.last) } }.inject(:merge)
   end
@@ -55,8 +55,9 @@ class V1::AccessController < ApplicationController
   end
 
   def count_containers(container)
-  #   Elasticsearch::Model.client.count(index: container)['count']
-  # rescue Elasticsearch::Transport::Transport::Errors => e
+    index = Rails.env + '-' + container.split('-').last.pluralize.gsub(':', '')
+    Elasticsearch::Model.client.count(index: index, type: container)['count']
+  rescue Elasticsearch::Transport::Transport::Errors => e
     0
   end
 
