@@ -22,13 +22,13 @@ class Mapper::Indexer < Mapper::Base
           new_hash[k + '_history'] = v.count if v.count > 1
         elsif !!v == v # Check if Boolean
           new_hash[k] = v
+        elsif v.is_a?(Array)
+          new_hash[k] = v.map {|value| value.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''}) }
         else
           new_hash[k] = v.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''})
         end
       end
     end
-
-    ap new_hash.sort.to_h
 
     Elasticsearch::Model.client.index index: index, type: container, id: id, body: new_hash.sort.to_h
 
