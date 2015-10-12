@@ -40,7 +40,7 @@ class Record::Search < Record::Match
       },
       {
         flt_field: {
-          description: {
+          url: {
             like_text: @query_hash[:query],
             analyzer: 'snowball',
             fuzziness: 0.7
@@ -49,19 +49,10 @@ class Record::Search < Record::Match
       },
       {
         flt_field: {
-          url: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.8
-          }
-        }
-      },
-      {
-        flt_field: {
           tags: {
             like_text: @query_hash[:query],
             analyzer: 'snowball',
-            fuzziness: 0.5
+            fuzziness: 0.3
           }
         }
       },
@@ -70,7 +61,16 @@ class Record::Search < Record::Match
           categories: {
             like_text: @query_hash[:query],
             analyzer: 'snowball',
-            fuzziness: 0.6
+            fuzziness: 0.5
+          }
+        }
+      },
+      {
+        flt_field: {
+          description: {
+            like_text: @query_hash[:query],
+            analyzer: 'snowball',
+            fuzziness: 0.1
           }
         }
       },

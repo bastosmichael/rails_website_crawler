@@ -2,7 +2,7 @@ class Crawler::SpiderOne < Crawler::Spider
   sidekiq_options queue: :spider_one,
                   retry: true,
                   backtrace: true,
-                  unique: true,
+                  unique: :until_executed,
                   unique_job_expiration: 24 * 60 * 60
 
   def perform(url)

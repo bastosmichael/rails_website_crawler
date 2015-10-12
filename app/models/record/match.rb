@@ -7,7 +7,8 @@ class Record::Match < Record::Base
       types = container.split('-').last.pluralize.gsub(':', '')
       @index = [ Rails.env + '-' + types ]
     elsif @container.nil?
-      @index = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
+      @container = Rails.configuration.config[:admin][:api_containers]
+      @index = @container.map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
     end
 
     @options = options
@@ -15,7 +16,7 @@ class Record::Match < Record::Base
   end
 
   def elasticsearch_results
-    Elasticsearch::Model.client.search(index: @index, body: query).deep_symbolize_keys!
+    Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
