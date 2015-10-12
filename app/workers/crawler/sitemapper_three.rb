@@ -1,9 +1,9 @@
 class Crawler::SitemapperThree < Crawler::Sitemapper
   sidekiq_options queue: :sitemapper_three,
                   retry: true,
-                  backtrace: true,
-                  unique: :until_executed,
-                  unique_job_expiration: 24 * 60 * 60
+                  backtrace: true
+                  # unique: :until_executed,
+                  # unique_job_expiration: 24 * 60 * 60
 
   def perform(url, type = 'ScrimperThree')
     if Sidekiq::Queue.new(type.underscore).size <= 0
