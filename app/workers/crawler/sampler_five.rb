@@ -2,7 +2,7 @@ class Crawler::SamplerFive < Crawler::Sampler
   sidekiq_options queue: :sampler_five,
                   retry: true,
                   backtrace: true,
-                  unique: true,
+                  unique: :until_executed,
                   unique_job_expiration: 24 * 60 * 60
 
   def perform(url, type = 'ScrimperFive')

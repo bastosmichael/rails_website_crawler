@@ -2,7 +2,7 @@ class Crawler::ScrimperOne < Crawler::Base
   sidekiq_options queue: :scrimper_one,
                   retry: true,
                   backtrace: true,
-                  unique: true,
+                  unique: :until_executed,
                   unique_job_expiration: 24 * 60 * 60
 
   def perform(url)

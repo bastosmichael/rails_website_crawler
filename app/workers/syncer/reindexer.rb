@@ -1,7 +1,8 @@
 class Syncer::Reindexer < Syncer::Base
   def perform(container)
     @container = container
-    index = Rails.env + '-' + container
+    types = container.split('-').last.pluralize.gsub(':', '')
+    index = Rails.env + '-' + types
     Elasticsearch::Model.client.indices.refresh index: index
     records.with_progress("Remapping #{container}").each do |r|
       id = r.key.tr('.json','')

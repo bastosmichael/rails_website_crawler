@@ -2,29 +2,31 @@ class Record::Match < Record::Base
   def best(query_hash = {}, options = { crawl: true, social: false, results: 1 })
     @options = options
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
+
     if !@container.nil? && !@container.include?(Rails.env)
-      @container = [ Rails.env + '-' + @container ]
+      types = container.split('-').last.pluralize.gsub(':', '')
+      @index = [ Rails.env + '-' + types ]
     elsif @container.nil?
-      @container = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c }
+      @container = Rails.configuration.config[:admin][:api_containers]
+      @index = @container.map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
     end
+
     @options = options
     sanitize_results
   end
 
-  def elasticsearch_results container
-    Elasticsearch::Model.client.search(index: container, body: query).deep_symbolize_keys!
+  def elasticsearch_results
+    Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
-    @container.flat_map do |container|
-      elasticsearch_results(container)[:hits][:hits].each_with_index.map do |e, index|
-        recrawl(e[:_source][:url], @options) if e[:_source][:url]
-        { id: e[:_id],
-          container: e[:_type],
-          score: e[:_score]
-        }.merge(e[:_source]).merge(placement: index)
-      end
-    end.sort_by {|h| h[:placement] }
+    elasticsearch_results[:hits][:hits].map do |e|
+      recrawl(e[:_source][:url], @options) if e[:_source][:url]
+      { id: e[:_id],
+        container: e[:_type],
+        score: e[:_score]
+      }.merge(e[:_source])
+    end
   end
 
   def query

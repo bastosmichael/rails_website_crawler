@@ -2,17 +2,20 @@ class Record::Top < Record::Base
   def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10 })
     @options = options
     @query_array = query_array
+
     if !@container.nil? && !@container.include?(Rails.env)
-      @container = Rails.env + '-' + @container
+      types = container.split('-').last.pluralize.gsub(':', '')
+      @index = [ Rails.env + '-' + types ]
     elsif @container.nil?
-      @container = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c }
+      @index = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
     end
+
     @options = options
     sanitize_results
   end
 
   def elasticsearch_results
-    Elasticsearch::Model.client.search(index: @container, body: query).deep_symbolize_keys!
+    Elasticsearch::Model.client.search(index: @index, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
