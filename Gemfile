@@ -33,11 +33,11 @@ gem 'elasticsearch-model'
 
 gem 'dalli'
 
-gem 'sidekiq'
+gem 'sidekiq', '3.4.2'
 gem 'sidekiq-unique-jobs'
 gem 'sidekiq-limit_fetch'
 gem 'sidetiq'
-gem 'sidekiq-statistic'
+# gem 'sidekiq-statistic'
 
 gem 'sinatra', require: false
 
