@@ -382,7 +382,7 @@ GEM
       redis-namespace (~> 1.5, >= 1.5.2)
     sidekiq-limit_fetch (2.4.2)
       sidekiq (>= 2.6.5, < 4.0)
-    sidekiq-unique-jobs (4.0.4)
+    sidekiq-unique-jobs (4.0.7)
       sidekiq (>= 2.6)
     sidetiq (0.6.3)
       celluloid (>= 0.14.1)
