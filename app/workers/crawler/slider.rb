@@ -11,7 +11,7 @@ class Crawler::Slider < Crawler::Base
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' || e.response_code == '520' || e.response_code == '500'
-      Recorder::Deleter.perform_async url
+      Recorder::UrlDeleter.perform_async url
     else
       raise
     end

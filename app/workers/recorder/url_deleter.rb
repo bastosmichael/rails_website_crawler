@@ -1,8 +1,9 @@
-class Recorder::Deleter < Recorder::Base
+class Recorder::UrlDeleter < Recorder::Base
   def perform(url)
     @name = Page::Url.new(url).name
     @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
-    @index = Rails.env + '-' + @container
+    types = @container.split('-').last.pluralize.gsub(':', '')
+    @index = Rails.env + '-' + types
 
     record = Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })
 

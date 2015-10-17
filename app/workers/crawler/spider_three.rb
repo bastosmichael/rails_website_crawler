@@ -13,7 +13,7 @@ class Crawler::SpiderThree < Crawler::Spider
     visit.cache
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404'
-      Recorder::Deleter.perform_async url
+      Recorder::UrlDeleter.perform_async url
     else
       raise
     end
