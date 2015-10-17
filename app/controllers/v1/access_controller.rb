@@ -14,7 +14,7 @@ class V1::AccessController < ApplicationController
 
   def counts
     { available: count_indexes,
-      indexing: pretty_integer(count_mappers),
+      indexing: pretty_integer(count_indexers),
       processing: pretty_integer(count_scrimpers),
       pending: pretty_integer((count_sitemappers) * 50_000) }
   end
@@ -26,8 +26,9 @@ class V1::AccessController < ApplicationController
           .map {|array| { array.first => pretty_integer(array.last) } }.inject(:merge)
   end
 
-  def count_mappers
-    Sidekiq::Queue.new('mapper').size
+  def count_indexers
+    Sidekiq::Queue.new('mapper').size +
+      Sidekiq::Queue.new('recorder').size
   rescue Redis::CannotConnectError => e
     0
   end
@@ -38,7 +39,15 @@ class V1::AccessController < ApplicationController
       Sidekiq::Queue.new('scrimper_two').size +
       Sidekiq::Queue.new('scrimper_three').size +
       Sidekiq::Queue.new('scrimper_four').size +
-      Sidekiq::Queue.new('scrimper_five').size
+      Sidekiq::Queue.new('scrimper_five').size +
+      Sidekiq::Queue.new('sampler').size +
+      Sidekiq::Queue.new('sampler_one').size +
+      Sidekiq::Queue.new('sampler_two').size +
+      Sidekiq::Queue.new('sampler_three').size +
+      Sidekiq::Queue.new('sampler_four').size +
+      Sidekiq::Queue.new('sampler_five').size +
+      Sidekiq::Queue.new('slider').size +
+      Sidekiq::Queue.new('socializer').size
   rescue Redis::CannotConnectError => e
     0
   end
