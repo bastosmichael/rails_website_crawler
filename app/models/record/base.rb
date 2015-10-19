@@ -39,6 +39,8 @@ class Record::Base
     old_data.with_progress("Historical Data #{@container}: #{old_data['id']}").each do |k, v|
       new_data[k] = v if v.is_a?(Hash) && v.count > 1
     end if old_data['id']
+    # Grouping historical data by day, week and month
+    # hash.group_by_week {|k,v| k }.map {|k,v| if value = v.try(:first).try(:last) then @last = value end; {k.to_date => @last} }.inject({},:merge)
     recrawl(old_data['url'], options) if old_data['url']
     new_data.deep_symbolize_keys!
   end
