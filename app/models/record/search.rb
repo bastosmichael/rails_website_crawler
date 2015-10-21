@@ -8,26 +8,26 @@ class Record::Search < Record::Match
           name: @query_hash[:query]
         }
       },
-      {
-       match: {
-         description: @query_hash[:query]
-        }
-      },
-      {
-        match: {
-          url: @query_hash[:query]
-        }
-      },
-      {
-        match: {
-          tags: @query_hash[:query]
-        }
-      },
-      {
-        match: {
-          categories: @query_hash[:query]
-        }
-      },
+      # {
+      #  match: {
+      #    description: @query_hash[:query]
+      #   }
+      # },
+      # {
+      #   match: {
+      #     url: @query_hash[:query]
+      #   }
+      # },
+      # {
+      #   match: {
+      #     tags: @query_hash[:query]
+      #   }
+      # },
+      # {
+      #   match: {
+      #     categories: @query_hash[:query]
+      #   }
+      # },
       # {
       #   flt_field: {
       #     name: {
