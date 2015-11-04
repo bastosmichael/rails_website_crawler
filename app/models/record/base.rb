@@ -26,7 +26,11 @@ class Record::Base
     return { error: 'not available' } unless old_data = data
     new_data = {}
     old_data.with_progress("Current Data #{@container}: #{old_data['id']}").each do |k, v|
-      new_data[k] = v.is_a?(Hash) ? v.values.last : v
+      if v.is_a?(Hash)
+        new_data[k] = sanitize_value(v.values.last)
+      else
+        new_data[k] = sanitize_value(v)
+      end
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
     new_data.deep_symbolize_keys!
@@ -40,13 +44,7 @@ class Record::Base
       if v.is_a?(Hash) && v.count > 1
         new_data[k] = v.group_by_day {|k,v| k }.map do |k,v|
           if value = v.try(:first).try(:last)
-            if value.to_i.to_s == value.to_s
-              @last = value.to_i
-            elsif (Float(value) rescue false)
-              @last = value.to_f
-            else
-              @last = value
-            end
+            @last = sanitize_value(value)
           end
           {k.to_date => @last}
         end.inject({},:merge)
@@ -65,6 +63,18 @@ class Record::Base
   end
 
   private
+
+  def sanitize_value value
+    if value.is_a?(Array)
+      return value
+    elsif value.to_i.to_s == value.to_s
+      return value.to_i
+    elsif (Float(value) rescue false)
+      return value.to_f
+    else
+      return value
+    end
+  end
 
   def recrawl(url, options)
     if options[:crawl]
