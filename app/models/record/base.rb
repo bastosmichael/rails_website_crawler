@@ -38,7 +38,18 @@ class Record::Base
                  name: old_data['name'] }
     old_data.with_progress("Historical Data #{@container}: #{old_data['id']}").each do |k, v|
       if v.is_a?(Hash) && v.count > 1
-        new_data[k] = v.group_by_day {|k,v| k }.map {|k,v| if value = v.try(:first).try(:last) then @last = value end; {k.to_date => @last} }.inject({},:merge)
+        new_data[k] = v.group_by_day {|k,v| k }.map do |k,v|
+          if value = v.try(:first).try(:last)
+            if value.to_i.to_s == value.to_s
+              @last = value.to_i
+            elsif (Float(value) rescue false)
+              @last = value.to_f
+            else
+              @last = value
+            end
+          end
+          {k.to_date => @last}
+        end.inject({},:merge)
       end
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
