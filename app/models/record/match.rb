@@ -30,7 +30,7 @@ class Record::Match < Record::Base
       }
 
       e[:_source].each do |k,v|
-        if k.include?('_shares')
+        if k.to_s.include?('_shares')
           new_data[:social][k] = v
         else
           new_data[k] = v
