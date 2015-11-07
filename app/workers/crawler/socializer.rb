@@ -2,8 +2,7 @@ class Crawler::Socializer < Crawler::Base
   sidekiq_options queue: :socializer,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed,
-                  unique_job_expiration: 24 * 60 * 60
+                  unique: :until_executed
 
   def perform(url)
     @url = url

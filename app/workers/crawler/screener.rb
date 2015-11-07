@@ -1,7 +1,8 @@
 class Crawler::Screener < Crawler::Base
   sidekiq_options queue: :screener,
                   retry: true,
-                  backtrace: true
+                  backtrace: true,
+                  unique: :until_executed
 
   def perform(url, path)
     @url = url

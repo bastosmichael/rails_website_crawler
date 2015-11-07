@@ -2,8 +2,7 @@ class Syncer::Base < Worker
   sidekiq_options queue: :syncer,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed,
-                  unique_job_expiration: 24 * 60
+                  unique: :until_executed
 
   def cloud
     @cloud ||= Cloud.new(@container)
