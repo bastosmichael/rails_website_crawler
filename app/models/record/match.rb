@@ -33,7 +33,7 @@ class Record::Match < Record::Base
 
       e[:_source].each do |k,v|
         if k.to_s.include?('_history')
-          new_data[:history][k.gsub('_history','')] = v
+          new_data[:history][k.to_s.gsub('_history','')] = v
         elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
           new_data[:social][k] = v
         elsif k.to_s.include?('price')
