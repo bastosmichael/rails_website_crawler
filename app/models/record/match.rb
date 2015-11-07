@@ -22,10 +22,21 @@ class Record::Match < Record::Base
   def sanitize_results
     elasticsearch_results[:hits][:hits].map do |e|
       recrawl(e[:_source][:url], @options) if e[:_source][:url]
-      { id: e[:_id],
+
+      new_data = { social: {},
+        id: e[:_id],
         container: e[:_type],
         score: e[:_score]
-      }.merge(e[:_source])
+      }
+
+      e[:_source].each do |k,v|
+        if k.include?('_shares')
+          new_data[:social][k] = v
+        else
+          new_data[k] = v
+        end
+      end
+      new_data
     end
   end
 
