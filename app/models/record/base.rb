@@ -24,18 +24,22 @@ class Record::Base
 
   def current_data(options = { crawl: true, social: false })
     return { error: 'not available' } unless old_data = data
-    new_data = {social: {}}
+    new_data = {social: {}, price:{}}
     old_data.with_progress("Current Data #{@container}: #{old_data['id']}").each do |k, v|
 
       if v.is_a?(Hash)
         if k.include?('_shares')
           new_data[:social][k] = sanitize_value(v.values.last)
+        elsif k.include?('price')
+          new_data[:price][k] = sanitize_value(v.values.last)
         else
           new_data[k] = sanitize_value(v.values.last)
         end
       else
-        if k.include?('social')
+        if k.include?('_shares')
           new_data[:social][k] = sanitize_value(v)
+        elsif k.include?('price')
+          new_data[:price][k] = sanitize_value(v)
         else
           new_data[k] = sanitize_value(v)
         end
