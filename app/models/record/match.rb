@@ -23,14 +23,17 @@ class Record::Match < Record::Base
     elasticsearch_results[:hits][:hits].map do |e|
       recrawl(e[:_source][:url], @options) if e[:_source][:url]
 
-      new_data = { social: {},
-        id: e[:_id],
-        container: e[:_type],
-        score: e[:_score]
-      }
+      new_data = { history: {},
+                   social: {},
+                   id: e[:_id],
+                   container: e[:_type],
+                   score: e[:_score]
+                 }
 
       e[:_source].each do |k,v|
-        if k.to_s.include?('_shares')
+        if k.to_s.include?('_history')
+          new_data[:history][k] = v
+        elsif (k.to_s.include?('facebook') || k.to_s.include?('_shares')) && !k.to_s.include?('_history')
           new_data[:social][k] = v
         else
           new_data[k] = v
