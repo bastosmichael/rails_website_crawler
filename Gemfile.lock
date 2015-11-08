@@ -484,6 +484,3 @@ DEPENDENCIES
   unicorn
   user-agent-randomizer
   vcr
-
-BUNDLED WITH
-   1.10.6
