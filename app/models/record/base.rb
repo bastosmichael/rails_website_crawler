@@ -83,7 +83,7 @@ class Record::Base
   private
 
   def sanitize_value value
-    if value.is_a?(Array)
+    if value.is_a?(Array) || !!value == value
       return value
     elsif value.to_i.to_s == value.to_s
       return value.to_i
