@@ -11,7 +11,9 @@ class Mapper::Indexer < Mapper::Base
         if v.is_a?(Hash)
           value = v.values.last
 
-          if value.to_i.to_s == value.to_s
+          if value.is_a?(Array) || !!value == value
+            new_hash[k] = value
+          elsif value.to_i.to_s == value.to_s
             new_hash[k] = value.to_i
           elsif (Float(value) rescue false)
             new_hash[k] = value.to_f
