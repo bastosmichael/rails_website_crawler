@@ -33,8 +33,8 @@ class Mapper::Indexer < Mapper::Base
     Elasticsearch::Model.client.index index: index, type: container, id: id, body: new_hash.sort.to_h
 
     Elasticsearch::Model.client.indices.refresh index: index
-  # rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-  #  record(id + '.json').delete
-  #  Crawler::Slider.perform_async new_hash['url']
+  rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+   record(id + '.json').delete
+   Crawler::Slider.perform_async new_hash['url']
   end
 end

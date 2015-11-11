@@ -36,7 +36,7 @@ class Record::Match < Record::Base
           new_data[:history][k.to_s.gsub('_history','')] = v
         elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
           new_data[:social][k] = v
-        elsif k.to_s.include?('price')
+        elsif k.to_s.include?('price') || k.to_s.include?('rebate')
           new_data[:price][k] = v
         else
           new_data[k] = v
