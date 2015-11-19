@@ -34,12 +34,12 @@
   #- [sitemapper_five, 1]
   - default
 :process_limits:
-  scrimper: 1
-  scrimper_one: 1
-  scrimper_two: 1
-  scrimper_three: 1
-  scrimper_four: 1
-  scrimper_five: 1
+  scrimper: 5
+  scrimper_one: 5
+  scrimper_two: 5
+  scrimper_three: 5
+  scrimper_four: 5
+  scrimper_five: 5
 :limits:
   sitemapper: 1
   sitemapper_one: 1
