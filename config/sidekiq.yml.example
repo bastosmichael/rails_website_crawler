@@ -1,10 +1,10 @@
 ---
-:concurrency: 20
+:concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 4096]
-  - [mapper, 2048]
-  - [recorder, 1024]
+  #- [mapper, 2048]
+  #- [recorder, 1024]
   - [slider, 512]
   - [socializer, 256]
   - [scrimper, 128]
@@ -33,13 +33,6 @@
   #- [sitemapper_four, 1]
   #- [sitemapper_five, 1]
   - default
-:process_limits:
-  scrimper: 5
-  scrimper_one: 5
-  scrimper_two: 5
-  scrimper_three: 5
-  scrimper_four: 5
-  scrimper_five: 5
 :limits:
   sitemapper: 1
   sitemapper_one: 1
