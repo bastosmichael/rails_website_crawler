@@ -46,6 +46,12 @@ class V1::AccessController < ApplicationController
       Sidekiq::Queue.new('sampler_three').size +
       Sidekiq::Queue.new('sampler_four').size +
       Sidekiq::Queue.new('sampler_five').size +
+      Sidekiq::Queue.new('spider').size +
+      Sidekiq::Queue.new('spider_one').size +
+      Sidekiq::Queue.new('spider_two').size +
+      Sidekiq::Queue.new('spider_three').size +
+      Sidekiq::Queue.new('spider_four').size +
+      Sidekiq::Queue.new('spider_five').size +
       Sidekiq::Queue.new('slider').size +
       Sidekiq::Queue.new('socializer').size
   rescue Redis::CannotConnectError => e
