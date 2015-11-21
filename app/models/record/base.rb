@@ -35,7 +35,7 @@ class Record::Base
       if v.is_a?(Hash)
         if k.include?('_shares')
           new_data[:social][k] = sanitize_value(v.values.last)
-        elsif k.include?('price') || k.include?('rebate')
+        elsif k.include?('price')
           new_data[:price][k] = sanitize_value(v.values.last)
         else
           new_data[k] = sanitize_value(v.values.last)
@@ -43,7 +43,7 @@ class Record::Base
       else
         if k.include?('_shares')
           new_data[:social][k] = sanitize_value(v)
-        elsif k.include?('price') || k.include?('rebate')
+        elsif k.include?('price')
           new_data[:price][k] = sanitize_value(v)
         else
           new_data[k] = sanitize_value(v)
