@@ -26,12 +26,12 @@
   - [spider_four, 64]
   - [spider_five, 64]
   - [syncer, 32]
-  #- [sitemapper, 16]
-  #- [sitemapper_one, 8]
-  #- [sitemapper_two, 6]
-  #- [sitemapper_three, 4]
-  #- [sitemapper_four, 2]
-  #- [sitemapper_five, 1]
+  - [sitemapper, 16]
+  - [sitemapper_one, 8]
+  - [sitemapper_two, 6]
+  - [sitemapper_three, 4]
+  - [sitemapper_four, 2]
+  - [sitemapper_five, 1]
   - default
 :limits:
   mapper: 200
