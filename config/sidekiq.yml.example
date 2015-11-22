@@ -36,6 +36,7 @@
 :limits:
   mapper: 200
   recorder: 500
+:process_limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
