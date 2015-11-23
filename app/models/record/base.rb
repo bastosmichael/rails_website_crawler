@@ -98,5 +98,7 @@ class Record::Base
     if options[:crawl]
       options[:social] ? Crawler::Socializer.perform_async(url) : Crawler::Slider.perform_async(url)
     end
+  rescue #TODO find the correct error for Redis not responding
+    nil
   end
 end
