@@ -35,6 +35,7 @@ class Cloud
     files = container.files
     truncated = files.try(:is_truncated)
     while truncated
+      ap "Collecting #{files.count} from #{self.bucket}..."
       bucket_object = container.files.all(marker: files.last.key)
       truncated = bucket_object.is_truncated
       files += bucket_object
