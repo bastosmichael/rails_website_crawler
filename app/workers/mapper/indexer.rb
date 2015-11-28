@@ -6,6 +6,8 @@ class Mapper::Indexer < Mapper::Base
     index = Rails.env + '-' + types
     new_hash = {}
 
+    ap hash
+
     hash.with_progress("Mapping #{index}: #{id}").each do |k, v|
       unless Record::Upload::EXCLUDE.include? k.to_sym
         if v.is_a?(Hash)
@@ -17,6 +19,7 @@ class Mapper::Indexer < Mapper::Base
             new_hash[k] = value.to_i
           elsif (Float(value) rescue false)
             new_hash[k] = value.to_f
+            new_hash[k] = value if new_hash[k].infinite?
           else
             new_hash[k] = value
           end
@@ -31,6 +34,8 @@ class Mapper::Indexer < Mapper::Base
         end
       end
     end
+
+    ap new_hash
 
     Elasticsearch::Model.client.index index: index, type: container, id: id, body: new_hash.sort.to_h
 
