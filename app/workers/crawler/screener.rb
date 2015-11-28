@@ -5,6 +5,7 @@ class Crawler::Screener < Crawler::Base
                   unique: :until_executed
 
   def perform(url, path)
+    return if url.nil?
     @url = url
     capturer.relative_path = path
     capturer.screen

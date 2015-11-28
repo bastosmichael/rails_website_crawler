@@ -5,6 +5,7 @@ class Crawler::Sampler < Crawler::Base
                   unique: :until_executed
 
   def perform(url, type = 'Scrimper')
+    return if url.nil?
     @url = url
     @type = type
     parser.page = scraper.get

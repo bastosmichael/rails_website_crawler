@@ -5,6 +5,7 @@ class Crawler::SpiderTwo < Crawler::Spider
                   unique: :until_executed
 
   def perform(url)
+    return if url.nil?
     @url = url
     parser.page = scraper.get
     visit.cache

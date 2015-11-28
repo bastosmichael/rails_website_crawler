@@ -5,6 +5,7 @@ class Crawler::ScrimperFour < Crawler::Base
                   unique: :until_executed
 
   def perform(url)
+    return if url.nil?
     @url = url
     parser.page = scraper.get
     upload

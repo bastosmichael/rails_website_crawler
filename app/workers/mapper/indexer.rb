@@ -37,6 +37,6 @@ class Mapper::Indexer < Mapper::Base
     Elasticsearch::Model.client.indices.refresh index: index
   rescue NoMethodError # Elasticsearch::Transport::Transport::Errors::BadRequest => e
    record(id + '.json').delete
-   Crawler::Slider.perform_async new_hash['url']
+   Crawler::Slider.perform_async new_hash['url'] if new_hash['url']
   end
 end
