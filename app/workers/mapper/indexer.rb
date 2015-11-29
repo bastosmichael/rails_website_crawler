@@ -33,6 +33,15 @@ class Mapper::Indexer < Mapper::Base
       end
     end
 
+    if bad_ids = Elasticsearch::Model.client.search(index: index, type: @container, body: { query: { match_phrase_prefix: { url: new_hash['url'] } } })['hits']['hits'].select do |hit|
+                   hit['_id'] != id
+                 end
+      bad_ids.each do |bad_id|
+        record(bad_id + '.json').delete
+        Elasticsearch::Model.client.delete index: index, type: @container, id: bad_id
+      end
+    end
+
     Elasticsearch::Model.client.index index: index, type: container, id: id, body: new_hash.sort.to_h
 
     Elasticsearch::Model.client.indices.refresh index: index
