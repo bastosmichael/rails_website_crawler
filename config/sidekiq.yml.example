@@ -20,15 +20,15 @@
   - [spider_four, 4096]
   - [spider_five, 4096]
   - [syncer, 2048]
-  - [scrimper, 1024]
-  - [scrimper_one, 512]
-  - [scrimper_two, 256]
-  - [scrimper_three, 128]
-  - [scrimper_four, 64]
-  - [scrimper_five, 32]
-  - [sitemapper, 16]
-  - [sitemapper_one, 8]
-  - [sitemapper_two, 6]
+  - [scrimper, 2048]
+  - [scrimper_one, 1024]
+  - [scrimper_two, 512]
+  - [scrimper_three, 256]
+  - [scrimper_four, 128]
+  - [scrimper_five, 64]
+  - [sitemapper, 32]
+  - [sitemapper_one, 16]
+  - [sitemapper_two, 8]
   - [sitemapper_three, 4]
   - [sitemapper_four, 2]
   - [sitemapper_five, 1]
@@ -36,9 +36,9 @@
 :limits:
   mapper: 100
   recorder: 100
-  sitemapper: 5
-  sitemapper_one: 5
-  sitemapper_two: 5
-  sitemapper_three: 5
-  sitemapper_four: 5
-  sitemapper_five: 5
+  sitemapper: 64
+  sitemapper_one: 32
+  sitemapper_two: 16
+  sitemapper_three: 8
+  sitemapper_four: 4
+  sitemapper_five: 2
