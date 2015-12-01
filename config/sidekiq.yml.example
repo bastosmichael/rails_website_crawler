@@ -1,5 +1,5 @@
 ---
-:concurrency: 5
+:concurrency: 30
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 4096]
@@ -36,9 +36,9 @@
 :limits:
   mapper: 100
   recorder: 100
-  sitemapper: 64
-  sitemapper_one: 32
-  sitemapper_two: 16
-  sitemapper_three: 8
-  sitemapper_four: 4
-  sitemapper_five: 2
+  sitemapper: 5
+  sitemapper_one: 5
+  sitemapper_two: 5
+  sitemapper_three: 5
+  sitemapper_four: 5
+  sitemapper_five: 5
