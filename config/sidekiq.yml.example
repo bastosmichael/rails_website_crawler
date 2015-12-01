@@ -36,9 +36,9 @@
 :limits:
   mapper: 100
   recorder: 100
-  sitemapper: 5
-  sitemapper_one: 5
-  sitemapper_two: 5
-  sitemapper_three: 5
-  sitemapper_four: 5
-  sitemapper_five: 5
+  sitemapper: 10
+  sitemapper_one: 10
+  sitemapper_two: 10
+  sitemapper_three: 10
+  sitemapper_four: 10
+  sitemapper_five: 10
