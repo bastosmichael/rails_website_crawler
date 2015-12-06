@@ -26,17 +26,16 @@
   - [scrimper_three, 256]
   - [scrimper_four, 128]
   - [scrimper_five, 64]
-  #- [sitemapper, 32]
-  #- [sitemapper_one, 16]
-  #- [sitemapper_two, 8]
-  #- [sitemapper_three, 4]
-  #- [sitemapper_four, 2]
-  #- [sitemapper_five, 1]
+  - [sitemapper, 32]
+  - [sitemapper_one, 16]
+  - [sitemapper_two, 8]
+  - [sitemapper_three, 4]
+  - [sitemapper_four, 2]
+  - [sitemapper_five, 1]
   - default
 :limits:
   mapper: 100
   recorder: 100
-:process_limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
