@@ -1,5 +1,5 @@
-class Record::Top < Record::Base
-  def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10 })
+class Record::Top < Record::Match
+  def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10, fix: false })
     @options = options
     @query_array = query_array
 
@@ -19,12 +19,30 @@ class Record::Top < Record::Base
   end
 
   def sanitize_results
-    elasticsearch_results[:hits][:hits].each_with_index.map do |e, index|
+    elasticsearch_results[:hits][:hits].map do |e|
+      delete_bad_data e[:_source][:url] if @options[:fix]
       recrawl(e[:_source][:url], @options) if e[:_source][:url]
-      { id: e[:_id],
-        container: e[:_type],
-        score: index + 1
-      }.merge(e[:_source])
+
+      new_data = { id: e[:_id],
+                   container: e[:_type],
+                   score: e[:_score],
+                   history: {},
+                   social: {},
+                   price: {}
+                 }
+
+      e[:_source].each do |k,v|
+        if k.to_s.include?('_history')
+          new_data[:history][k.to_s.gsub('_history','')] = v
+        elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
+          new_data[:social][k] = v
+        elsif k.to_s.include?('price')
+          new_data[:price][k] = v
+        else
+          new_data[k] = v
+        end
+      end
+      new_data
     end
   end
 
@@ -57,5 +75,9 @@ class Record::Top < Record::Base
     else
       @options[:results]
     end
+  end
+
+  def delete_bad_data url
+    Recorder::UrlDeleter.perform_async url
   end
 end
