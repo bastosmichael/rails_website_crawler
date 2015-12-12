@@ -38,42 +38,42 @@ class Record::Search < Record::Match
           }
         }
       },
-      {
-        flt_field: {
-          description: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.3
-          }
-        }
-      },
-      {
-        flt_field: {
-          url: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.5
-          }
-        }
-      },
-      {
-        flt_field: {
-          tags: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.7
-          }
-        }
-      },
-      {
-        flt_field: {
-          categories: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.9
-          }
-        }
-      },
+      # {
+      #  flt_field: {
+      #    description: {
+      #      like_text: @query_hash[:query],
+      #      analyzer: 'snowball',
+      #      fuzziness: 0.3
+      #    }
+      #  }
+      # },
+      # {
+      #  flt_field: {
+      #    url: {
+       #     like_text: @query_hash[:query],
+       #     analyzer: 'snowball',
+       #     fuzziness: 0.5
+       #   }
+       # }
+      # },
+      # {
+      #  flt_field: {
+      #    tags: {
+      #      like_text: @query_hash[:query],
+      #      analyzer: 'snowball',
+      #      fuzziness: 0.7
+      #    }
+      #  }
+      # },
+      # {
+      #  flt_field: {
+      #    categories: {
+      #      like_text: @query_hash[:query],
+      #      analyzer: 'snowball',
+      #      fuzziness: 0.9
+      #    }
+      #  }
+      # },
     ]
   end
 end
