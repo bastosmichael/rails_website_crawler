@@ -3,11 +3,11 @@ class Record::Search < Record::Match
 
   def match_query
     [
-      # {
-      #   match: {
-      #     name: @query_hash[:query]
-      #   }
-      # },
+      {
+        match: {
+          name: @query_hash[:query]
+        }
+      },
       # {
       #  match: {
       #    description: @query_hash[:query]
@@ -28,16 +28,16 @@ class Record::Search < Record::Match
       #     categories: @query_hash[:query]
       #   }
       # },
-      {
-        flt_field: {
-          name: {
-            like_text: @query_hash[:query],
-            analyzer: 'snowball',
-            fuzziness: 0.1,
-            boost: 5
-          }
-        }
-      },
+      # {
+      #   flt_field: {
+      #     name: {
+      #       like_text: @query_hash[:query],
+      #       analyzer: 'snowball',
+      #       fuzziness: 0.1,
+      #       boost: 5
+      #     }
+      #   }
+      # },
       # {
       #  flt_field: {
       #    description: {
@@ -50,11 +50,11 @@ class Record::Search < Record::Match
       # {
       #  flt_field: {
       #    url: {
-       #     like_text: @query_hash[:query],
-       #     analyzer: 'snowball',
-       #     fuzziness: 0.5
-       #   }
-       # }
+      #     like_text: @query_hash[:query],
+      #     analyzer: 'snowball',
+      #     fuzziness: 0.5
+      #   }
+      # }
       # },
       # {
       #  flt_field: {
