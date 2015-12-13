@@ -6,7 +6,8 @@ class Mapper::Indexer < Mapper::Base
     index = Rails.env + '-' + types
     new_hash = {}
 
-    hash.with_progress("Mapping #{index}: #{id}").each do |k, v|
+    # hash.with_progress("Mapping #{index}: #{@container} - #{id}").each do |k, v|
+    hash.each do |k, v|
       unless Record::Upload::EXCLUDE.include? k.to_sym
         if v.is_a?(Hash)
           value = v.values.last
