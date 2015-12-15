@@ -4,7 +4,7 @@
 :queues:
   #- [screener, 4096]
   - [recorder, 131072]
-  #- [mapper, 65546]
+  - [mapper, 65546]
   - [slider, 32768]
   - [socializer, 16384]
   - [sampler, 8192]
