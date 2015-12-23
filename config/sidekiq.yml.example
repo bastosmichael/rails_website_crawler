@@ -36,6 +36,12 @@
 :limits:
   mapper: 100
   recorder: 100
+  sampler: 1
+  sampler_one: 1
+  sampler_two: 1
+  sampler_three: 1
+  sampler_four: 1
+  sampler_five: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
