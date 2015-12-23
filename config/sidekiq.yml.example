@@ -36,12 +36,6 @@
 :limits:
   mapper: 100
   recorder: 100
-  scrimper: 1
-  scrimper_one: 1
-  scrimper_two: 1
-  scrimper_three: 1
-  scrimper_four: 1
-  scrimper_five: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
