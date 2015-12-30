@@ -27,7 +27,7 @@
   - [scrimper_four, 2]
   - [scrimper_five, 2]
   #- [sitemapper, 1]
-  #- [sitemapper_one, 1]
+  - [sitemapper_one, 1]
   #- [sitemapper_two, 1]
   #- [sitemapper_three, 1]
   #- [sitemapper_four, 1]
