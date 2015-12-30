@@ -26,12 +26,12 @@
   - [scrimper_three, 2]
   - [scrimper_four, 2]
   - [scrimper_five, 2]
-  - [sitemapper, 1]
-  - [sitemapper_one, 1]
-  - [sitemapper_two, 1]
-  - [sitemapper_three, 1]
-  - [sitemapper_four, 1]
-  - [sitemapper_five, 1]
+  #- [sitemapper, 1]
+  #- [sitemapper_one, 1]
+  #- [sitemapper_two, 1]
+  #- [sitemapper_three, 1]
+  #- [sitemapper_four, 1]
+  #- [sitemapper_five, 1]
   - default
 :limits:
   mapper: 100
