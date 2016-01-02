@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 gem 'responders'
 gem 'sqlite3'
 
@@ -28,13 +28,14 @@ gem 'vcr'
 gem 'typhoeus'
 gem 'fog'
 
+gem 'redis-namespace'
 gem 'redis-objects'
 gem 'redis-rails'
 gem 'elasticsearch-model'
 
 gem 'dalli'
 
-gem 'sidekiq', '3.4.2'
+gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
 gem 'sidekiq-limit_fetch'
 gem 'sidetiq'
