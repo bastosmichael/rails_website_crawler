@@ -9,6 +9,8 @@
       nginx_sites:
         - name: 'production'
           server_name: '_'
+          root: '/home/ubuntu/skynet/current'
+          listen: '0.0.0.0:80'
           access_log:
             format: 'production'
           # ssl:
