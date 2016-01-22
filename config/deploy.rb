@@ -1,7 +1,7 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-require 'mina/rvm'
+require 'mina/chruby'
 require 'mina_sidekiq/tasks'
 require 'mina/unicorn'
 
@@ -24,7 +24,7 @@ set :shared_paths, ['public/static',
                     'log']
 
 task :environment do
-  invoke :'rvm:use[ruby-2.2.2]'
+  # invoke :'rvm:use[ruby-2.2.2]'
 end
 
 task :setup => :environment do
