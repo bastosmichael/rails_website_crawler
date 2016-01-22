@@ -50,6 +50,12 @@ end
 
 group :development, :test do
   gem 'thin'
+  gem 'capistrano'
+  gem 'capistrano-chruby'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-sidekiq'
 end
 
 group :development do
