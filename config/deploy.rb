@@ -9,7 +9,7 @@ set :user, 'ubuntu'
 set :domain, ENV['DOMAIN']
 set :deploy_to, '/home/ubuntu/skynet'
 set :app_path, lambda { "#{deploy_to}/#{current_path}" }
-set :repository, 'git@github.com:bastosmichael/skynet.git'
+set :repository, 'https://github.com/bastosmichael/skynet.git'
 set :branch, 'master'
 set :forward_agent, true
 set :rails_env, 'production'
@@ -24,7 +24,7 @@ set :shared_paths, ['public/static',
                     'log']
 
 task :environment do
-  # invoke :'rvm:use[ruby-2.2.2]'
+  invoke :'chruby[ruby-2.3.0]'
 end
 
 task :setup => :environment do

@@ -5,6 +5,9 @@
   roles:
     - ubuntu-common
     - chruby
+    - ruby-install
+    - role: build-ruby
+      version: 2.3.0
     - role: nginx-unicorn
       nginx_sites:
         - name: 'production'
