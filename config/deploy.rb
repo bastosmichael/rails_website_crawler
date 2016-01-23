@@ -29,30 +29,24 @@ end
 
 task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/public"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public"]
-
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/public/static"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public/static"]
-
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
-
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
-
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp"]
-
   queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp/sockets"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets"]
-
-  queue! %[mkdir -p "#{deploy_to}/#{shared_parnth}/tmp/pids"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/pids"]
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp/pids"]
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/app/sites"]
 
   queue! %[touch "#{deploy_to}/#{shared_path}/config/sidekiq.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/config.yml"]
 
-  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/app/sites"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public/static"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/sockets"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp/pids"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/app/sites"]
 end
 
