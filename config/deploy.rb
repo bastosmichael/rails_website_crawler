@@ -18,7 +18,7 @@ set :keep_releases, 5
 set :shared_paths, ['public/static',
                     'config/sidekiq.yml',
                     'config/config.yml',
-                    'config/secrets.yml'
+                    'config/secrets.yml',
                     'app/sites',
                     'tmp/sockets',
                     'tmp/pids',
