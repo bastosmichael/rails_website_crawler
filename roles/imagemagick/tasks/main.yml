@@ -1,0 +1,12 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+  sudo: yes
+
+- name: Install Imagemagick
+  action: apt pkg={{ item }} state=latest
+  sudo: yes
+  with_items:
+    - imagemagick
+    - libmagickcore-dev
+    - libmagickwand-dev

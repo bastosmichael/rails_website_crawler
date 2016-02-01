@@ -4,6 +4,7 @@
   sudo: yes
   roles:
     - ubuntu-common
+    - imagemagick
     - chruby
     - ruby-install
     - role: build-ruby

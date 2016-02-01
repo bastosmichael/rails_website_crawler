@@ -1,0 +1,34 @@
+---
+machine:
+  python:
+    version: 2.7.9
+dependencies:
+  pre:
+    - sudo rm /etc/apt/sources.list.d/*
+    - sudo bash -c "> /etc/apt/sources.list"
+    - sudo bash -c "printf 'deb http://us.archive.ubuntu.com/ubuntu/ precise main\ndeb-src http://us.archive.ubuntu.com/ubuntu/ precise main\ndeb http://us.archive.ubuntu.com/ubuntu/ precise-security main\ndeb http://us.archive.ubuntu.com/ubuntu/ precise-updates main\ndeb-src http://us.archive.ubuntu.com/ubuntu/ precise-security main\ndeb-src http://us.archive.ubuntu.com/ubuntu/ precise-updates main\n' > /etc/apt/sources.list"
+    - sudo dpkg --configure --pending
+    - sudo apt-get -f install
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq python-apt python-pycurl aptitude python-software-properties python-pip python-dev git unattended-upgrades build-essential libreadline6 libreadline6-dev curl zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev autoconf libc6-dev libncurses5-dev automake libtool bison pkg-config
+    - sudo apt-get update -qq
+
+    # Install Ansible.
+    - pip install ansible==1.9.0.1
+
+    # Add ansible.cfg to pick up roles path.
+    - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
+test:
+  override:
+    # Get nginx role
+    - ansible-galaxy install -f https://github.com/crushlovely/ansible-imagemagick.git,remotes/origin/$CIRCLE_BRANCH -p ./tests/roles/
+
+    # Check the role/playbook's syntax.
+    - ansible-playbook --syntax-check -i tests/inventory tests/test.yml
+
+    # Check the role/playbook's syntax.
+    - ansible-playbook -i tests/inventory tests/test.yml:
+        timeout: 900
+
+    # Idempotence Test
+    - "ansible-playbook -i tests/inventory tests/test.yml | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)"
