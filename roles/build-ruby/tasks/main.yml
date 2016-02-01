@@ -1,0 +1,14 @@
+---
+# tasks file for build-ruby
+
+
+#- command: /usr/bin/test -e /opt/rubies/ruby-{{version}}
+#  register: ruby_installed
+#  ignore_errors: True
+
+- name: Install ruby-{{version}}
+  shell: ruby-install --install-dir /opt/rubies/ruby-{{version}} --no-reinstall ruby {{version}}
+  #when: ruby_installed|failed
+
+- name: Install bundler
+  shell: chruby-exec ruby {{version}} -- gem install bundler --conservative
