@@ -1,0 +1,30 @@
+---
+- name: Add OS specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Install RedHat sqlite package
+  yum: name={{ item }} state=installed
+  with_items: sqlite_pkg
+  when: ansible_os_family == 'RedHat'
+
+- name: Install Debian sqlite package
+  apt: name={{ item }} state=installed update_cache=yes
+  with_items: sqlite_pkg
+  when: ansible_os_family == 'Debian'
+
+- name: Create sqlite directory.
+  file: >
+      path={{ sqlite_dir }}
+      owner={{ ansible_user_id }}
+      group={{ ansible_user_id }}
+      mode=0755
+      state=directory
+
+- name: Create sqlite dbs
+  file: >
+      name={{ sqlite_dir }}/{{ item }}
+      owner={{ ansible_user_id }}
+      group={{ ansible_user_id }}
+      mode=0644
+      state=file
+  with_items: sqlite_dbs

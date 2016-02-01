@@ -1,0 +1,3 @@
+---
+sqlite_dir: /var/lib/sqlite
+sqlite_dbs: []
