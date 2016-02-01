@@ -5,7 +5,6 @@
   roles:
     - ubuntu-common
     - imagemagick
-    - sqlite
     - chruby
     - ruby-install
     - role: build-ruby
