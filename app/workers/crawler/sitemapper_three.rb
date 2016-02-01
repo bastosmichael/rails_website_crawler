@@ -23,7 +23,7 @@ class Crawler::SitemapperThree < Crawler::Sitemapper
         get_sitemap u
       end if sitemap.indexes?
     else
-      Crawler::SitemapperThree.perform_async url, type
+      raise "#{type} queue still too large"
     end
   rescue Net::HTTP::Persistent::Error
     Crawler::SitemapperThree.perform_async @url, @type
