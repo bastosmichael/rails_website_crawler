@@ -14,6 +14,7 @@ set :branch, 'master'
 set :forward_agent, true
 set :rails_env, 'production'
 set :keep_releases, 5
+set :sidekiq_log "#{deploy_to}/shared/log/sidekiq.log"
 
 set :shared_paths, ['public/static',
                     'config/sidekiq.yml',
