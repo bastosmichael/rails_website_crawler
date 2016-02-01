@@ -18,6 +18,7 @@ set :keep_releases, 5
 set :shared_paths, ['public/static',
                     'config/sidekiq.yml',
                     'config/config.yml',
+                    'config/secrets.yml'
                     'app/sites',
                     'tmp/sockets',
                     'tmp/pids',
@@ -39,6 +40,7 @@ task :setup => :environment do
 
   queue! %[touch "#{deploy_to}/#{shared_path}/config/sidekiq.yml"]
   queue! %[touch "#{deploy_to}/#{shared_path}/config/config.yml"]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
 
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/public/static"]
