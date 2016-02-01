@@ -59,8 +59,7 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
-    # invoke :'rvm:use[ruby-2.2.2]'
-    # invoke :'sidekiq:quiet'
+    invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
@@ -68,10 +67,10 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      # invoke :'sidekiq:restart'
-      # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      invoke :'sidekiq:restart'
+      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       invoke :'unicorn:restart'
-      # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
   end
 end
