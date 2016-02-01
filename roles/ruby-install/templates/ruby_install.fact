@@ -1,0 +1,1 @@
+{"version": "{{ installed_ruby_install_version.stdout }}"}

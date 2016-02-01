@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Andrew Angelo Ang
+  description: "Installs ruby-install."
+  company: InnoHub, Inc.
+  license: MIT
+  min_ansible_version: 1.4
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - development
+  - system
+dependencies: []

@@ -1,0 +1,40 @@
+---
+- name: Download ruby-install
+  shell: wget -O ruby-install-{{ ruby_install_version }}.tar.gz https://github.com/postmodern/ruby-install/archive/v{{ ruby_install_version }}.tar.gz
+  when:
+    ansible_local is not defined or
+    ansible_local.ruby_install is not defined or
+    ansible_local.ruby_install.version != ruby_install_version
+  register: ruby_install_downloaded
+
+- name: Extract ruby-install
+  shell: tar -xzvf ruby-install-{{ ruby_install_version }}.tar.gz
+  when: ruby_install_downloaded | changed
+
+- name: Install ruby-install
+  sudo: true
+  shell:
+    chdir=ruby-install-{{ ruby_install_version }}
+    make install
+  when: ruby_install_downloaded | changed
+  register: ruby_install_installed
+
+- name: Clean up ruby-install sources
+  shell: rm -rf ruby-install-*
+  when: ruby_install_downloaded | changed
+
+#
+# Setup ruby-install facts.d
+#
+- name: Capture installed ruby-install version
+  shell: ruby-install --version | awk '{ print $2 }'
+  ignore_errors: yes
+  register: installed_ruby_install_version
+
+- name: Create ansible facts directory
+  sudo: true
+  file: state=directory recurse=yes path=/etc/ansible/facts.d
+
+- name: Set ruby-install facts
+  sudo: true
+  template: src=ruby_install.fact dest=/etc/ansible/facts.d/ruby_install.fact
