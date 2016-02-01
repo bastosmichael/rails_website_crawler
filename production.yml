@@ -16,12 +16,4 @@
           root: '/home/ubuntu/skynet/current'
           listen: '0.0.0.0:80'
           access_log:
-            format: 'production'
-          # ssl:
-          #   certificate: /etc/ssl/localcerts/my_app1.pem
-          #   certificate_key: /etc/ssl/localcerts/my_app1.key
-          #   sensitive_uris:
-          #     - ^/user/sign_in(.*)
-          #     - ^/user/password(.*)
-            access_log:
-              format: 'production'
+            format: 'combined'
