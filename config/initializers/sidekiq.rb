@@ -1,10 +1,4 @@
 require 'sidekiq'
-require 'sidekiq/web'
-
-Sidekiq::Web.use(Rack::Auth::Basic) do |_user, _password|
-  user = Rails.configuration.config[:admin][:username]
-  password = Rails.configuration.config[:admin][:password]
-end
 
 Sidekiq.configure_server do |config|
   config.redis = { url: "redis://:#{Rails.configuration.config[:redis][:password]}@#{Rails.configuration.config[:redis][:host]}:#{Rails.configuration.config[:redis][:port]}/#{Rails.configuration.config[:redis][:database]}", namespace: 'crawler' }

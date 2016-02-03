@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-  require 'sidekiq/web'
+
   root to: 'application#index'
 
-  mount Sidekiq::Web, at: '/sidekiq'
+  require "sidekiq/web"
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    username == Rails.configuration.config[:admin][:username] && password == Rails.configuration.config[:admin][:password]
+  end if Rails.env.production?
+  mount Sidekiq::Web, at: "/sidekiq"
 
   namespace :v1, defaults: { format: 'json' } do
     get '/', to: 'access#index'
