@@ -77,7 +77,7 @@ class Record::Base
   end
 
   def cloud
-    @cloud ||= Cloud.new(@container)
+    Cloud.new(@container)
   end
 
   private
