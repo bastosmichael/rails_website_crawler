@@ -1,6 +1,6 @@
 class V1::HistoryController < V1::AccessController
   def index
-    history = Record::Base.new(params[:container], params[:record_id]).historical_data default_options
+    history = Record::Base.new(params[:container], params[:record_id]).historical_data(default_options)
     respond_to do |format|
       format.json { json_response(200, history) }
       # format.xml { xml_response(200, history) }
