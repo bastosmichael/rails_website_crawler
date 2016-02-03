@@ -1,7 +1,7 @@
 class Record::Batch < Record::Base
   MAX_BATCH = 50
 
-  def batch(batch_hash = {}, options = { crawl: true, social: false, results: 10 })
+  def batch(batch_hash = {}, options = { crawl: true, social: false, history: false, results: 10 })
     @options = options
     @batch_hash = batch_hash
 
@@ -13,7 +13,11 @@ class Record::Batch < Record::Base
         if value.kind_of?(Array)
           value.map do |id|
             @record = id
-            current_data(options)
+            if options[:history]
+              historical_data(options)
+            else
+              current_data(options)
+            end
           end
         else
           return { error: 'ids must be given as an array' }

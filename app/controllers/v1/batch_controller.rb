@@ -1,9 +1,18 @@
 class V1::BatchController < V1::AccessController
   def index
-    # record = Record::Addons.insert(Record::Base.new(params[:container], params[:record_id]).current_data(default_options).merge(container: params[:container]))
+    # container = Record::Batch.new(params[:container])
+    # new_params = params
+    # new_params.delete(:container) if params[:container]
+    # if new_params.empty?
+    #   results = errors_response('no results found')
+    #   status = 404
+    # else
+    #   results = {results: container.batch(new_params, default_options.merge(results: params[:results] || 12)).map {|h| Record::Addons.insert h } }
+    #   status = 200
+    # end
     # respond_to do |format|
-    #   format.json { json_response(200, record) }
-    #   format.xml { xml_response(200, record) }
+    #   format.json { json_response(status, results) }
+    #   format.xml { xml_response(status, results) }
     # end
   end
 end
