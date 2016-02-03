@@ -18,5 +18,5 @@
 /config/application.yml
 /config/sidekiq.yml
 /config/config.yml
-/config/secret.yml
+/config/secrets.yml
 /production

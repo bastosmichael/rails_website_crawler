@@ -9,15 +9,15 @@ Rails.application.routes.draw do
   mount Sidekiq::Web, at: "/sidekiq"
 
   namespace :v1, defaults: { format: 'json' } do
-    get '/', to: 'access#index'
-    get '/match', to: 'record#best_match', results: 10
-    get '/search/:query', to: 'record#search'
-    get '/top/:array', to: 'record#top'
-    get '/:container/match', to: 'record#best_match'
-    get '/:container/search/:query', to: 'record#search'
-    get '/:container/top/:array', to: 'record#top'
-    get '/:container/:record_id/history', to: 'record#history'
-    get '/:container/:record_id/:screenshot_id', to: 'record#screenshot'
-    get '/:container/:record_id', to: 'record#record'
+    get '/', to: 'status#index'
+    get '/match', to: 'match#index', results: 10
+    get '/search/:query', to: 'search#index'
+    get '/top/:array', to: 'top#index'
+    get '/:container/match', to: 'match#index'
+    get '/:container/search/:query', to: 'search#index'
+    get '/:container/top/:array', to: 'top#index'
+    get '/:container/:record_id/history', to: 'history#index'
+    get '/:container/:record_id/:screenshot_id', to: 'screenshot#index'
+    get '/:container/:record_id', to: 'record#index'
   end
 end
