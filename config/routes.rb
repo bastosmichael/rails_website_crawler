@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get '/', to: 'status#index'
     get '/match', to: 'match#index', results: 10
     get '/search/:query', to: 'search#index'
+    post '/batch' => 'batch#index'
     get '/top/:array', to: 'top#index'
     get '/:container/match', to: 'match#index'
     get '/:container/search/:query', to: 'search#index'

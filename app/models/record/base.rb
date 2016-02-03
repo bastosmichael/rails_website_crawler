@@ -23,9 +23,9 @@ class Record::Base
   end
 
   def current_data(options = { crawl: true, social: false })
-    return { error: 'not available', id: @record, container: @record } unless old_data = data
+    return { id: @record, container: @container, error: 'not available' } unless old_data = data
     new_data = { id: nil,
-                 container: nil,
+                 container: @container,
                  social: {},
                  price:{}
                }
@@ -55,8 +55,9 @@ class Record::Base
   end
 
   def historical_data(options = { crawl: true, social: false })
-    return { error: 'not available', id: @record, container: @record } unless old_data = data
+    return { id: @record, container: @container, error: 'not available' } unless old_data = data
     new_data = { id: old_data['id'],
+                 container: @container,
                  name: old_data['name'] }
     old_data.with_progress("Historical Data #{@container}: #{old_data['id']}").each do |k, v|
       if v.is_a?(Hash) && v.count > 1
