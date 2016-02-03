@@ -26,7 +26,7 @@ class Record::Export
 
   def process_master_hash
     @headers.each do |header, _value|
-      hash = record('_' + header.pluralize + '.json').data
+      hash = record('_' + header.pluralize).data
       hash.each do |k, v|
         if master_hash.keys.include?(k)
           master_hash[k][header] = v

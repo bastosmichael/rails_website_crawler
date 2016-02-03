@@ -5,7 +5,7 @@ class Record::Base
   end
 
   def delete
-    cloud.head(@record).try(:destroy)
+    cloud.head(@record + '.json').try(:destroy)
   end
 
   def url
@@ -17,13 +17,13 @@ class Record::Base
   end
 
   def data
-    JSON.parse(cloud.get(@record).try(:body), quirks_mode: true)
+    JSON.parse(cloud.get(@record + '.json').try(:body), quirks_mode: true)
   rescue
     {}
   end
 
   def current_data(options = { crawl: true, social: false })
-    return { error: 'not available' } unless old_data = data
+    return { error: 'not available', id: @record, container: @record } unless old_data = data
     new_data = { id: nil,
                  container: nil,
                  social: {},
@@ -55,7 +55,7 @@ class Record::Base
   end
 
   def historical_data(options = { crawl: true, social: false })
-    return { error: 'not available' } unless old_data = data
+    return { error: 'not available', id: @record, container: @record } unless old_data = data
     new_data = { id: old_data['id'],
                  name: old_data['name'] }
     old_data.with_progress("Historical Data #{@container}: #{old_data['id']}").each do |k, v|
@@ -73,7 +73,7 @@ class Record::Base
   end
 
   def data=(new_hash = {})
-    cloud.sync @record, new_hash.to_json
+    cloud.sync @record + '.json', new_hash.to_json
   end
 
   def cloud

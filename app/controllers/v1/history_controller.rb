@@ -1,11 +1,11 @@
 class V1::HistoryController < V1::AccessController
   def index
-    history = Record::Base.new(params[:container], params[:record_id] + '.json').historical_data default_options
+    history = Record::Base.new(params[:container], params[:record_id]).historical_data default_options
     respond_to do |format|
       format.json { json_response(200, history) }
       # format.xml { xml_response(200, history) }
       # format.csv do
-      #   # history = Record::Base.new('bestbuy-offers','9071056.json').historical_data
+      #   # history = Record::Base.new('bestbuy-offers','9071056').historical_data
       #   headers_hash = history.keys.map {|k| {k => nil}}.inject({},:merge)
       #   dates_hash = history.values.flat_map {|hash| if hash.try(:keys) then hash.keys end }.compact.uniq.sort.map {|date| {date.to_date => headers_hash} }.inject({},:merge)
       #   dates_hash.each do |key,value|

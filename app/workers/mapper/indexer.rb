@@ -2,7 +2,7 @@ class Mapper::Indexer < Mapper::Base
   def perform(container, id, hash = nil)
     @container = container
     types = container.split('-').last.pluralize.gsub(':', '')
-    hash = record(id + '.json').data if hash.nil?
+    hash = record(id).data if hash.nil?
     index = Rails.env + '-' + types
     new_hash = {}
 
@@ -39,7 +39,7 @@ class Mapper::Indexer < Mapper::Base
                    hit['_id'] != id
                  end
       bad_ids.each do |bad_id|
-        record(bad_id['_id'] + '.json').delete
+        record(bad_id['_id']).delete
         Elasticsearch::Model.client.delete index: index, type: @container, id: bad_id['_id']
       end unless bad_ids.empty?
     end
@@ -48,7 +48,7 @@ class Mapper::Indexer < Mapper::Base
 
     Elasticsearch::Model.client.indices.refresh index: index
   # rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
-  #  record(id + '.json').delete
+  #  record(id).delete
   #  Crawler::Scrimper.perform_async new_hash['url'] if new_hash['url']
   end
 end

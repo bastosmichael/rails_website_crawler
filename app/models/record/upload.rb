@@ -99,7 +99,7 @@ class Record::Upload < Page::Url
   end
 
   def json_relative_path
-    @json_relative_path ||= id ? id + '.json' : md5 + '.json'
+    @json_relative_path ||= id ? id : md5
   end
 
   def types
