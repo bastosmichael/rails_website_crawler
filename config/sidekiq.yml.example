@@ -1,5 +1,5 @@
 ---
-:concurrency: 1
+:concurrency: 10
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 8192]
