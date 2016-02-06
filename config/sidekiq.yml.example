@@ -46,6 +46,6 @@
   sitemapper_three: 1
   sitemapper_four: 1
   sitemapper_five: 1
-:limits:
-  mapper: 100
-  recorder: 100
+#:limits:
+ # mapper: 100
+ # recorder: 100
