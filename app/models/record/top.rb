@@ -4,7 +4,7 @@ class Record::Top < Record::Match
     @query_array = query_array
 
     if !@container.nil? && !@container.include?(Rails.env)
-      types = container.split('-').last.pluralize.gsub(':', '')
+      types = @container.split('-').last.pluralize.gsub(':', '')
       @index = [ Rails.env + '-' + types ]
     elsif @container.nil?
       @index = Rails.configuration.config[:admin][:api_containers].map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
