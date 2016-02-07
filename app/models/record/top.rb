@@ -15,7 +15,7 @@ class Record::Top < Record::Match
   end
 
   def elasticsearch_results
-    Elasticsearch::Model.client.search(index: @index, body: query).deep_symbolize_keys!
+    Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
   end
 
   def sanitize_results
