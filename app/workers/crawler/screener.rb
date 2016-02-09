@@ -8,7 +8,7 @@ class Crawler::Screener < Crawler::Base
     return if url.nil?
     @url = url
     capturer.relative_path = path
-    capturer.screen
+    capturer.screening
   rescue EOFError => e
     Crawler::Screener.perform_async url, path
   rescue Net::ReadTimeout => e

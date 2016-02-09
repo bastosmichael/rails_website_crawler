@@ -20,9 +20,9 @@ gem 'mechanize'
 gem 'social_shares'
 gem 'user-agent-randomizer'
 
-gem 'selenium-webdriver'
-gem 'headless'
-gem 'rmagick'
+gem 'imgkit'
+gem 'wkhtmltoimage-binary'
+gem 'mini_magick'
 
 gem 'vcr'
 gem 'typhoeus'
