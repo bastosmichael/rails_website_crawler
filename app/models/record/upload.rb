@@ -10,12 +10,12 @@ class Record::Upload < Page::Url
                  tags
                  categories
                  open_graph
-                 schema_org).freeze
+                 schema_org
+                 screenshot).freeze
 
   EXCLUDE = %i(site_name
                id
-               type
-               screenshot).freeze
+               type).freeze
 
   attr_accessor :metadata
   attr_accessor :id
