@@ -63,7 +63,7 @@ class Record::Top < Record::Match
   end
 
   def from_page
-    (@options[:page].try(:to_i) || 1) -1 * limit_results
+    ((@options[:page].try(:to_i) || 1) - 1) * limit_results
   end
 
   def sort_query
