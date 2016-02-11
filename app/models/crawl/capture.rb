@@ -6,20 +6,18 @@ class Crawl::Capture < Page::Url
   JPG = '.jpg'
 
   def screen
-    unless cloud.head relative_path
-      temp_file.write(download)
-      temp_file.flush
+    temp_file.write(download)
+    temp_file.flush
 
-      image = MiniMagick::Image.new(temp_path)
-      image.crop "1024x1024+8+8"
-      image.strip
-      image.quality "80"
-      image.depth "8"
-      image.interlace "plane"
+    image = MiniMagick::Image.new(temp_path)
+    image.crop "1024x1024+8+8"
+    image.strip
+    image.quality "80"
+    image.depth "8"
+    image.interlace "plane"
 
-      cloud.sync(relative_path, jpeg)
-      temp_file.unlink
-    end
+    cloud.sync(relative_path, jpeg)
+    temp_file.unlink
 
     relative_path
   end
