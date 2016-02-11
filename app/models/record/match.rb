@@ -1,5 +1,5 @@
 class Record::Match < Record::Base
-  def best(query_hash = {}, options = { crawl: true, social: false, results: 1 })
+  def best(query_hash = {}, options = { crawl: true, social: false, results: 1, page: 1 })
     @options = options
     @query_hash = query_hash.delete_if { |_k, v| v.nil? || v.blank? }
 
@@ -16,7 +16,11 @@ class Record::Match < Record::Base
   end
 
   def elasticsearch_results
-    Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
+    @elasticsearch_results ||= Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
+  end
+
+  def total
+    ((elasticsearch_results[:hits][:total] || 0) / limit_results.to_f).ceil
   end
 
   def sanitize_results
@@ -53,7 +57,8 @@ class Record::Match < Record::Base
           should: match_query
         }
       },
-      size: limit_results
+      size: limit_results,
+      from: from_page
     }
   end
 
@@ -65,6 +70,10 @@ class Record::Match < Record::Base
         }
       }
     end
+  end
+
+  def from_page
+    ((@options[:page].try(:to_i) || 1) - 1) * limit_results
   end
 
   def limit_results

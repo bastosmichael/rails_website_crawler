@@ -1,5 +1,5 @@
 class Record::Top < Record::Match
-  def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10, fix: false })
+  def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10, page: 1, fix: false })
     @options = options
     @query_array = query_array
 
@@ -15,7 +15,11 @@ class Record::Top < Record::Match
   end
 
   def elasticsearch_results
-    Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
+    @elasticsearch_results ||= Elasticsearch::Model.client.search(index: @index, type: @container, body: query).deep_symbolize_keys!
+  end
+
+  def total
+    ((elasticsearch_results[:hits][:total] || 0) / limit_results.to_f).ceil
   end
 
   def sanitize_results
@@ -53,8 +57,13 @@ class Record::Top < Record::Match
         match_all: { }
       },
       sort: sort_query,
-      size: limit_results
+      size: limit_results,
+      from: from_page
     }
+  end
+
+  def from_page
+    (@options[:page].try(:to_i) || 1) -1 * limit_results
   end
 
   def sort_query

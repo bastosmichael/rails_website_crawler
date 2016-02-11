@@ -5,7 +5,8 @@ class V1::TopController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = {results: container.sort(params[:array].split(','), default_options.merge(social: params[:social] || true)).map {|h| Record::Addons.insert h } }
+      results = { results: container.sort(params[:array].split(','), default_options.merge(social: params[:social] || true)).map {|h| Record::Addons.insert h },
+                  pagination: pagination(container.total) }
       status = 200
     end
     respond_to do |format|

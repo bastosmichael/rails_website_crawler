@@ -5,8 +5,42 @@ class V1::AccessController < ApplicationController
 
   private
 
+  def current_page
+    params[:page].to_i > 0 ? params[:page].to_i : 1
+  end
+
+  def pagination(total_pages = 0)
+      if total_pages < 1
+        pages = 1
+      else
+        pages = total_pages
+      end
+
+      if (current_page + 1) <= total_pages
+        next_page = current_page + 1
+      else
+        next_page = nil
+      end
+
+      if (current_page - 1) > 0 && (current_page - 1) < total_pages
+        prev_page = current_page - 1
+      else
+        prev_page = nil
+      end
+
+      {
+        next_page:    next_page,
+        prev_page:    prev_page,
+        total_pages:  pages,
+        current_page: current_page
+      }
+    end
+
   def default_options
-    { crawl: params[:fetch] || true, social: params[:social] || false, fix: params[:fix] || false }
+    { crawl: params[:fetch] || true,
+      social: params[:social] || false,
+      fix: params[:fix] || false,
+      page: params[:page] || 1 }
   end
 
   def remove_params
