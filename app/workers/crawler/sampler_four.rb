@@ -2,7 +2,8 @@ class Crawler::SamplerFour < Crawler::Sampler
   sidekiq_options queue: :sampler_four,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed
+                  unique: :until_and_while_executing,
+                  unique_expiration: 120 * 60
 
   def perform(url, type = 'ScrimperFour')
     return if url.nil?

@@ -2,7 +2,8 @@ class Crawler::ScrimperFour < Crawler::Base
   sidekiq_options queue: :scrimper_four,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed
+                  unique: :until_and_while_executing,
+                  unique_expiration: 120 * 60
 
   def perform(url)
     return if url.nil?

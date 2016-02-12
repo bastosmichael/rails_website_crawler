@@ -2,7 +2,8 @@ class Crawler::Screener < Crawler::Base
   sidekiq_options queue: :screener,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed
+                  unique: :until_and_while_executing,
+                  unique_expiration: 120 * 60
 
   def perform(url, path)
     return if url.nil?

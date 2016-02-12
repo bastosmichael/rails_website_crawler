@@ -2,7 +2,8 @@ class Crawler::SitemapperThree < Crawler::Sitemapper
   sidekiq_options queue: :sitemapper_three,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed
+                  unique: :until_and_while_executing,
+                  unique_expiration: 120 * 60
 
   def perform(url, type = 'ScrimperThree')
     return if url.nil?

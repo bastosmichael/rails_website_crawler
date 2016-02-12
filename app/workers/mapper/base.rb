@@ -2,7 +2,8 @@ class Mapper::Base < Worker
   sidekiq_options queue: :mapper,
                   retry: true,
                   backtrace: true,
-                  unique: :until_executed
+                  unique: :until_and_while_executing,
+                  unique_expiration: 120 * 60
 
   def cloud
     @cloud ||= Cloud.new(@container)
