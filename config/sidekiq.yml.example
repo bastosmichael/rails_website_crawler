@@ -33,26 +33,7 @@
   - [sitemapper_five, 1]
   - default
 :process_limits:
-  slider: 1
   socializer: 1
-  scrimper: 1
-  scrimper_one: 1
-  scrimper_two: 1
-  scrimper_three: 1
-  scrimper_four: 1
-  scrimper_five: 1
-  sampler: 1
-  sampler_one: 1
-  sampler_two: 1
-  sampler_three: 1
-  sampler_four: 1
-  sampler_five: 1
-  spider: 1
-  spider_one: 1
-  spider_two: 1
-  spider_three: 1
-  spider_four: 1
-  spider_five: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
