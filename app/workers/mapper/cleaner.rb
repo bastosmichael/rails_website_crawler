@@ -10,7 +10,7 @@ class Mapper::Cleaner < Mapper::Base
 
   def parse_record(data)
     if id = data['id']
-      data.with_progress("Parsing #{id}").each do |k, v|
+      data.each do |k, v|
         ap 'KEY'
         ap k
         if v.is_a?(Hash)

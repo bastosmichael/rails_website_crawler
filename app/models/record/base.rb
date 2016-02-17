@@ -30,7 +30,7 @@ class Record::Base
                  price:{}
                }
 
-    old_data.with_progress("Current Data #{@container}: #{old_data['id']}").each do |k, v|
+    old_data.each do |k, v|
 
       if v.is_a?(Hash)
         if k.include?('_shares')
@@ -59,7 +59,7 @@ class Record::Base
     new_data = { id: old_data['id'],
                  container: @container,
                  name: old_data['name'] }
-    old_data.with_progress("Historical Data #{@container}: #{old_data['id']}").each do |k, v|
+    old_data.each do |k, v|
       if v.is_a?(Hash) && v.count > 1
         new_data[k] = v.merge({Date.today.to_s => v.values.last}).group_by_week {|k,v| k }.map do |k,v|
           if value = v.try(:first).try(:last)
