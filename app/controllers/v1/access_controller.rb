@@ -9,6 +9,10 @@ class V1::AccessController < ApplicationController
     params[:page].to_i > 0 ? params[:page].to_i : 1
   end
 
+  def current_results
+    params[:results].to_i > 0 ? params[:results].to_i : 10
+  end
+
   def pagination(total_pages = 0)
     pages = if total_pages < 1
               1

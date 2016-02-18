@@ -7,7 +7,7 @@ class V1::MatchController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = { results: container.best(new_params, default_options.merge(results: params[:results].try(:to_i) || 1)).map { |h| Record::Addons.insert h },
+      results = { results: container.best(new_params, default_options.merge(results: current_results)).map { |h| Record::Addons.insert h },
                   pagination: pagination(container.total) }
       status = 200
     end
