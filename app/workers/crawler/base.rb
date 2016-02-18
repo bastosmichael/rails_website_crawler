@@ -10,6 +10,7 @@ class Crawler::Base < Worker
   end
 
   def upload
+    scraper.clear
     parsed = parser.save if parser.build
     if parsed && parsed['type']
       Recorder::Uploader.perform_async parsed
