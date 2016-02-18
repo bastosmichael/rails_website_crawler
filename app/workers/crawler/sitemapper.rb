@@ -31,6 +31,7 @@ class Crawler::Sitemapper < Crawler::Base
 
   def get_xml
     sitemap.xml = scraper.get
+    scraper.clear
   end
 
   def check_page(url)
