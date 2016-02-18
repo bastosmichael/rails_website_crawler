@@ -43,11 +43,11 @@ class Crawl::Base < Page::Url
     agent.user_agent = UserAgentRandomizer::UserAgent.fetch(type: "desktop_browser").string
     agent.html_parser = Nokogiri::HTML
     # agent.ssl_version = 'SSLv3'
-    agent.open_timeout = 300
-    agent.read_timeout = 300
-    agent.idle_timeout = 300
-    agent.max_history = 10
-    agent.keep_alive = true
+    # agent.open_timeout = 300
+    # agent.read_timeout = 300
+    # agent.idle_timeout = 300
+    # agent.max_history = 10
+    agent.keep_alive = false
     agent
   end
 end
