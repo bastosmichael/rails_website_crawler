@@ -9,6 +9,7 @@ class Crawler::ScrimperOne < Crawler::Base
     return if url.nil?
     @url = url
     parser.page = scraper.get
+    scraper.clear
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||

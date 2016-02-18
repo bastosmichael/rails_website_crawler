@@ -14,6 +14,10 @@ class Crawl::Base < Page::Url
     }
   end
 
+  def clear
+    agent.shutdown
+  end
+
   def post(params, headers = '')
     # TODO: change it back to cache_key when built
     VCR.use_cassette(File.join(cache_vcr, params.to_query + headers), record: :new_episodes) do
