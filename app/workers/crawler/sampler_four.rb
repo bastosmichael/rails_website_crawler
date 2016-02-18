@@ -16,8 +16,7 @@ class Crawler::SamplerFour < Crawler::Sampler
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '520' ||
-         e.response_code == '500' ||
-         e.response_code == '503'
+         e.response_code == '500'
       Recorder::UrlDeleter.perform_async url
     else
       raise
