@@ -7,7 +7,7 @@ class Crawler::SitemapperFour < Crawler::Sitemapper
 
   def perform(url, type = 'ScrimperFour')
     return if url.nil?
-    if Sidekiq::Queue.new(type.underscore).size <= 0
+    if Sidekiq::Queue.new(type.underscore).size <= 10_000
       @url = url
       @type = type
       @name = Page::Url.new(url).name
