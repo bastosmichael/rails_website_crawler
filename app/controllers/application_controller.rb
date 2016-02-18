@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   attr_reader :api_key
 
   def restrict_access
-    return if check_partner params[:access_token] if params[:access_token]
+    return if params[:access_token] && check_partner params[:access_token]
     authenticate_or_request_with_http_token do |token, _options|
       return if check_partner token
     end

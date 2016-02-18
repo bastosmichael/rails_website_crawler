@@ -12,14 +12,14 @@ class V1::StatusController < V1::AccessController
     { available: count_indexes,
       indexing: pretty_integer(count_indexers),
       processing: pretty_integer(count_scrimpers),
-      pending: pretty_integer((count_sitemappers) * 50_000) }
+      pending: pretty_integer(count_sitemappers * 50_000) }
   end
 
   def count_indexes
     Rails.configuration.config[:admin][:api_containers]
-      .map { |c| [c, count_containers(c) ] }
-        .sort_by {|array| array.last }.reverse
-          .map {|array| { array.first => pretty_integer(array.last) } }.inject(:merge)
+      .map { |c| [c, count_containers(c)] }
+      .sort_by(&:last).reverse
+      .map { |array| { array.first => pretty_integer(array.last) } }.inject(:merge)
   end
 
   def count_indexers
@@ -66,7 +66,7 @@ class V1::StatusController < V1::AccessController
   end
 
   def count_containers(container)
-    index = Rails.env + '-' + container.split('-').last.pluralize.gsub(':', '')
+    index = Rails.env + '-' + container.split('-').last.pluralize.delete(':')
     Elasticsearch::Model.client.count(index: index, type: container)['count']
   rescue Elasticsearch::Transport::Transport::Errors => e
     0

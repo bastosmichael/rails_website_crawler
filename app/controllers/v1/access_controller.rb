@@ -10,30 +10,24 @@ class V1::AccessController < ApplicationController
   end
 
   def pagination(total_pages = 0)
-      if total_pages < 1
-        pages = 1
-      else
-        pages = total_pages
-      end
+    pages = if total_pages < 1
+              1
+            else
+              total_pages
+            end
 
-      if (current_page + 1) <= total_pages
-        next_page = current_page + 1
-      else
-        next_page = nil
-      end
+    next_page = (current_page + 1 if (current_page + 1) <= total_pages)
 
-      if (current_page - 1) > 0 && (current_page - 1) < total_pages
-        prev_page = current_page - 1
-      else
-        prev_page = nil
-      end
+    prev_page = if (current_page - 1) > 0 && (current_page - 1) < total_pages
+                  current_page - 1
+                end
 
-      {
-        next_page:    next_page,
-        prev_page:    prev_page,
-        total_pages:  pages,
-        current_page: current_page
-      }
+    {
+      next_page:    next_page,
+      prev_page:    prev_page,
+      total_pages:  pages,
+      current_page: current_page
+    }
     end
 
   def default_options
