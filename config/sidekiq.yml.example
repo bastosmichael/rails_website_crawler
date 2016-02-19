@@ -1,5 +1,5 @@
 ---
-:concurrency: 2
+:concurrency: 30
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   #- [screener, 40960]
@@ -34,12 +34,12 @@
   - default
 :process_limits:
   socializer: 1
+  slider: 1
+  scrimper: 1
+  sampler: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
   sitemapper_three: 1
   sitemapper_four: 1
   sitemapper_five: 1
-#:limits:
- # mapper: 100
- # recorder: 100
