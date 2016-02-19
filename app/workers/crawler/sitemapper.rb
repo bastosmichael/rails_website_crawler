@@ -22,8 +22,6 @@ class Crawler::Sitemapper < Crawler::Base
       sitemap.index_links.each do |u|
         get_sitemap u
       end if sitemap.indexes?
-    else
-      raise "#{type} queue still too large"
     end
   end
 
