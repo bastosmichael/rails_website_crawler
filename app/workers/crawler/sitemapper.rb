@@ -7,7 +7,7 @@ class Crawler::Sitemapper < Crawler::Base
 
   def perform(url, type = 'Scrimper')
     return if url.nil?
-    while Sidekiq::Queue.new(type.underscore).size <= 0
+    if Sidekiq::Queue.new(type.underscore).size <= 0
       @url = url
       @type = type
       @name = Page::Url.new(url).name
@@ -22,6 +22,8 @@ class Crawler::Sitemapper < Crawler::Base
       sitemap.index_links.each do |u|
         get_sitemap u
       end if sitemap.indexes?
+    else
+      raise "#{type} queue still too large"
     end
   end
 
