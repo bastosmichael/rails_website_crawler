@@ -33,10 +33,10 @@
   - [sitemapper_five, 1]
   - default
 :process_limits:
-  socializer: 1
-  slider: 1
-  scrimper: 1
-  sampler: 1
+  socializer: 2
+  slider: 2
+  scrimper: 2
+  sampler: 2
 :limits:
   sitemapper: 1
   sitemapper_one: 1
