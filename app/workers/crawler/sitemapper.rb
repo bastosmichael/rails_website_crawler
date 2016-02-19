@@ -7,7 +7,7 @@ class Crawler::Sitemapper < Crawler::Base
 
   def perform(url, type = 'Scrimper')
     return if url.nil?
-    if Sidekiq::Queue.new(type.underscore).size <= 0
+    while Sidekiq::Queue.new(type.underscore).size <= 0
       @url = url
       @type = type
       @name = Page::Url.new(url).name
@@ -25,8 +25,6 @@ class Crawler::Sitemapper < Crawler::Base
     else
       raise "#{type} queue still too large"
     end
-  rescue Net::HTTP::Persistent::Error
-    Crawler::Sitemapper.perform_async @url, @type
   end
 
   def get_xml
