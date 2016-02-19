@@ -7,27 +7,24 @@ class Crawler::SitemapperFour < Crawler::Sitemapper
 
   def perform(url, type = 'ScrimperFour')
     return if url.nil?
-    if Sidekiq::Queue.new(type.underscore).size <= 0
-      @url = url
-      @type = type
-      @name = Page::Url.new(url).name
-      @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
-      @index = Rails.env + '-' + @container
-
-      get_xml
-
-      sitemap.site_links.each do |u|
-        check_page(u)
-      end if sitemap.sites?
-
-      sitemap.index_links.each do |u|
-        get_sitemap u
-      end if sitemap.indexes?
-    else
-      raise "#{type} queue still too large"
+    while Sidekiq::Queue.new(type.underscore).size > 0
+      sleep 30
     end
-  rescue Net::HTTP::Persistent::Error
-    Crawler::SitemapperFour.perform_async @url, @type
+
+    @url = url
+    @type = type
+    @name = Page::Url.new(url).name
+    @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
+
+    get_xml
+
+    sitemap.site_links.each do |u|
+      check_page(u)
+    end if sitemap.sites?
+
+    sitemap.index_links.each do |u|
+      get_sitemap u
+    end if sitemap.indexes?
   end
 
   def get_sitemap(url)
