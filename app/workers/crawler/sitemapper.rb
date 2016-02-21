@@ -7,10 +7,6 @@ class Crawler::Sitemapper < Crawler::Base
 
   def perform(url, type = 'Scrimper')
     return if url.nil?
-    while Sidekiq::Queue.new(type.underscore).size > 0
-      sleep 1800
-    end
-
     @url = url
     @type = type
     @name = Page::Url.new(url).name
