@@ -2,39 +2,44 @@
 :concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  #- [screener, 409600]
-  - [mapper, 204800]
-  - [recorder, 102400]
-  - [slider, 51200]
-  - [socializer, 25600]
-  - [scrimper, 12800]
-  - [scrimper_one, 6400]
-  - [scrimper_two, 6400]
-  - [scrimper_three, 6400]
-  - [scrimper_four, 6400]
-  - [scrimper_five, 6400]
-  - [sampler, 32]
-  - [sampler_one, 16]
-  - [sampler_two, 16]
-  - [sampler_three, 16]
-  - [sampler_four, 16]
-  - [sampler_five, 16]
-  - [spider, 8]
-  - [spider_one, 4]
-  - [spider_two, 4]
-  - [spider_three, 4]
-  - [spider_four, 4]
-  - [spider_five, 4]
-  - [sitemapper, 2]
-  - [sitemapper_one, 1]
-  - [sitemapper_two, 1]
-  - [sitemapper_three, 1]
-  - [sitemapper_four, 1]
-  - [sitemapper_five, 1]
+  #- screener
+  - mapper
+  - recorder
+  - slider
+  - socializer
+  - sampler
+  - sampler_one
+  - sampler_two
+  - sampler_three
+  - sampler_four
+  - sampler_five
+  - spider
+  - spider_one
+  - spider_two
+  - spider_three
+  - spider_four
+  - spider_five
+  - scrimper
+  - scrimper_one
+  - scrimper_two
+  - scrimper_three
+  - scrimper_four
+  - scrimper_five
+  - sitemapper
+  - sitemapper_one
+  - sitemapper_two
+  - sitemapper_three
+  - sitemapper_four
+  - sitemapper_five
   - default
+:blocking:
+  - scrimper
+  - scrimper_one
+  - scrimper_two
+  - scrimper_three
+  - scrimper_four
+  - scrimper_five
 :process_limits:
-  socializer: 1
-  slider: 1
   scrimper: 2
   scrimper_one: 1
   scrimper_two: 1
