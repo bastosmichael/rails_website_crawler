@@ -1,8 +1,8 @@
 class V1::StatusController < V1::AccessController
   def index
     respond_to do |format|
-      format.json { json_response(200, api_data.merge(counts)) }
-      format.xml { xml_response(200, api_data.merge(counts)) }
+      format.json { json_response(200, status: api_data.merge(counts)) }
+      format.xml { xml_response(200, status: api_data.merge(counts)) }
     end
   end
 
