@@ -62,14 +62,11 @@ class Crawl::Google
   def sites
     @sites ||= if google_hash = Google::Search::Web.new(query: @query).response.hash['responseData']
                  google_hash['results'].map do |hash|
-                   # {
-                   #  title: hash['titleNoFormatting'],
-                   #  description: hash['content'],
-                   #  image: hash['tbUrl'],
-                   #  url: hash['url'],
-                   #  duration: distance_of_time_in_words(hash['duration'].to_i),
-                   #  published: hash['published'].to_date.to_s
-                   # }
+                   {
+                    title: hash['titleNoFormatting'],
+                    description: hash['content'],
+                    url: hash['unescapedUrl']
+                   }
                  end
                else
                  []
