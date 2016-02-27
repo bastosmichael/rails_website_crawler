@@ -70,7 +70,12 @@ class Record::Base
       end
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
-    new_data.deep_symbolize_keys!
+
+    if new_data.count <= 3
+      new_data.merge(error: 'no history available').deep_symbolize_keys!
+    else
+      new_data.deep_symbolize_keys!
+    end
   end
 
   def data=(new_hash = {})
