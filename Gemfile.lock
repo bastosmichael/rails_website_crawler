@@ -463,6 +463,7 @@ GEM
     vcr (3.0.1)
     webrobots (0.1.2)
     websocket (1.2.2)
+    wikipedia-client (1.6.1)
     xml-simple (1.1.5)
 
 PLATFORMS
@@ -518,6 +519,7 @@ DEPENDENCIES
   unicorn
   user-agent-randomizer
   vcr
+  wikipedia-client
 
 BUNDLED WITH
    1.11.2
