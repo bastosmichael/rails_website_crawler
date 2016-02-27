@@ -17,7 +17,7 @@ class Crawl::Google
                    }
                  end
                else
-                 []
+                 nil
                end
   end
 
@@ -48,7 +48,7 @@ class Crawl::Google
                   }
                 end
               else
-                []
+                nil
               end
   end
 
@@ -69,7 +69,7 @@ class Crawl::Google
                    }
                  end
                else
-                 []
+                 nil
                end
   end
 
@@ -83,7 +83,7 @@ class Crawl::Google
                    }
                  end
                else
-                 []
+                 nil
                end
   end
 end

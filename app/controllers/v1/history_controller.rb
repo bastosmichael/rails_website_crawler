@@ -3,7 +3,7 @@ class V1::HistoryController < V1::AccessController
     history = Record::Base.new(params[:container], params[:record_id]).historical_data(default_options)
     respond_to do |format|
       format.json { json_response(200, result: history) }
-      # format.xml { xml_response(200, history) }
+      # format.xml { xml_response(200, result: history) }
       # format.csv do
       #   # history = Record::Base.new('bestbuy-offers','9071056').historical_data
       #   headers_hash = history.keys.map {|k| {k => nil}}.inject({},:merge)

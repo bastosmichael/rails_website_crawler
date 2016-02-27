@@ -90,25 +90,89 @@ class Record::Base
   def links_data(options = { crawl: true, social: false })
     return { id: @record, container: @container, error: 'not available' } unless name
 
+    links = Crawl::Google.new(name).links
 
+    if links
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        links: links
+      }
+    else
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        error: 'no links available'
+      }
+    end
   end
 
   def references_data(options = { crawl: true, social: false })
     return { id: @record, container: @container, error: 'not available' } unless name
 
+    references = Crawl::Google.new(name).references
 
+    if references
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        references: references
+      }
+    else
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        error: 'no references available'
+      }
+    end
   end
 
   def news_data(options = { crawl: true, social: false })
     return { id: @record, container: @container, error: 'not available' } unless name
 
+    news = Crawl::Google.new(name).news
 
+    if news
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        news: news
+      }
+    else
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        error: 'no news available'
+      }
+    end
   end
 
   def videos_data(options = { crawl: true, social: false })
     return { id: @record, container: @container, error: 'not available' } unless name
 
+    videos = Crawl::Google.new(name).videos
 
+    if videos
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        videos: videos
+      }
+    else
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        error: 'no videos available'
+      }
+    end
   end
 
   def name hash = {}
