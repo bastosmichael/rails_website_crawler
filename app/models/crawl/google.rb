@@ -1,11 +1,10 @@
 class Crawl::Google
-  include ActionView::Helpers::DateHelper
-
   def initialize(query = nil)
     @query = query
   end
 
   def videos
+    include ActionView::Helpers::DateHelper
     @videos ||= if google_hash = Google::Search::Video.new(query: @query).response.hash['responseData']
                  google_hash['results'].map do |hash|
                    {
