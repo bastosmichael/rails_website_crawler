@@ -26,6 +26,7 @@ class Record::Base
     return { id: @record, container: @container, error: 'not available' } unless old_data = data
     new_data = { id: nil,
                  container: @container,
+                 name: name(old_data),
                  social: {},
                  price:{}
                }
@@ -56,9 +57,7 @@ class Record::Base
 
   def historical_data(options = { crawl: true, social: false })
     return { id: @record, container: @container, error: 'not available' } unless old_data = data
-    new_data = { id: old_data['id'],
-                 container: @container,
-                 name: old_data['name'] }
+    new_data = {}
     old_data.each do |k, v|
       if v.is_a?(Hash) && v.count > 1
         new_data[k] = v.merge({Date.today.to_s => v.values.last}).group_by_week {|k,v| k }.map do |k,v|
@@ -71,10 +70,54 @@ class Record::Base
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
 
-    if new_data.count <= 3
-      new_data.merge(error: 'no history available').deep_symbolize_keys!
+    if new_data.empty?
+      {
+        id: old_data['id'],
+        container: @container,
+        name: name(old_data),
+        error: 'no history available'
+      }
     else
-      new_data.deep_symbolize_keys!
+      {
+        id: old_data['id'],
+        container: @container,
+        name: name(old_data),
+        history: new_data.deep_symbolize_keys!
+      }
+    end
+  end
+
+  def links_data(options = { crawl: true, social: false })
+    return { id: @record, container: @container, error: 'not available' } unless name
+
+
+  end
+
+  def references_data(options = { crawl: true, social: false })
+    return { id: @record, container: @container, error: 'not available' } unless name
+
+
+  end
+
+  def news_data(options = { crawl: true, social: false })
+    return { id: @record, container: @container, error: 'not available' } unless name
+
+
+  end
+
+  def videos_data(options = { crawl: true, social: false })
+    return { id: @record, container: @container, error: 'not available' } unless name
+
+
+  end
+
+  def name hash = {}
+    Rails.cache.fetch("#{@container}/#{@record}/name", expires_in: 30.days) do
+      if saved_name = hash['name']
+        return saved_name
+      else
+        data['name']
+      end
     end
   end
 

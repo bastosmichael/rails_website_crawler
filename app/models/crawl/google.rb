@@ -52,8 +52,8 @@ class Crawl::Google
               end
   end
 
-  def books
-    @books ||= if google_hash = Google::Search::Book.new(query: @query).response.hash['responseData']
+  def references
+    @references ||= if google_hash = Google::Search::Book.new(query: @query).response.hash['responseData']
                  google_hash['results'].map do |hash|
                    description = "by #{hash['authors']} ISBN: #{hash['bookId']}"
 
@@ -73,8 +73,8 @@ class Crawl::Google
                end
   end
 
-  def sites
-    @sites ||= if google_hash = Google::Search::Web.new(query: @query).response.hash['responseData']
+  def links
+    @links ||= if google_hash = Google::Search::Web.new(query: @query).response.hash['responseData']
                  google_hash['results'].map do |hash|
                    {
                     title: hash['titleNoFormatting'],
