@@ -213,6 +213,8 @@ GEM
     git-version-bump (0.15.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    google-search (1.0.3)
+      json
     groupdate (2.5.2)
       activesupport (>= 3)
     guard (2.13.0)
@@ -473,6 +475,7 @@ DEPENDENCIES
   dalli
   elasticsearch-model
   fog
+  google-search
   groupdate
   guard-livereload
   guard-rails

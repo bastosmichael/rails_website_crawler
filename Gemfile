@@ -40,8 +40,10 @@ gem 'sidekiq-unique-jobs'
 gem 'sidekiq-limit_fetch'
 gem 'sidetiq'
 # gem 'sidekiq-statistic'
-
 gem 'sinatra', require: false
+
+gem 'google-search'
+gem 'wikipedia-client'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
