@@ -10,7 +10,7 @@ class Crawl::Google
                  google_hash['results'].map do |hash|
                    {
                     title: hash['titleNoFormatting'],
-                    description: hash['content'],
+                    description: ActionView::Base.full_sanitizer.sanitize(hash['content']),
                     image: hash['tbUrl'],
                     url: hash['url'],
                     length: distance_of_time_in_words(hash['duration'].to_i),
@@ -39,7 +39,7 @@ class Crawl::Google
                   end
                   {
                     title: hash['titleNoFormatting'],
-                    description: hash['content'],
+                    description: ActionView::Base.full_sanitizer.sanitize(hash['content']),
                     image: image,
                     url: hash['unescapedUrl'],
                     publisher: hash['publisher'],
@@ -79,7 +79,7 @@ class Crawl::Google
                  google_hash['results'].map do |hash|
                    {
                     title: hash['titleNoFormatting'],
-                    description: hash['content'],
+                    description: ActionView::Base.full_sanitizer.sanitize(hash['content']),
                     url: hash['unescapedUrl']
                    }
                  end
