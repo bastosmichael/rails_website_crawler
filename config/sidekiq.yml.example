@@ -19,12 +19,12 @@
   - spider_three
   - spider_four
   - spider_five
-  - scrimper
   - scrimper_one
   - scrimper_two
   - scrimper_three
   - scrimper_four
   - scrimper_five
+  - scrimper
   - sitemapper
   - sitemapper_one
   - sitemapper_two
@@ -34,15 +34,11 @@
   - default
 :blocking:
   - scrimper
-  - scrimper_one
-  - scrimper_two
-  - scrimper_three
-  - scrimper_four
-  - scrimper_five
 :process_limits:
   scrimper: 1
   sampler: 1
   spider: 1
+:limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
