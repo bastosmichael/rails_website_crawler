@@ -48,6 +48,7 @@ class Mapper::Indexer < Mapper::Base
 
     Elasticsearch::Model.client.indices.refresh index: index
   # rescue Elasticsearch::Transport::Transport::Errors::BadRequest => e
+  # # rescue Elasticsearch::Transport::Transport::Errors::NotFound
   #  record(id).delete
   #  Crawler::Scrimper.perform_async new_hash['url'] if new_hash['url']
   end
