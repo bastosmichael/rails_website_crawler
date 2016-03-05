@@ -1,18 +1,19 @@
 class Crawler::Sampler < Crawler::Base
+  TYPE = 'Scrimper'
+
   sidekiq_options queue: :sampler,
                   retry: true,
                   backtrace: true,
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url, type = 'Scrimper')
+  def perform(url, type = TYPE)
     return if url.nil?
     @url = url
     @type = type
     parser.page = scraper.get
-    internal_links
+    visit.cache unless internal_links.empty?
     upload
-    visit.cache
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '520' ||
@@ -22,7 +23,7 @@ class Crawler::Sampler < Crawler::Base
       raise
     end
   rescue Net::HTTP::Persistent::Error => e
-    Crawler::Sampler.perform_async @url
+    self.class.name.constantize.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
   end
