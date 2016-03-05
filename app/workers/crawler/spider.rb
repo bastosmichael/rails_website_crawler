@@ -8,10 +8,10 @@ class Crawler::Spider < Crawler::Base
   def perform(url)
     return if url.nil?
     @url = url
+    @type = type
     parser.page = scraper.get
-    internal_links
+    visit.cache unless internal_links.empty?
     upload
-    visit.cache
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '520' ||
@@ -20,8 +20,6 @@ class Crawler::Spider < Crawler::Base
     else
       raise
     end
-  rescue Net::HTTP::Persistent::Error => e
-    Crawler::Spider.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
   end

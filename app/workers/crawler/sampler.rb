@@ -16,14 +16,13 @@ class Crawler::Sampler < Crawler::Base
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
+         e.response_code == '410' ||
          e.response_code == '520' ||
          e.response_code == '500'
       Recorder::UrlDeleter.perform_async url
     else
       raise
     end
-  rescue Net::HTTP::Persistent::Error => e
-    self.class.name.constantize.perform_async @url
   rescue Mechanize::RedirectLimitReachedError => e
     nil
   end
