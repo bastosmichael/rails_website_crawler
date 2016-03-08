@@ -2,36 +2,36 @@
 :concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
+  - default
   #- screener
   - mapper
   - recorder
   - slider
   - socializer
-  - sampler
   - sampler_one
   - sampler_two
   - sampler_three
   - sampler_four
   - sampler_five
-  - spider
+  - sampler
   - spider_one
   - spider_two
   - spider_three
   - spider_four
   - spider_five
+  - spider
   - scrimper_one
   - scrimper_two
   - scrimper_three
   - scrimper_four
   - scrimper_five
   - scrimper
-  - sitemapper
   - sitemapper_one
   - sitemapper_two
   - sitemapper_three
   - sitemapper_four
   - sitemapper_five
-  - default
+  - sitemapper
 :blocking:
   - scrimper
 :process_limits:
