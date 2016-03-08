@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get '/search/:query', to: 'search#index'
     post '/batch' => 'batch#index'
     get '/top/:array', to: 'top#index'
+    get '/:container/ids', to: 'record#ids'
     get '/:container/match', to: 'match#index'
     get '/:container/search/:query', to: 'search#index'
     get '/:container/top/:array', to: 'top#index'
