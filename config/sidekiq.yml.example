@@ -35,7 +35,7 @@
 :blocking:
   - scrimper
 :process_limits:
-  scrimper: 1
+  # scrimper: 1
   # scrimper_one: 1
   # scrimper_two: 1
   # scrimper_three: 1
