@@ -1,6 +1,8 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://" + ENV['DOMAIN'] + '/'
 
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
+
 SitemapGenerator::Sitemap.create_index = true
 
 SitemapGenerator::Sitemap.sitemaps_host = "http://#{ENV['DOMAIN']}-sitemaps.s3.amazonaws.com/"

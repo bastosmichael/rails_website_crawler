@@ -18,6 +18,7 @@ set :sidekiq_log, "#{deploy_to}/#{shared_path}/log/sidekiq.log"
 set :sidekiq_pid, "#{deploy_to}/#{shared_path}/tmp/pids/sidekiq.pid"
 
 set :shared_paths, ['public/static',
+                    'public/sitemaps',
                     'config/sidekiq.yml',
                     'config/config.yml',
                     'config/secrets.yml',
