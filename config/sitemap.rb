@@ -24,4 +24,10 @@ SitemapGenerator::Sitemap.create do
   #   Article.find_each do |article|
   #     add article_path(article), :lastmod => article.updated_at
   #   end
+  # ['boxed-offers'].each do |container|
+  Rails.configuration.config[:admin][:api_containers].reverse.each do |container|
+    Cloud.new(container).files.each do |file|
+      add ("http://" + ENV['DOMAIN'] + '/' + container + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
+    end
+  end
 end
