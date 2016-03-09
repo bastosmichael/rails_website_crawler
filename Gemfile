@@ -7,6 +7,7 @@ gem 'sqlite3'
 gem 'mina', :require => false
 gem 'mina-sidekiq', :require => false
 gem 'mina-unicorn', :require => false
+gem 'sitemap_generator'
 
 gem 'oj'
 gem 'oj_mimic_json'
