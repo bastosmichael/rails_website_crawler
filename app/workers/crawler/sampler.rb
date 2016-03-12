@@ -1,16 +1,20 @@
 class Crawler::Sampler < Crawler::Base
-  TYPE = 'Scrimper'
-
   sidekiq_options queue: :sampler,
                   retry: true,
                   backtrace: true,
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url, type = TYPE)
+  def perform(url, type = nil)
     return if url.nil?
+
+    if type.nil?
+      next_type
+    else
+      @type = type
+    end
+
     @url = url
-    @type = type
     parser.page = scraper.get
     visit.cache unless internal_links.empty?
     upload
@@ -25,6 +29,10 @@ class Crawler::Sampler < Crawler::Base
     end
   rescue Mechanize::RedirectLimitReachedError => e
     nil
+  end
+
+  def next_type
+    @type ||= 'Scrimper'
   end
 
   def visit
