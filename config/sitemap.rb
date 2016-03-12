@@ -35,8 +35,12 @@ SitemapGenerator::Sitemap.create do
   #   end
   # ['boxed-offers'].each do |container|
   Rails.configuration.config[:admin][:api_containers].reverse.each do |container|
-    Cloud.new(container).files.each do |file|
-      add (container + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
+    begin
+      Cloud.new(container).files.each do |file|
+        add (container + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
+      end
+    rescue => e
+      ap e.message
     end
   end
 end
