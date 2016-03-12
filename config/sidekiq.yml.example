@@ -8,6 +8,12 @@
   - recorder
   - slider
   - socializer
+  - scrimper_one
+  - scrimper_two
+  - scrimper_three
+  - scrimper_four
+  - scrimper_five
+  - scrimper
   - sampler_one
   - sampler_two
   - sampler_three
@@ -20,12 +26,6 @@
   - spider_four
   - spider_five
   - spider
-  - scrimper_one
-  - scrimper_two
-  - scrimper_three
-  - scrimper_four
-  - scrimper_five
-  - scrimper
   - sitemapper_one
   - sitemapper_two
   - sitemapper_three
@@ -34,6 +34,7 @@
   - sitemapper
 :blocking:
   - scrimper
+  - sampler
 :process_limits:
   # scrimper: 1
   # scrimper_one: 1
