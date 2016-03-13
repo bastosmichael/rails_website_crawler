@@ -1,4 +1,4 @@
-class Crawler::Slider < Crawler::Scrimper
+class Crawler::Slider < Crawler::Sampler
   sidekiq_options queue: :slider,
                   retry: true,
                   backtrace: true,
