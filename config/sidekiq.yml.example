@@ -4,8 +4,8 @@
 :queues:
   - [default, 65536]
   #- [screener, 65536]
-  - [mapper, 65536]
-  - [recorder, 65536]
+  #- [mapper, 65536]
+  #- [recorder, 65536]
   - [slider, 65536]
   - [socializer, 65536]
   - [scrimper_one, 32768]
