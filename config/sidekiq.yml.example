@@ -2,38 +2,37 @@
 :concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - default
-  #- screener
-  - mapper
-  - recorder
-  - slider
-  - socializer
-  - spider_one
-  - spider_two
-  - spider_three
-  - spider_four
-  - spider_five
-  - spider
-  - scrimper_one
-  - scrimper_two
-  - scrimper_three
-  - scrimper_four
-  - scrimper_five
-  - scrimper
-  - sampler_one
-  - sampler_two
-  - sampler_three
-  - sampler_four
-  - sampler_five
-  - sampler
-  - sitemapper_one
-  - sitemapper_two
-  - sitemapper_three
-  - sitemapper_four
-  - sitemapper_five
-  - sitemapper
+  - [default, 65536]
+  #- [screener, 65536]
+  - [mapper, 65536]
+  - [recorder, 65536]
+  - [slider, 65536]
+  - [socializer, 65536]
+  - [scrimper_one, 32768]
+  - [scrimper_two, 32768]
+  - [scrimper_three, 32768]
+  - [scrimper_four, 32768]
+  - [scrimper_five, 32768]
+  - [scrimper, 16384]
+  - [spider_one, 8192]
+  - [spider_two, 8192]
+  - [spider_three, 8192]
+  - [spider_four, 8192]
+  - [spider_five, 8192]
+  - [spider, 4096]
+  - [sampler_one, 2048]
+  - [sampler_two, 1024]
+  - [sampler_three, 512]
+  - [sampler_four, 256]
+  - [sampler_five, 128]
+  - [sampler, 64]
+  - [sitemapper_one, 32]
+  - [sitemapper_two, 16]
+  - [sitemapper_three, 8]
+  - [sitemapper_four, 4]
+  - [sitemapper_five, 2]
+  - [sitemapper, 1]
 :blocking:
-  - scrimper
   - sampler
 :process_limits:
   # scrimper: 1
