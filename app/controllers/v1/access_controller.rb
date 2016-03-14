@@ -35,9 +35,9 @@ class V1::AccessController < ApplicationController
     end
 
   def default_options
-    { crawl: params[:fetch],
-      social: params[:social],
-      fix: params[:fix],
+    { crawl: (if params[:fetch].nil? || params[:fetch] then true else false end),
+      social: (if params[:social].nil? || !params[:social] then false else true end),
+      fix: (if params[:fix].nil? || !params[:fix] then false else true end),
       page: current_page,
       results: current_results }
   end
