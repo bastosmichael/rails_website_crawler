@@ -35,10 +35,11 @@ class V1::AccessController < ApplicationController
     end
 
   def default_options
-    { crawl: params[:fetch] || true,
-      social: params[:social] || false,
-      fix: params[:fix] || false,
-      page: params[:page] || 1 }
+    { crawl: params[:fetch],
+      social: params[:social],
+      fix: params[:fix],
+      page: current_page,
+      results: current_results }
   end
 
   def remove_params
