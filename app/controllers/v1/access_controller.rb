@@ -13,6 +13,14 @@ class V1::AccessController < ApplicationController
     params[:results].to_i > 0 ? params[:results].to_i : 10
   end
 
+  def default_true value
+    value == 'false' ? false : true
+  end
+
+  def default_false value
+    value == 'true' ? true : false
+  end
+
   def pagination(total_pages = 0)
     pages = if total_pages < 1
               1
@@ -35,9 +43,9 @@ class V1::AccessController < ApplicationController
     end
 
   def default_options
-    { crawl: (if params[:fetch].nil? || params[:fetch] then true else false end),
-      social: (if params[:social].nil? || !params[:social] then false else true end),
-      fix: (if params[:fix].nil? || !params[:fix] then false else true end),
+    { crawl: default_true(params[:fetch]),
+      social: default_false(params[:social]),
+      fix: default_false(params[:fix]),
       page: current_page,
       results: current_results }
   end
