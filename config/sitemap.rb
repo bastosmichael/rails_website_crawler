@@ -13,9 +13,9 @@ SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(Rails.config
 SitemapGenerator::Sitemap.create do
   # ['boxed-offers'].each do |container|
   begin
-    Cloud.new(container).files.each do |file|
-      add (container + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
-    end if container = ENV['CONTAINER']
+    Cloud.new(ENV['CONTAINER']).files.each do |file|
+      add (ENV['CONTAINER'] + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
+    end
   rescue => e
     ap e.message
   end
