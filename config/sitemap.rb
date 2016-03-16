@@ -19,13 +19,5 @@ SitemapGenerator::Sitemap.create do
   rescue => e
     ap e.message
   end
-  # Rails.configuration.config[:admin][:api_containers].reverse.each do |container|
-  #   begin
-  #     Cloud.new(container).files.each do |file|
-  #       add (container + '/' + file.key.gsub('.json','')), lastmod: file.last_modified
-  #     end
-  #   rescue => e
-  #     ap e.message
-  #   end
-  # end
+  # Example. DOMAIN=pricenometry.com CONTAINER=newegg-offers bundle exec rake sitemap:refresh
 end
