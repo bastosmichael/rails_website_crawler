@@ -1,6 +1,6 @@
-class V1::TopController < V1::AccessController
+class V1::TrendsController < V1::AccessController
   def index
-    container = Record::Top.new(params[:container])
+    container = Record::Trends.new(params[:container])
     if params[:array].empty?
       results = errors_response('no results found')
       status = 404
