@@ -7,11 +7,12 @@ class Crawl::Base < Page::Url
   end
 
   def get
-    # 	get_with_vcr :new_episodes
-    # rescue Psych::SyntaxError
-    Timeout::timeout(120) {
-      agent.get(url)
-    }
+    page = agent.get(url)
+    if page.code == '200'
+      return page
+    else
+      raise Mechanize::ResponseCodeError.new(page, 'Not 200')
+    end
   end
 
   def clear
@@ -46,6 +47,7 @@ class Crawl::Base < Page::Url
     agent = Mechanize.new
     agent.user_agent = UserAgentRandomizer::UserAgent.fetch(type: "desktop_browser").string
     agent.html_parser = Nokogiri::HTML
+    agent.redirect_ok = false
     # agent.ssl_version = 'SSLv3'
     # agent.open_timeout = 300
     # agent.read_timeout = 300
