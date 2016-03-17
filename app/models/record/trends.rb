@@ -1,4 +1,4 @@
-class Record::Top < Record::Match
+class Record::Trends < Record::Match
   def sort(query_array = ['date'], options = { crawl: true, social: true, results: 10, page: 1, fix: false })
     @options = options
     @query_array = query_array

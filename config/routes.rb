@@ -13,11 +13,11 @@ Rails.application.routes.draw do
     get '/match', to: 'match#index', results: 10
     get '/search/:query', to: 'search#index'
     post '/batch' => 'batch#index'
-    get '/top/:array', to: 'top#index'
+    get '/trends/:array', to: 'trends#index'
     get '/:container/ids', to: 'record#ids'
     get '/:container/match', to: 'match#index'
     get '/:container/search/:query', to: 'search#index'
-    get '/:container/top/:array', to: 'top#index'
+    get '/:container/trends/:array', to: 'trends#index'
     get '/:container/:record_id/history', to: 'history#index'
     get '/:container/:record_id/news', to: 'news#index'
     get '/:container/:record_id/videos', to: 'videos#index'
