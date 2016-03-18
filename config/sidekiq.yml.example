@@ -35,12 +35,12 @@
 :blocking:
   - sampler
 :process_limits:
-  scrimper: 1
-  scrimper_one: 1
-  scrimper_two: 1
-  scrimper_three: 1
-  scrimper_four: 1
-  scrimper_five: 1
+  # scrimper: 1
+  # scrimper_one: 1
+  # scrimper_two: 1
+  # scrimper_three: 1
+  # scrimper_four: 1
+  # scrimper_five: 1
   sampler: 1
   sampler_one: 1
   sampler_two: 1
