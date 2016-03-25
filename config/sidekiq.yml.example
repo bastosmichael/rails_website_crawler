@@ -28,7 +28,7 @@
   - [sampler, 20000]
   #- [sitemapper_one, 1]
   #- [sitemapper_two, 1]
-  #- [sitemapper_three, 1]
+  - [sitemapper_three, 1]
   #- [sitemapper_four, 1]
   #- [sitemapper_five, 1]
   #- [sitemapper, 1]
