@@ -4,7 +4,7 @@
 :queues:
   - [default, 640000]
   - [mapper, 3200000]
-  - [recorder, 3200000]
+  - [recorder, 320000]
   - [slider, 160000]
   - [socializer, 160000]
   - [scrimper_one, 80000]
