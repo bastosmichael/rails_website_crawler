@@ -2,6 +2,8 @@
 :concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
+  - [slider, 1280000]
+  - [socializer, 1280000]
   - [mapper, 640000]
   - [recorder, 320000]
   - [slider, 160000]
