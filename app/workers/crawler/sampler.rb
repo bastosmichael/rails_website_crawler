@@ -16,8 +16,9 @@ class Crawler::Sampler < Crawler::Base
 
     @url = url
     parser.page = scraper.get
-    visit.cache unless internal_links.empty?
+    internal_links
     upload
+    visit.cache unless internal_links.empty?
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '410' ||
