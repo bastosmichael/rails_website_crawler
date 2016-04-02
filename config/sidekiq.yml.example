@@ -3,9 +3,9 @@
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [slider, 12800000]
-  - [socializer, 12800000]
-  - [recorder, 6400000]
-  - [mapper, 3200000]
+  - [socializer, 6400000]
+  - [recorder, 3200000]
+  - [mapper, 1600000]
   - [scrimper_one, 80000]
   - [scrimper_two, 80000]
   - [scrimper_three, 80000]
