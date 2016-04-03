@@ -18,12 +18,12 @@ Rails.application.routes.draw do
     get '/:container/match', to: 'match#index'
     get '/:container/search/:query', to: 'search#index'
     get '/:container/trends/:array', to: 'trends#index'
-    get '/:container/:record_id/history', to: 'history#index'
-    get '/:container/:record_id/news', to: 'news#index'
-    get '/:container/:record_id/videos', to: 'videos#index'
-    get '/:container/:record_id/references', to: 'references#index'
-    get '/:container/:record_id/links', to: 'links#index'
-    get '/:container/:record_id/:screenshot_id', to: 'screenshot#index'
+    get '/:container/:record_id/history', to: 'record#history'
+    get '/:container/:record_id/news', to: 'record#news'
+    get '/:container/:record_id/videos', to: 'record#videos'
+    get '/:container/:record_id/references', to: 'record#references'
+    get '/:container/:record_id/links', to: 'record#links'
+    get '/:container/:record_id/:screenshot_id', to: 'record#screenshot'
     get '/:container/:record_id', to: 'record#index'
   end
 end
