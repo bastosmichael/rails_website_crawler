@@ -6,18 +6,6 @@ class Record::Base
     @index = Rails.env + '-' + @types if @types
   end
 
-  def ids options = {}
-    limit_results = options[:results].try(:to_i) || 10
-    elasticsearch_results = Elasticsearch::Model.client.search(index: @index, type: @container, body: {query: {match_all: {}}, size: limit_results, from: (((options[:page].try(:to_i) || 1) - 1) * 30), fields: ["_id"]})
-    {
-      result: {
-        container: @container,
-        ids: (elasticsearch_results['hits']['hits'].map {|h| h['_id'] } if elasticsearch_results['hits'] || []),
-      },
-      total: ((elasticsearch_results['hits']['total'] if elasticsearch_results['hits'] || 0) / limit_results.to_f / 3).ceil
-    }
-  end
-
   def delete
     cloud.head(@record + '.json').try(:destroy)
   end
