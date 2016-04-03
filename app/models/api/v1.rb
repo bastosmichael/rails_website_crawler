@@ -92,25 +92,33 @@ class Api::V1 < Record::Base
   end
 
   def related_data(options = { crawl: true, social: false })
-    # return { id: @record, container: @container, error: 'not available' } unless name
+    return { id: @record, container: @container, error: 'not available' } unless name
 
-    # links = Crawl::Google.new(name).links
+    @containers = containers - [@container]
 
-    # if links
-    #   {
-    #     id: @record,
-    #     container: @container,
-    #     name: name,
-    #     links: links
-    #   }
-    # else
-    #   {
-    #     id: @record,
-    #     container: @container,
-    #     name: name,
-    #     error: 'no related available'
-    #   }
-    # end
+    query = initial_query({
+        match: {
+          name: name
+        }
+      })
+
+    related = sanitize_results(@containers, query, options)
+
+    if related.any?
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        related: related
+      }
+    else
+      {
+        id: @record,
+        container: @container,
+        name: name,
+        error: 'no related available'
+      }
+    end
   end
 
   def links_data(options = { crawl: true, social: false })
@@ -221,5 +229,62 @@ class Api::V1 < Record::Base
         data['name']
       end
     end
+  end
+
+  def containers
+    Rails.configuration.config[:admin][:api_containers]
+  end
+
+  def types
+    @container.split('-').last.pluralize.gsub(':', '')
+  end
+
+  def index
+    unless @container.nil?
+      [ Rails.env + '-' + types ]
+    else
+      @container.map { |c| Rails.env + '-' + c.split('-').last.pluralize.gsub(':', '') }.uniq
+    end
+  end
+
+  def elasticsearch_results containers, query
+    Elasticsearch::Model.client.search(index: index, type: containers, body: query).deep_symbolize_keys!
+  end
+
+  def sanitize_results containers, query, options
+    elasticsearch_results(containers, query)[:hits][:hits].map do |e|
+      recrawl(e[:_source][:url], options) if e[:_source][:url]
+
+      new_data = { id: e[:_id],
+                   container: e[:_type],
+                   score: e[:_score],
+                   history: {},
+                   social: {},
+                   price: {}
+                 }
+
+      e[:_source].each do |k,v|
+        if k.to_s.include?('_history')
+          new_data[:history][k.to_s.gsub('_history','')] = v
+        elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
+          new_data[:social][k] = v
+        elsif k.to_s.include?('price')
+          new_data[:price][k] = v
+        else
+          new_data[k] = v
+        end
+      end
+      new_data
+    end
+  end
+
+  def initial_query hash = {}
+    {
+      query: {
+        bool: {
+          should: hash
+        }
+      }
+    }
   end
 end

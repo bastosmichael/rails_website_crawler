@@ -49,6 +49,14 @@ class V1::RecordController < V1::AccessController
     end
   end
 
+  def related
+    related = record.related_data(default_options)
+    respond_to do |format|
+      format.json { json_response(200, result: related) }
+      format.xml { xml_response(200, result: related) }
+    end
+  end
+
   def news
     news = record.news_data(default_options)
     respond_to do |format|
