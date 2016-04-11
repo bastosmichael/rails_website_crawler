@@ -2,6 +2,7 @@
 :concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
+  - [default, 1280000]
   - [slider, 1280000]
   - [socializer, 640000]
   - [recorder, 320000]
@@ -30,7 +31,6 @@
   - [sitemapper_four, 1]
   - [sitemapper_five, 1]
   - [sitemapper, 1]
-  - default
 :process_limits:
   sampler: 1
   sampler_one: 1
