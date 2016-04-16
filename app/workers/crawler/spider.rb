@@ -14,9 +14,11 @@ class Crawler::Spider < Crawler::Base
     visit.cache unless internal_links.empty?
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
+         e.response_code == '410' ||
          e.response_code == '520' ||
          e.response_code == '500' ||
-         e.response_code == '301'
+         e.response_code == '301' ||
+         e.response_code == '302'
       Recorder::UrlDeleter.perform_async url
     else
       raise
