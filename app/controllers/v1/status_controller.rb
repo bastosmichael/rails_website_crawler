@@ -10,6 +10,8 @@ class V1::StatusController < V1::AccessController
 
   def counts
     { available: count_indexes,
+      count: Rails.configuration.config[:admin][:api_containers].count.to_s,
+      total: pretty_integer(@total || 0),
       indexing: pretty_integer(count_indexers),
       processing: pretty_integer(count_scrimpers),
       pending: pretty_integer(count_sitemappers * 50_000) }
@@ -66,8 +68,11 @@ class V1::StatusController < V1::AccessController
   end
 
   def count_containers(container)
+    @total ||= 0
     index = Rails.env + '-' + container.split('-').last.pluralize.delete(':')
-    Elasticsearch::Model.client.count(index: index, type: container)['count']
+    count = Elasticsearch::Model.client.count(index: index, type: container)['count']
+    @total = @total + count
+    count
   rescue Elasticsearch::Transport::Transport::Errors => e
     0
   end
