@@ -47,7 +47,7 @@
   spider_three: 1
   spider_four: 1
   spider_five: 1
-:limits:
+# :limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
