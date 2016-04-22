@@ -2,7 +2,7 @@ class Crawl::Social < Page::Url
   require 'social_shares'
 
   def shares
-    all.merge(facebook).delete_if { |_k, v| v == 0 }
+    all.delete_if { |_k, v| v == 0 }
   end
 
   def all
