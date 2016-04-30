@@ -1,4 +1,4 @@
-class Recorder::IdDeleter < Recorder::Base
+class Recorder::IdAvailability < Recorder::Base
   def perform(container, id)
     @container = container
     types = @container.split('-').last.pluralize.gsub(':', '')

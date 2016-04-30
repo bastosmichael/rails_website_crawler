@@ -26,7 +26,7 @@ class Record::Upload < Page::Url
     self.data = update_metadata(update_canonical(data))
   end
 
-  def update_canonical(new_data = {})
+  def update_canonical(new_data = {'available' => true})
     types
     set_date
     set_screenshot

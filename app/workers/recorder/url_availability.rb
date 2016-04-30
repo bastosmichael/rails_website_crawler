@@ -1,4 +1,4 @@
-class Recorder::UrlDeleter < Recorder::Base
+class Recorder::UrlAvailability < Recorder::Base
   def perform(url)
     @name = Page::Url.new(url).name
     @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }

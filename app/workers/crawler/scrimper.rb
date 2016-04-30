@@ -17,7 +17,7 @@ class Crawler::Scrimper < Crawler::Base
          e.response_code == '500' ||
          e.response_code == '301' ||
          e.response_code == '302'
-      Recorder::UrlDeleter.perform_async url
+      Recorder::UrlAvailability.perform_async url
     else
       raise
     end
