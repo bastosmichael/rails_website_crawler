@@ -1,5 +1,5 @@
 ---
-:concurrency: 10
+:concurrency: 50
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [syncer, 1280000]
@@ -33,8 +33,8 @@
   - [sitemapper_five, 1]
   - [sitemapper, 1]
 :process_limits:
-  slider: 10
-  socializer: 10
+  slider: 1
+  socializer: 1
   sampler: 1
   sampler_one: 1
   sampler_two: 1
