@@ -27,10 +27,11 @@ class Api::V1 < Record::Base
   end
 
   def current_data(options = { crawl: true, social: false })
-    return { id: @record, container: @container, error: 'not available' } unless old_data = data
+    return { id: @record, container: @container, available: false, error: 'not available' } unless old_data = data
     new_data = { id: nil,
                  container: @container,
                  name: name(old_data),
+                 available: true,
                  social: {},
                  price:{}
                }
@@ -256,6 +257,7 @@ class Api::V1 < Record::Base
       new_data = { id: e[:_id],
                    container: e[:_type],
                    score: e[:_score],
+                   available: true,
                    history: {},
                    social: {},
                    price: {}

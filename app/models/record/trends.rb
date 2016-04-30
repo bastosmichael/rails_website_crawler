@@ -30,6 +30,7 @@ class Record::Trends < Record::Match
       new_data = { id: e[:_id],
                    container: e[:_type],
                    score: e[:_score],
+                   available: true,
                    history: {},
                    social: {},
                    price: {}

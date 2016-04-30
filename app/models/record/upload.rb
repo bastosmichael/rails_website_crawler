@@ -10,7 +10,8 @@ class Record::Upload < Page::Url
                  tags
                  categories
                  open_graph
-                 schema_org).freeze
+                 schema_org
+                 available).freeze
 
   EXCLUDE = %i(site_name
                id
