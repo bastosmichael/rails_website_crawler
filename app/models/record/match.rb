@@ -53,12 +53,12 @@ class Record::Match < Record::Base
   def query
     @query = {
       query: {
-        must_not: {
-          term: {
-            available: false
-          }
-        },
         bool: {
+          must_not: {
+            term: {
+              available: false
+            }
+          },
           should: match_query
         }
       },
