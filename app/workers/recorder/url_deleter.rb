@@ -9,7 +9,10 @@ class Recorder::UrlDeleter < Recorder::Base
 
     if records['hits']['total'] > 0
       records['hits']['hits'].each do |record|
-        Recorder::Uploader.perform_async { id: record['_id'], available: false, url: record['_source']['url'], type: record['_type'].split('-').last.capitalize.singularize }
+        Recorder::Uploader.perform_async({ id: record['_id'],
+                                           available: false,
+                                           url: record['_source']['url'],
+                                           type: record['_type'].split('-').last.capitalize.singularize })
       end
       # Elasticsearch::Model.client.delete index: @index, type: @container, id: record['hits']['hits'].try(:first)['_id']
       # cloud.head(record['hits']['hits'].try(:first)['_id'] + '.json').try(:destroy)
