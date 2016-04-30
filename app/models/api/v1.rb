@@ -97,9 +97,7 @@ class Api::V1 < Record::Base
     @containers = containers - [@container]
 
     query = initial_query({
-        match: {
-          name: name
-        }
+        name: name
       })
 
     related = sanitize_results(@containers, query, options)
@@ -282,7 +280,14 @@ class Api::V1 < Record::Base
     {
       query: {
         bool: {
-          should: hash
+          must_not: {
+            term: {
+              available: false
+            }
+          },
+          should: {
+            match: hash
+          }
         }
       }
     }
