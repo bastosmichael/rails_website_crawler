@@ -69,7 +69,7 @@
   spider_five: 1
 :limits:
   recorder: 100
-  mapper: 10
+  mapper: 100
   sampler: 10
   sampler_one: 10
   sampler_two: 10
