@@ -68,8 +68,8 @@
   spider_four: 1
   spider_five: 1
 :limits:
+  recorder: 100
   mapper: 10
-  recorder: 10
   sampler: 10
   sampler_one: 10
   sampler_two: 10
