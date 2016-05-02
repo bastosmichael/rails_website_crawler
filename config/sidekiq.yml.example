@@ -1,5 +1,5 @@
 ---
-:concurrency: 10
+:concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [syncer, 1280000]
@@ -13,24 +13,39 @@
   - [scrimper_three, 8000]
   - [scrimper_four, 8000]
   - [scrimper_five, 8000]
+  - [scrimper_six, 8000]
+  - [scrimper_seven, 8000]
+  - [scrimper_eight, 8000]
+  - [scrimper_nine, 8000]
+  - [scrimper_ten, 8000]
   - [scrimper, 8000]
-  - [spider_one, 4000]
-  - [spider_two, 4000]
-  - [spider_three, 4000]
-  - [spider_four, 4000]
-  - [spider_five, 4000]
-  - [spider, 4000]
-  - [sampler_one, 2000]
-  - [sampler_two, 2000]
-  - [sampler_three, 2000]
-  - [sampler_four, 2000]
-  - [sampler_five, 2000]
-  - [sampler, 2000]
+  - [sampler_one, 4000]
+  - [sampler_two, 4000]
+  - [sampler_three, 4000]
+  - [sampler_four, 4000]
+  - [sampler_five, 4000]
+  - [sampler_six, 4000]
+  - [sampler_seven, 4000]
+  - [sampler_eight, 4000]
+  - [sampler_nine, 4000]
+  - [sampler_ten, 4000]
+  - [sampler, 4000]
+  - [spider_one, 2000]
+  - [spider_two, 2000]
+  - [spider_three, 2000]
+  - [spider_four, 2000]
+  - [spider_five, 2000]
+  - [spider, 2000]
   - [sitemapper_one, 1]
   - [sitemapper_two, 1]
   - [sitemapper_three, 1]
   - [sitemapper_four, 1]
   - [sitemapper_five, 1]
+  - [sitemapper_six, 1]
+  - [sitemapper_seven, 1]
+  - [sitemapper_eight, 1]
+  - [sitemapper_nine, 1]
+  - [sitemapper_ten, 1]
   - [sitemapper, 1]
 :process_limits:
   slider: 1
@@ -41,6 +56,11 @@
   sampler_three: 1
   sampler_four: 1
   sampler_five: 1
+  sampler_six: 1
+  sampler_seven: 1
+  sampler_eight: 1
+  sampler_nine: 1
+  sampler_ten: 1
   spider: 1
   spider_one: 1
   spider_two: 1
@@ -48,9 +68,16 @@
   spider_four: 1
   spider_five: 1
 :limits:
+  mapper: 100
+  recorder: 100
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
   sitemapper_three: 1
   sitemapper_four: 1
   sitemapper_five: 1
+  sitemapper_six: 1
+  sitemapper_seven: 1
+  sitemapper_eight: 1
+  sitemapper_nine: 1
+  sitemapper_ten: 1
