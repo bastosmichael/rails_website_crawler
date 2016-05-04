@@ -27,7 +27,7 @@ class Record::Upload < Page::Url
   end
 
   def update_canonical(new_data = {})
-    new_data['available'] = true
+    new_data['available'] = true unless metadata['available']
     types
     set_date
     set_screenshot
