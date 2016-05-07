@@ -1,5 +1,5 @@
 ---
-:concurrency: 20
+:concurrency: 10
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [syncer, 60000]
@@ -51,7 +51,7 @@
   slider: 1
   socializer: 1
   scrimper: 1
-  scrimper_one: 1
+  # scrimper_one: 1
   scrimper_two: 1
   scrimper_three: 1
   scrimper_four: 1
