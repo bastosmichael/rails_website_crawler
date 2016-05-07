@@ -9,6 +9,8 @@ class Syncer::Refixer < Syncer::Base
       if id.size > 20
         r = record(id)
         if url = r.try(:url)
+          Elasticsearch::Model.client.delete index: index, type: container, id: id
+          Elasticsearch::Model.client.indices.refresh index: index
           Crawler::Scrimper.perform_async url
         end
         r.delete
