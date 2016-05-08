@@ -48,8 +48,8 @@
   - [sitemapper_ten, 1]
   - [sitemapper, 1]
 :process_limits:
-  slider: 1
-  socializer: 1
+  # slider: 1
+  # socializer: 1
   scrimper: 1
   scrimper_one: 1
   scrimper_two: 1
