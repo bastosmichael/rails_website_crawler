@@ -36,7 +36,7 @@
   - [sampler_nine, 30000]
   - [sampler_ten, 30000]
   - [sampler, 20000]
-  #- [sitemapper_one, 1]
+  - [sitemapper_one, 1]
   - [sitemapper_two, 1]
   - [sitemapper_three, 1]
   - [sitemapper_four, 1]
