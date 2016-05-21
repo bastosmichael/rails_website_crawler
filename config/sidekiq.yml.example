@@ -2,12 +2,12 @@
 :concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [syncer, 120000]
-  - [default, 110000]
-  - [slider, 1000000]
-  - [socializer, 900000]
-  - [recorder, 800000]
-  - [mapper, 700000]
+  - [slider, 1200000]
+  - [socializer, 1100000]
+  - [recorder, 1000000]
+  - [mapper, 900000]
+  - [syncer, 80000]
+  - [default, 70000]
   - [scrimper_one, 60000]
   - [scrimper_two, 60000]
   - [scrimper_three, 60000]
