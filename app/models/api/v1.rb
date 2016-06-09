@@ -60,7 +60,7 @@ class Api::V1 < Record::Base
           new_data[k] = sanitize_value(v)
         end
       end
-    end if old_data['id']
+    end
     recrawl(old_data['url'], options) if old_data['url']
     new_data.deep_symbolize_keys!
   end
