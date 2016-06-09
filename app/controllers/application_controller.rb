@@ -7,30 +7,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def check_partner(access_token)
-    @api_key = access_token
-    return true if api_data['active'] == true
-  rescue
-    return false
-  end
-
-  def api_data
-    @api_data ||= api_record.data
-  end
-
-  def api_record
-    @api_record ||= Record::Base.new('api-keys', api_key)
-  end
-
-  attr_reader :api_key
-
-  def restrict_access
-    return if params[:access_token].presence && check_partner(params[:access_token])
-    authenticate_or_request_with_http_token do |token, _options|
-      return if check_partner token
-    end
-  end
-
   def errors_response(error_messages)
     error_messages = Array(error_messages)
     {

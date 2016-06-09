@@ -21,6 +21,17 @@ default: &default
     docs: https://github.com/bastosmichael/skynet
     api_containers:
       -
+    api_keys:
+      'sample-key':
+        customer: name
+        permissions:
+          - record_show
+          - search_index
+          - match_index
+          - trends_index
+          - batch_index
+          - status_index
+        limit: 20
     url_addons: {}
   app:
     name: crawler
