@@ -71,7 +71,6 @@ GEM
     concurrent-ruby (1.0.1)
     connection_pool (2.2.0)
     daemons (1.2.3)
-    dalli (2.7.6)
     debug_inspector (0.0.2)
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
@@ -495,7 +494,6 @@ DEPENDENCIES
   awesome_print
   better_errors
   binding_of_caller
-  dalli
   elasticsearch-model
   fog
   google-search

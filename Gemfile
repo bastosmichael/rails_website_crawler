@@ -34,7 +34,7 @@ gem 'redis-objects'
 gem 'redis-rails'
 gem 'elasticsearch-model'
 
-gem 'dalli'
+# gem 'dalli'
 
 gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
