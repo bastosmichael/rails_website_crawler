@@ -27,8 +27,13 @@ class Api::V1 < Record::Base
   end
 
   def current_data(options = { crawl: true, social: false })
-    return { id: @record, container: @container, available: false, error: 'not available' } unless old_data = data
-    new_data = { id: nil,
+    if old_data = es_data
+    elsif old_data = data
+    else
+      return { id: @record, container: @container, available: false, error: 'not available' }
+    end
+
+    new_data = { id: @record,
                  container: @container,
                  name: name(old_data),
                  available: true,
@@ -58,6 +63,12 @@ class Api::V1 < Record::Base
     end if old_data['id']
     recrawl(old_data['url'], options) if old_data['url']
     new_data.deep_symbolize_keys!
+  end
+
+  def es_data
+    Elasticsearch::Model.client.get(index: index.first, type: @container, id: @record)['_source']
+  rescue
+    nil
   end
 
   def historical_data(options = { crawl: true, social: false })
