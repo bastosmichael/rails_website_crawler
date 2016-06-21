@@ -1,4 +1,4 @@
-class Api::V1::RecordsController < Api::V2::ApplicationController
+class V1::RecordsController < V1::ApplicationController
   def records_show
     check_permissions(__method__)
     expires_in 30.minutes, public: true

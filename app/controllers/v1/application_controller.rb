@@ -98,7 +98,7 @@ class V1::ApplicationController < ActionController::Base
   end
 
   def check_permissions end_point
-    raise PermissionError unless Rails.configuration.config['api_keys'][check_token]['permissions'] && Rails.configuration.config['api_v2'][check_token]['permissions'].include?(end_point.to_s)
+    raise PermissionError unless Rails.configuration.config['api_keys'][check_token]['permissions'] && Rails.configuration.config['api_keys'][check_token]['permissions'].include?(end_point.to_s)
   end
 
   def current_page
@@ -106,7 +106,7 @@ class V1::ApplicationController < ActionController::Base
   end
 
   def init_api
-    @api = Api::V1::Base.new(self)
+    @api = V1::Base.new(self)
   end
 
   def require_ssl

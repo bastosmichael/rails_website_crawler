@@ -1,9 +1,9 @@
-class Api::V1::Base
+class V1::Base
   attr_accessor :current_page
   attr_accessor :records
 
   def initialize(controller)
-    @records    = Api::V1::Records.new(self)
+    @records    = V1::Records.new(self)
 
     @controller = controller
   end
