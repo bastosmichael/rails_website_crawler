@@ -1,9 +1,105 @@
 class V1::AccessController < ApplicationController
   include CountsHelper
-  before_filter :restrict_access
+  before_action :require_auth!
+  before_action :throttle
   before_filter :remove_params
 
+  class AuthenticationError < Exception; end
+
+  class PermissionError < Exception; end
+
+  class RatelimitError < Exception; end
+
+  rescue_from StandardError do |_exception|
+    # Honeybadger.context(tags: 'api')
+    # Honeybadger.notify(exception)
+    json_response(500, json_errors('☃ Looks like something went wrong!'))
+  end unless Rails.env.development? || Rails.env.test?
+
+  rescue_from AuthenticationError, with: :authentication_error
+
+  rescue_from PermissionError, with: :permission_error
+
+  rescue_from RatelimitError, with: :ratelimit_error
+
   private
+
+  def throttle
+    if limit > 0
+      redis_id = check_token || request.ip
+      count = redis.incr redis_id
+      redis.expire(redis_id, 1.day) if count == 1
+
+      raise RatelimitError unless count <= limit.to_i
+    else
+      true
+    end
+  rescue
+    true
+  else
+
+  end
+
+  def limit
+    @limit ||= Rails.configuration.config[:admin][:api_keys][check_token.try(:to_sym)][:limit].to_i
+  end
+
+  def redis
+    Redis.new(url: Rails.configuration.config[:redis], db:2)
+  end
+
+  def authentication_error
+    json_response(401, json_errors('Authentication required'))
+  end
+
+  def permission_error
+    json_response(403, json_errors('Endpoint Permission required'))
+  end
+
+  def ratelimit_error
+    json_response(403, json_errors('You have fired too many requests. Please wait for some time.'))
+  end
+
+  def require_auth!
+    if check_token
+      true
+    elsif token_exists?
+      raise AuthenticationError
+    else
+      @limit = 20
+      true
+    end
+  end
+
+  def token_exists?
+    @token_exists ||= if params[:access_token].presence
+                        true
+                      else
+                        authenticate_or_request_with_http_token do |token|
+                          if token.presence
+                            true
+                          else
+                            false
+                          end
+                        end
+                      end
+  end
+
+  def check_token
+    @check_token ||= if Rails.configuration.config[:admin][:api_keys].keys.include?(params[:access_token].try(:to_sym))
+                        params[:access_token].presence
+                      else
+                        authenticate_or_request_with_http_token do |token|
+                          if Rails.configuration.config[:admin][:api_keys].keys.include?(token.try(:to_sym))
+                            token
+                          end
+                        end
+                      end
+  end
+
+  def check_permissions end_point
+    raise PermissionError unless Rails.configuration.config[:admin][:api_keys][check_token.try(:to_sym)][:permissions] && Rails.configuration.config[:admin][:api_keys][check_token.try(:to_sym)][:permissions].include?(end_point.to_s)
+  end
 
   def current_page
     params[:page].to_i > 0 ? params[:page].to_i : 1
@@ -57,37 +153,24 @@ class V1::AccessController < ApplicationController
     params.delete(:access_token) if params[:access_token]
   end
 
-  def track_usage
-    if api_data['api_last_used'] == Date.today.to_s
-      api_data['api_daily_usage'] = api_data['api_daily_usage'] + 1
-    else
-      api_data['api_last_used'] = Date.today.to_s
-      api_data['api_daily_usage'] = 0
-    end
-    api_record.data = api_data
+  def json_errors(error_messages)
+    error_messages = Array(error_messages)
+    {
+      error: {
+        errors: error_messages.map { |message| { message: message } }
+      }
+    }
   end
 
-  def check_partner(access_token)
-    @api_key = access_token
-    if api_active && api_usage_cap.nil?
-      return true
-    elsif api_active && api_usage_cap
-      track_usage
-      return true if api_active && api_daily_usage < api_usage_cap
-    end
-  rescue
-    return false
+  def json_response(status_code, json = {})
+    render json: json_response_object(status_code, json), status: 200
   end
 
-  def api_active
-    api_data['active'] == true
-  end
-
-  def api_usage_cap
-    api_data['api_usage_cap']
-  end
-
-  def api_daily_usage
-    api_data['api_daily_usage']
+  def json_response_object(status_code, json = {})
+    {
+      response: {
+        status: status_code
+      }
+    }.merge!(json)
   end
 end
