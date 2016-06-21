@@ -1,5 +1,5 @@
 class V1::BatchController < V1::AccessController
-  def index
+  def batch_index
     container = Api::V1.new(params[:container])
     new_params = params
     new_params.delete(:container) if params[:container]

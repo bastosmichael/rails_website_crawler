@@ -1,6 +1,5 @@
 class V1::AccessController < ApplicationController
   include CountsHelper
-  before_filter :restrict_access
   before_filter :remove_params
 
   private
