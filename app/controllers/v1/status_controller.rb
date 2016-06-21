@@ -1,8 +1,8 @@
 class V1::StatusController < V1::AccessController
   def index
     respond_to do |format|
-      format.json { json_response(200, status: api_data.merge(counts)) }
-      format.xml { xml_response(200, status: api_data.merge(counts)) }
+      format.json { json_response(200, status: (Rails.configuration.config[:admin][:api_keys][check_token.try(:to_sym)] || {}).merge(counts)) }
+      format.xml { xml_response(200, status: (Rails.configuration.config[:admin][:api_keys][check_token.try(:to_sym)] || {}).merge(counts)) }
     end
   end
 
