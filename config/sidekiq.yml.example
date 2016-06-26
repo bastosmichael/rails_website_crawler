@@ -77,8 +77,8 @@
   sitemapper_eight: 1
   sitemapper_nine: 1
   sitemapper_ten: 1
-  recorder: 100
-  mapper: 100
+  recorder: 200
+  mapper: 200
   sampler: 10
   sampler_one: 10
   sampler_two: 10
