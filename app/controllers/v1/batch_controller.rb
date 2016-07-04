@@ -7,7 +7,7 @@ class V1::BatchController < V1::AccessController
       results = errors_response('no results found')
       status = 404
     else
-      results = { results: container.batch(new_params[:batch], default_options.merge(results: current_results)).map { |h| Record::Addons.insert h } }
+      results = { results: container.batch(new_params[:batch], default_options.merge(results: current_results)).map { |h| Record::Addons.insert(Record::Addons.append(h)) } }
       status = 200
     end
     respond_to do |format|

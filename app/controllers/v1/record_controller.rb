@@ -1,6 +1,6 @@
 class V1::RecordController < V1::AccessController
   def index
-    object = Record::Addons.insert(record.current_data(default_options))
+    object = Record::Addons.insert(Record::Addons.append(record.current_data(default_options)))
     respond_to do |format|
       format.json { json_response(200, result: object) }
       format.xml { xml_response(200, result: object) }
@@ -76,7 +76,7 @@ class V1::RecordController < V1::AccessController
   def links
     links = record.links_data(default_options)
     # if links[:links]
-    #   links[:links] = links[:links].map {|h| Record::Addons.insert(h) }
+    #   links[:links] = links[:links].map {|h| Record::Addons.insert(Record::Addons.append(h)) }
     # end
     respond_to do |format|
       format.json { json_response(200, result: links) }
