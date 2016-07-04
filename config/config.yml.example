@@ -32,7 +32,9 @@ default: &default
           - batch_index
           - status_index
         limit: 20
-    url_addons: {}
+    append: {}
+    insert: {}
+    tracker: []
   app:
     name: crawler
 
