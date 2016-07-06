@@ -34,7 +34,7 @@ default: &default
         limit: 20
     append: {}
     insert: {}
-    tracker: []
+    tracker: {}
   app:
     name: crawler
 
