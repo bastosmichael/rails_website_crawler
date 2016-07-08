@@ -1,5 +1,5 @@
 ---
-:concurrency: 5
+:concurrency: 6
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [slider, 1200000]
@@ -36,31 +36,18 @@
   - [sampler_nine, 30000]
   - [sampler_ten, 30000]
   - [sampler, 20000]
-  #- [sitemapper_one, 1]
-  #- [sitemapper_two, 1]
-  #- [sitemapper_three, 1]
+  - [sitemapper_one, 1]
+  - [sitemapper_two, 1]
+  - [sitemapper_three, 1]
   - [sitemapper_four, 1]
   - [sitemapper_five, 1]
-  #- [sitemapper_six, 1]
-  #- [sitemapper_seven, 1]
+  - [sitemapper_six, 1]
+  - [sitemapper_seven, 1]
   - [sitemapper_eight, 1]
   - [sitemapper_nine, 1]
   - [sitemapper_ten, 1]
   - [sitemapper, 1]
 :process_limits:
-  socializer: 1
-  slider: 1
-  scrimper: 1
-  scrimper_one: 1
-  scrimper_two: 1
-  scrimper_three: 1
-  scrimper_four: 1
-  scrimper_five: 1
-  scrimper_six: 1
-  scrimper_seven: 1
-  scrimper_eight: 1
-  scrimper_nine: 1
-  scrimper_ten: 1
   sampler: 1
   sampler_one: 1
   sampler_two: 1
@@ -92,14 +79,3 @@
   sitemapper_ten: 1
   recorder: 200
   mapper: 200
-  sampler: 10
-  sampler_one: 10
-  sampler_two: 10
-  sampler_three: 10
-  sampler_four: 10
-  sampler_five: 10
-  sampler_six: 10
-  sampler_seven: 10
-  sampler_eight: 10
-  sampler_nine: 10
-  sampler_ten: 10
