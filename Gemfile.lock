@@ -516,6 +516,7 @@ DEPENDENCIES
   oj
   oj_mimic_json
   progress
+  pry
   pry-rails
   quiet_assets
   rack-livereload

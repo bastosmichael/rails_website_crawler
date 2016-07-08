@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.5'
 gem 'responders'
 gem 'sqlite3'
+gem 'pry'
 
 gem 'mina', :require => false
 gem 'mina-sidekiq', :require => false
