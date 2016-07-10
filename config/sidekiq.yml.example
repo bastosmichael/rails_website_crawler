@@ -1,5 +1,5 @@
 ---
-:concurrency: 6
+:concurrency: 7
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [slider, 1200000]
@@ -65,7 +65,6 @@
   spider_three: 1
   spider_four: 1
   spider_five: 1
-:limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
