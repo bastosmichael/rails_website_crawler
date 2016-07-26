@@ -18,6 +18,7 @@
       letsencrypt_email: bastosmichael@gmail.com
       letsencrypt_cert_domains:
         - api.pricenometry.com
+      letsencrypt_renewal_command_args: '--renew-hook "systemctl restart nginx"'
     - role: nginx-unicorn
       nginx_sites:
         - name: 'production'
