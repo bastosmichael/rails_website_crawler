@@ -1,31 +1,36 @@
-# Ansible Role For ImageMagick
+# Ansible Role: ImageMagick
 
-[![Build Status](https://circleci.com/gh/crushlovely/ansible-imagemagick.svg?style=shield)](https://github.com/crushlovely/ansible-imagemagick)
-[![Current Version](http://img.shields.io/github/release/crushlovely/ansible-imagemagick.svg?style=flat)](https://galaxy.ansible.com/list#/roles/1180)
+An Ansible role that installs [ImageMagick](http://www.imagemagick.org/script/index.php) on RHEL/CentOS and Debian/Ubuntu.
 
-This an Ansible role that installs [ImageMagick](http://www.imagemagick.org/) and its dependencies via `apt` on a server running Ubuntu 12.04LTS and up.
 
-## Installation
+## Requirements
 
-``` bash
-$ ansible-galaxy install crushlovely.imagemagick,v1.0.0
-```
+None.
 
-## Usage
 
-Once this role is installed on your system, include it in the roles list of your playbook.
+## Role Variables
 
-``` yaml
----
-- hosts: localhost
-  roles:
-    - crushlovely.imagemagick
-```
+None.
+
 
 ## Dependencies
 
-None
+None.
+
+
+## Example Playbook
+
+```
+- hosts: servers
+  roles:
+     - { role: hashbangcode.imagemagick }
+```
 
 ## License
 
 MIT
+
+
+## Author Information
+
+This role was created by [Dan Bohea](http://bohea.co.uk) originally for use with [Vlad](https://github.com/hashbangcode/vlad).

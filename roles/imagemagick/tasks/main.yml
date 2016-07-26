@@ -1,12 +1,14 @@
 ---
-- name: Update apt
-  apt: update_cache=yes
-  sudo: yes
 
-- name: Install Imagemagick
-  action: apt pkg={{ item }} state=latest
-  sudo: yes
+- name: Install ImageMagick (Debian)
+  apt: pkg=imagemagick
+  when: ansible_os_family == "Debian"
+  become: true
+
+- name: Install ImageMagick (Red Hat)
+  yum: pkg={{ item }} state=installed
+  when: ansible_os_family == "RedHat"
+  become: true
   with_items:
-    - imagemagick
-    - libmagickcore-dev
-    - libmagickwand-dev
+    - ImageMagick
+    - ImageMagick-devel

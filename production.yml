@@ -9,6 +9,10 @@
     - ruby-install
     - role: build-ruby
       version: 2.3.0
+    - role: swapfile
+      swapfile_size: 8GB
+      swapfile_swappiness: 10
+      swapfile_location: /mnt/swapfile
     - role: letsencrypt
       letsencrypt_webroot_path: /home/ubuntu/skynet/current
       letsencrypt_email: bastosmichael@gmail.com
