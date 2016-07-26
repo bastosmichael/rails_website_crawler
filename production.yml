@@ -17,7 +17,7 @@
       letsencrypt_webroot_path: /home/ubuntu/skynet/current
       letsencrypt_email: bastosmichael@gmail.com
       letsencrypt_cert_domains:
-        - pricenometry.com
+        - api.pricenometry.com
     - role: nginx-unicorn
       nginx_sites:
         - name: 'production'
