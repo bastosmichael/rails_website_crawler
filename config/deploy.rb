@@ -6,7 +6,7 @@ require 'mina_sidekiq/tasks'
 require 'mina/unicorn'
 
 set :user, 'ubuntu'
-set :domain, ENV['DOMAIN'].split(',')
+set :domain, ENV['DOMAIN']
 set :deploy_to, '/home/ubuntu/skynet'
 set :app_path, lambda { "#{deploy_to}/#{current_path}" }
 set :repository, 'https://github.com/bastosmichael/skynet.git'

@@ -25,3 +25,4 @@
     - git
     - sqlite
     - libsqlite3-dev
+    - libmagickwand-dev
