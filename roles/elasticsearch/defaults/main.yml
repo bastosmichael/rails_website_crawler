@@ -1,0 +1,22 @@
+---
+es_major_version: "2.x"
+es_version: "2.2.0"
+es_version_lock: false
+es_use_repository: true
+es_start_service: true
+update_java: false
+es_restart_on_change: true
+es_plugins_reinstall: false
+es_scripts: false
+es_templates: false
+es_user: elasticsearch
+es_group: elasticsearch
+es_config: {}
+#Need to provide default directories
+es_pid_dir: "/var/run/elasticsearch"
+es_data_dirs: "/var/lib/elasticsearch"
+es_log_dir: "/var/log/elasticsearch"
+es_work_dir: "/tmp/elasticsearch"
+es_plugin_dir: "/usr/share/elasticsearch/plugins"
+es_max_open_files: 65536
+

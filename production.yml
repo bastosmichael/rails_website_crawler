@@ -9,6 +9,11 @@
     - ruby-install
     - role: build-ruby
       version: 2.3.0
+    - role: letsencrypt
+      letsencrypt_webroot_path: /home/ubuntu/skynet/current
+      letsencrypt_email: bastosmichael@gmail.com
+      letsencrypt_cert_domains:
+        - pricenometry.com
     - role: nginx-unicorn
       nginx_sites:
         - name: 'production'
@@ -17,3 +22,26 @@
           listen: '0.0.0.0:80'
           access_log:
             format: 'combined'
+    - role: logrotate
+      logrotate_scripts:
+        - name: rails
+          path: "/home/ubuntu/skynet/shared/log/*.log"
+          options:
+            - hourly
+            - size 25M
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+        - name: nginx
+          path: /var/log/nginx/*.log
+          options:
+            - hourly
+            - size 25M
+            - rotate 7
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+          scripts:
+            postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
