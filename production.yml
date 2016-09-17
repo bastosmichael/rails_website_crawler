@@ -27,9 +27,9 @@
           access_log:
             format: 'combined'
           ssl:
-            # ssl_only: true
-            sensitive_uris:
-              - ^/sidekiq(.*)
+            ssl_only: true
+            # sensitive_uris:
+            #   - ^/sidekiq(.*)
             certificate: /etc/letsencrypt/live/api.pricenometry.com/fullchain.pem
             certificate_key: /etc/letsencrypt/live/api.pricenometry.com/privkey.pem
     - role: logrotate
