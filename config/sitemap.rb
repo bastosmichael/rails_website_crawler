@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://" + ENV['DOMAIN'] + '/'
+SitemapGenerator::Sitemap.default_host = "https://" + ENV['DOMAIN'] + '/'
 
 SitemapGenerator::Sitemap.sitemaps_path = "#{ENV['CONTAINER']}/"
 
@@ -7,7 +7,7 @@ SitemapGenerator::Sitemap.create_index = true
 
 SitemapGenerator::Sitemap.public_path = "tmp/#{ENV['DOMAIN']}/#{ENV['CONTAINER']}/"
 
-SitemapGenerator::Sitemap.sitemaps_host = "http://#{ENV['DOMAIN']}/"
+SitemapGenerator::Sitemap.sitemaps_host = "https://#{ENV['DOMAIN']}/"
 
 SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(Rails.configuration.config[:fog].merge(fog_directory: "#{ENV['DOMAIN']}-sitemaps",
                                          fog_region: 'us-west-1', fog_provider: 'AWS'))
