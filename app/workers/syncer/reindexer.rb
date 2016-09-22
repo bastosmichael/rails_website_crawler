@@ -8,7 +8,8 @@ class Syncer::Reindexer < Syncer::Base
       id = r.key.gsub('.json','')
       begin
         unless Elasticsearch::Model.client.exists? index: index, type: container, id: id
-          Mapper::Indexer.perform_async @container, id
+          temp = Mapper::Indexer.new
+          temp.perform @container, id
         end
       rescue
         Mapper::Indexer.perform_async @container, id
