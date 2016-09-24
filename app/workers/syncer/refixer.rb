@@ -7,13 +7,17 @@ class Syncer::Refixer < Syncer::Base
     records.with_progress("Refixing #{container}").each do |r|
       id = r.key.gsub('.json','')
       if id.size > 20
-        Elasticsearch::Model.client.delete index: index, type: container, id: id
-        Elasticsearch::Model.client.indices.refresh index: index
-        r = record(id)
-        if url = r.try(:url)
-          Crawler::Scrimper.perform_async url
+        begin
+          Elasticsearch::Model.client.delete index: index, type: container, id: id
+          Elasticsearch::Model.client.indices.refresh index: index
+          r = record(id)
+          if url = r.try(:url)
+            Crawler::Scrimper.perform_async url
+          end
+          r.delete
+        rescue
+          Recorder::IdAvailability.perform_async container, id
         end
-        r.delete
       end
     end
   end
