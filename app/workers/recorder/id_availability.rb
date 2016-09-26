@@ -1,5 +1,6 @@
 class Recorder::IdAvailability < Recorder::Base
   def perform(container, id)
+    @container = container
     types = container.split('-').last.pluralize.gsub(':', '')
     index = Rails.env + '-' + types
     cloud.head(id + '.json').try(:destroy)

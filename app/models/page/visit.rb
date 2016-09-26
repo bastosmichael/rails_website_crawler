@@ -3,9 +3,10 @@ class Page::Visit
     @links = *links
     @type = type
     @name = Page::Url.new(@links.first).name
-    @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
-    types = @container.split('-').last.pluralize.gsub(':', '')
-    @index = Rails.env + '-' + types
+    if @container = Rails.configuration.config[:admin][:api_containers].find { |c| c.include?(@name) }
+      types = @container.split('-').last.pluralize.gsub(':', '')
+      @index = Rails.env + '-' + types
+    end
   end
 
   def cache
