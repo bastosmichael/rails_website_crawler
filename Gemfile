@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'bundler'
+
 gem 'rails', '4.2.5'
 gem 'responders'
 gem 'sqlite3'
