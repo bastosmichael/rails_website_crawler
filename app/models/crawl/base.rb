@@ -8,11 +8,16 @@ class Crawl::Base < Page::Url
 
   def get
     page = agent.get(url)
-    if page.code == '200'
-      return page
-    else
-      raise Mechanize::ResponseCodeError.new(page, 'Not 200')
+
+    return page if page.code == '200'
+
+    if page.code == '301' || page.code == '302'
+      page = agent.get(url.gsub('http://','https://'))
+
+      return page if page.code == '200'
     end
+
+    raise Mechanize::ResponseCodeError.new(page, 'Not 200')
   end
 
   def clear
