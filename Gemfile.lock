@@ -549,6 +549,3 @@ DEPENDENCIES
   user-agent-randomizer
   vcr
   wikipedia-client
-
-BUNDLED WITH
-   1.13.5
