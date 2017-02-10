@@ -32,27 +32,27 @@ task :environment do
 end
 
 task :setup => :environment do
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public/static"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/sockets"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/pids"]
-  queue! %[mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/app/sites"]
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public/static"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/sockets"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/pids"}
+  command %{mkdir -p "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/app/sites"}
 
-  queue! %[touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/sidekiq.yml"]
-  queue! %[touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/config.yml"]
-  queue! %[touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/secrets.yml"]
+  command %{touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/sidekiq.yml"}
+  command %{touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/config.yml"}
+  command %{touch "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config/secrets.yml"}
 
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public/static"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/sockets"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/pids"]
-  queue! %[chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/app/sites"]
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/public/static"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/log"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/config"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/sockets"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/tmp/pids"}
+  command %{chmod g+rx,u+rwx "#{fetch(:deploy_to)}/#{fetch(:shared_path)}/app/sites"}
 end
 
 desc "Deploys the current version to the server."
@@ -80,10 +80,3 @@ task :deploy => :environment do
     end
   end
 end
-
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
