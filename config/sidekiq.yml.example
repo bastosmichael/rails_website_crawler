@@ -78,6 +78,9 @@
   spider_three: 1
   spider_four: 1
   spider_five: 1
+  recorder: 1
+  mapper: 1
+:limits:
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
@@ -89,5 +92,3 @@
   sitemapper_eight: 1
   sitemapper_nine: 1
   sitemapper_ten: 1
-  recorder: 1
-  mapper: 1
