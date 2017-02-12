@@ -13,25 +13,25 @@
       swapfile_size: 8GB
       swapfile_swappiness: 10
       swapfile_location: /mnt/swapfile
-    - role: letsencrypt
-      letsencrypt_webroot_path: /home/ubuntu/skynet/current/public
-      letsencrypt_email: bastosmichael@gmail.com
-      letsencrypt_cert_domains:
-        - api.pricenometry.com
-    - role: nginx-unicorn
-      nginx_sites:
-        - name: 'production'
-          server_name: 'api.pricenometry.com'
-          root: '/home/ubuntu/skynet/current'
-          listen: '0.0.0.0:80'
-          access_log:
-            format: 'combined'
-          ssl:
-            ssl_only: true
-            # sensitive_uris:
-            #   - ^/sidekiq(.*)
-            certificate: /etc/letsencrypt/live/api.pricenometry.com/fullchain.pem
-            certificate_key: /etc/letsencrypt/live/api.pricenometry.com/privkey.pem
+    # - role: letsencrypt
+    #   letsencrypt_webroot_path: /home/ubuntu/skynet/current/public
+    #   letsencrypt_email: bastosmichael@gmail.com
+    #   letsencrypt_cert_domains:
+    #     - api.pricenometry.com
+    # - role: nginx-unicorn
+    #   nginx_sites:
+    #     - name: 'production'
+    #       server_name: 'api.pricenometry.com'
+    #       root: '/home/ubuntu/skynet/current'
+    #       listen: '0.0.0.0:80'
+    #       access_log:
+    #         format: 'combined'
+    #       ssl:
+    #         ssl_only: true
+    #         # sensitive_uris:
+    #         #   - ^/sidekiq(.*)
+    #         certificate: /etc/letsencrypt/live/api.pricenometry.com/fullchain.pem
+    #         certificate_key: /etc/letsencrypt/live/api.pricenometry.com/privkey.pem
     - role: logrotate
       logrotate_scripts:
         - name: rails
@@ -43,15 +43,15 @@
             - compress
             - delaycompress
             - copytruncate
-        - name: nginx
-          path: /var/log/nginx/*.log
-          options:
-            - hourly
-            - size 25M
-            - rotate 7
-            - missingok
-            - compress
-            - delaycompress
-            - copytruncate
-          scripts:
-            postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
+        # - name: nginx
+        #   path: /var/log/nginx/*.log
+        #   options:
+        #     - hourly
+        #     - size 25M
+        #     - rotate 7
+        #     - missingok
+        #     - compress
+        #     - delaycompress
+        #     - copytruncate
+        #   scripts:
+        #     postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
