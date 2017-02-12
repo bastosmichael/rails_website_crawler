@@ -30,10 +30,14 @@ class Crawler::Sitemapper < Crawler::Base
 
   def check_page(url)
     if new_url = @name.capitalize.constantize.sanitize_url(url)
-      get_page(new_url) if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
+      if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: new_url.gsub('https://','http://') } } })['hits']['total'] == 0
+        get_page(new_url) if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
+      end
     end
   rescue NoMethodError => e
-    get_page(url) if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
+    if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: url.gsub('https://','http://') } } })['hits']['total'] == 0
+      get_page(url) if Elasticsearch::Model.client.search(index: '_all', type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
+    end
   end
 
   def get_page(url)

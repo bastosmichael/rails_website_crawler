@@ -17,13 +17,13 @@ class Page::Visit
 
   def check_elasticsearch(url)
     if new_url = @name.capitalize.constantize.sanitize_url(url)
-      if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
-        check_redis(url)
+      if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url.gsub('https://','http://') } } })['hits']['total'] == 0
+        check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
       end
     end
   rescue NoMethodError => e
-    if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
-      check_redis(url)
+    if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url.gsub('https://','http://') } } })['hits']['total'] == 0
+      check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
     end
   end
 
