@@ -73,6 +73,7 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
+    invoke :'unicorn:restart'
 
     on :launch do
       # queue "touch #{fetch(:deploy_to)}/#{fetch(:shared_path)}/pids/sidekiq.pid"
@@ -84,12 +85,35 @@ task :deploy => :environment do
   end
 end
 
+desc "Sidekiq Restart all servers"
+task :sidekiq_all do
+  fetch(:domains).each do |domain|
+    set :domain, domain
+    invoke :'sidekiq:restart'
+  end
+end
+
+desc "Unicorn Restart all servers"
+task :unicorn_all do
+  fetch(:domains).each do |domain|
+    set :domain, domain
+    invoke :'unicorn:restart'
+  end
+end
+
+desc "Unlock all servers"
+task :unlock_all do
+  fetch(:domains).each do |domain|
+    set :domain, domain
+    invoke :'deploy:force_unlock'
+  end
+end
+
 desc "Deploy to all servers"
 task :deploy_all do
   fetch(:domains).each do |domain|
     set :domain, domain
     invoke :deploy
-    run!
   end
 end
 
