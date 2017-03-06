@@ -6,7 +6,8 @@ require 'mina_sidekiq/tasks'
 require 'mina/unicorn'
 
 set :user, 'ubuntu'
-set :domain, ENV['DOMAIN'] || File.read('production').split
+set :domain, ENV['DOMAIN']
+set :domains, File.read('production').split
 set :deploy_to, '/home/ubuntu/skynet'
 set :app_path, lambda { "#{fetch(:deploy_to)}/#{current_path}" }
 set :repository, 'https://github.com/bastosmichael/skynet.git'
@@ -80,6 +81,15 @@ task :deploy => :environment do
       # invoke :'unicorn:restart'
       # queue "touch #{fetch(:deploy_to)}/#{current_path}/tmp/restart.txt"
     end
+  end
+end
+
+desc "Deploy to all servers"
+task :deploy_all do
+  fetch(:domains).each do |domain|
+    set :domain, domain
+    invoke :deploy
+    run!
   end
 end
 
