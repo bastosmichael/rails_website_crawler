@@ -94,11 +94,15 @@ task :update_all do
   end
 end
 
+# ssh ubuntu@0.0.0.0 'cd skynet/shared/app/sites/; git pull origin master'
+
 desc "Sidekiq Restart all servers"
 task :sidekiq_all do
   fetch(:domains).each do |domain|
     set :domain, domain
-    invoke :'sidekiq:restart'
+    invoke :chruby, 'ruby-2.3.0'
+    command %{cd "#{fetch(:deploy_to)}/current"; RAILS_ENV=production bundle exec sidekiq -d -L log/sidekiq.log}
+    # invoke :'sidekiq:restart'
   end
 end
 
