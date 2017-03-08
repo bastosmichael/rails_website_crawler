@@ -67,6 +67,7 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
+
     invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
@@ -82,6 +83,14 @@ task :deploy => :environment do
       # invoke :'unicorn:restart'
       # queue "touch #{fetch(:deploy_to)}/#{current_path}/tmp/restart.txt"
     end
+  end
+end
+
+desc "Update sites folder"
+task :update_all do
+  fetch(:domains).each do |domain|
+    set :domain, domain
+    command %{cd "#{fetch(:shared_path)}/app/sites"; git pull origin master}
   end
 end
 
