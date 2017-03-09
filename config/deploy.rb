@@ -75,6 +75,7 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
     invoke :'unicorn:restart'
+    invoke :'sidekiq:restart'
 
     on :launch do
       # queue "touch #{fetch(:deploy_to)}/#{fetch(:shared_path)}/pids/sidekiq.pid"
