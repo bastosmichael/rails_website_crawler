@@ -100,8 +100,8 @@ desc "Sidekiq Restart all servers"
 task :sidekiq_all do
   fetch(:domains).each do |domain|
     set :domain, domain
-    invoke :chruby, 'ruby-2.3.0'
-    command %{cd "#{fetch(:deploy_to)}/current"; RAILS_ENV=production bundle exec sidekiq -d -L log/sidekiq.log}
+    # invoke :chruby, 'ruby-2.3.0'
+    command %{cd "#{fetch(:deploy_to)}/current" && RAILS_ENV=production bundle exec sidekiq -d -L log/sidekiq.log -c 1}
     # invoke :'sidekiq:restart'
   end
 end
