@@ -75,7 +75,7 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
     invoke :'unicorn:restart'
-    invoke :'sidekiq:restart'
+    # invoke :'sidekiq:restart'
 
     on :launch do
       # queue "touch #{fetch(:deploy_to)}/#{fetch(:shared_path)}/pids/sidekiq.pid"
@@ -89,9 +89,9 @@ end
 
 desc "Update sites folder"
 task :update_all do
-  fetch(:domains).each do |domain|
+  fetch(:domains).with_progress.each do |domain|
     set :domain, domain
-    command %{cd "#{fetch(:shared_path)}/app/sites"; git pull origin master}
+    command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
   end
 end
 
@@ -99,7 +99,7 @@ end
 
 desc "Sidekiq Restart all servers"
 task :sidekiq_all do
-  fetch(:domains).each do |domain|
+  fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     # invoke :chruby, 'ruby-2.3.0'
     command %{cd "#{fetch(:deploy_to)}/current" && RAILS_ENV=production bundle exec sidekiq -d -L log/sidekiq.log -c 1}
@@ -109,7 +109,7 @@ end
 
 desc "Unicorn Restart all servers"
 task :unicorn_all do
-  fetch(:domains).each do |domain|
+  fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'unicorn:restart'
   end
@@ -117,7 +117,7 @@ end
 
 desc "Unlock all servers"
 task :unlock_all do
-  fetch(:domains).each do |domain|
+  fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'deploy:force_unlock'
   end
@@ -125,7 +125,7 @@ end
 
 desc "Deploy to all servers"
 task :deploy_all do
-  fetch(:domains).each do |domain|
+  fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :deploy
   end
