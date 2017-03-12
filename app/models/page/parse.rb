@@ -14,6 +14,10 @@ class Page::Parse < Page::Base
     build_page
   end
 
+  def self.sanitize_url url
+    return url
+  end
+
   def screenshot
     @screenshot ||= File.join(@id, date) + '.jpg'
   end
