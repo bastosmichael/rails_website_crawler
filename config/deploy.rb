@@ -4,6 +4,7 @@ require 'mina/git'
 require 'mina/chruby'
 require 'mina_sidekiq/tasks'
 require 'mina/unicorn'
+require 'progress'
 
 set :user, 'ubuntu'
 set :domain, ENV['DOMAIN']
@@ -69,6 +70,7 @@ task :deploy => :environment do
     # instance of your project.
 
     invoke :'sidekiq:quiet'
+    # command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
@@ -88,7 +90,7 @@ task :deploy => :environment do
 end
 
 desc "Update sites folder"
-task :update_all do
+task :update_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
@@ -98,7 +100,7 @@ end
 # ssh ubuntu@0.0.0.0 'cd skynet/shared/app/sites/; git pull origin master'
 
 desc "Sidekiq Restart all servers"
-task :sidekiq_all do
+task :sidekiq_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     # invoke :chruby, 'ruby-2.3.0'
@@ -108,7 +110,7 @@ task :sidekiq_all do
 end
 
 desc "Unicorn Restart all servers"
-task :unicorn_all do
+task :unicorn_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'unicorn:restart'
@@ -116,7 +118,7 @@ task :unicorn_all do
 end
 
 desc "Unlock all servers"
-task :unlock_all do
+task :unlock_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'deploy:force_unlock'
@@ -124,7 +126,7 @@ task :unlock_all do
 end
 
 desc "Deploy to all servers"
-task :deploy_all do
+task :deploy_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :deploy
