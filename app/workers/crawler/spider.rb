@@ -8,7 +8,9 @@ class Crawler::Spider < Crawler::Base
   def perform(url)
     return if url.nil?
     @url = url
-    parser.page = scraper.get
+    Timeout::timeout(60) do
+      parser.page = scraper.get
+    end
     internal_links
     upload
     visit.cache unless internal_links.empty?
@@ -25,5 +27,7 @@ class Crawler::Spider < Crawler::Base
     end
   rescue Mechanize::RedirectLimitReachedError => e
     nil
+  rescue Timeout::Error => e
+    Crawler::Stretcher.perform_async url
   end
 end

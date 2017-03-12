@@ -8,7 +8,9 @@ class Crawler::Scrimper < Crawler::Base
   def perform(url)
     return if url.nil?
     @url = url
-    parser.page = scraper.get
+    Timeout::timeout(60) do
+      parser.page = scraper.get
+    end
     upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
@@ -23,5 +25,7 @@ class Crawler::Scrimper < Crawler::Base
     end
   rescue Mechanize::RedirectLimitReachedError => e
     nil
+  rescue Timeout::Error => e
+    Crawler::Stretcher.perform_async url
   end
 end
