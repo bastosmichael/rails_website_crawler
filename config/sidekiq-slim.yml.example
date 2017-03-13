@@ -2,6 +2,95 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [recorder, 2]
-  - [mapper, 1]
-
+  - [slider, 1200000]
+  - [socializer, 1100000]
+  - [recorder, 1000000]
+  - [mapper, 900000]
+  - [syncer, 80000]
+  - [default, 70000]
+  - [scrimper_one, 60000]
+  - [scrimper_two, 60000]
+  - [scrimper_three, 60000]
+  - [scrimper_four, 60000]
+  - [scrimper_five, 60000]
+  - [scrimper_six, 60000]
+  - [scrimper_seven, 60000]
+  - [scrimper_eight, 60000]
+  - [scrimper_nine, 60000]
+  - [scrimper_ten, 60000]
+  - [scrimper, 50000]
+  - [spider_one, 50000]
+  - [spider_two, 50000]
+  - [spider_three, 50000]
+  - [spider_four, 50000]
+  - [spider_five, 50000]
+  - [spider, 40000]
+  - [sampler_one, 30000]
+  - [sampler_two, 30000]
+  - [sampler_three, 30000]
+  - [sampler_four, 30000]
+  - [sampler_five, 30000]
+  - [sampler_six, 30000]
+  - [sampler_seven, 30000]
+  - [sampler_eight, 30000]
+  - [sampler_nine, 30000]
+  - [sampler_ten, 30000]
+  - [sampler, 20000]
+  - [sitemapper_one, 1]
+  - [sitemapper_two, 1]
+  - [sitemapper_three, 1]
+  - [sitemapper_four, 1]
+  - [sitemapper_five, 1]
+  - [sitemapper_six, 1]
+  - [sitemapper_seven, 1]
+  - [sitemapper_eight, 1]
+  - [sitemapper_nine, 1]
+  - [sitemapper_ten, 1]
+  - [sitemapper, 1]
+  - [stretcher, 1]
+:process_limits:
+  slider: 1
+  socializer: 1
+  scrimper: 1
+  scrimper_one: 1
+  scrimper_two: 1
+  scrimper_three: 1
+  scrimper_four: 1
+  scrimper_five: 1
+  scrimper_six: 1
+  scrimper_seven: 1
+  scrimper_eight: 1
+  scrimper_nine: 1
+  scrimper_ten: 1
+  sampler: 1
+  sampler_one: 1
+  sampler_two: 1
+  sampler_three: 1
+  sampler_four: 1
+  sampler_five: 1
+  sampler_six: 1
+  sampler_seven: 1
+  sampler_eight: 1
+  sampler_nine: 1
+  sampler_ten: 1
+  spider: 1
+  spider_one: 1
+  spider_two: 1
+  spider_three: 1
+  spider_four: 1
+  spider_five: 1
+  recorder: 1
+  mapper: 1
+:limits:
+  sitemapper: 1
+  sitemapper_one: 1
+  sitemapper_two: 1
+  sitemapper_three: 1
+  sitemapper_four: 1
+  sitemapper_five: 1
+  sitemapper_six: 1
+  sitemapper_seven: 1
+  sitemapper_eight: 1
+  sitemapper_nine: 1
+  sitemapper_ten: 1
+  stretcher: 1
