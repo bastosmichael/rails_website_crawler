@@ -77,7 +77,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
     invoke :'unicorn:restart'
     command %{cp "#{fetch(:deploy_to)}"/current/config/sidekiq-slim.yml.example "#{fetch(:shared_path)}/config/sidekiq.yml"}
-    # invoke :'sidekiq:restart'
+    invoke :'sidekiq:restart'
 
     on :launch do
       # queue "touch #{fetch(:deploy_to)}/#{fetch(:shared_path)}/pids/sidekiq.pid"
