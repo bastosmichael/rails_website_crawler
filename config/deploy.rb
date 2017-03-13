@@ -72,11 +72,11 @@ task :deploy => :environment do
     invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
-    command %{cp "#{fetch(:deploy_to)}"/current/config/sidekiq-slim.yml.example "#{fetch(:shared_path)}/config/sidekiq.yml"}
     invoke :'bundle:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
     invoke :'unicorn:restart'
+    command %{cp "#{fetch(:deploy_to)}"/current/config/sidekiq-slim.yml.example "#{fetch(:shared_path)}/config/sidekiq.yml"}
     # invoke :'sidekiq:restart'
 
     on :launch do
