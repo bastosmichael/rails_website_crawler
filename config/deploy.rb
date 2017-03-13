@@ -111,7 +111,7 @@ task :sidekiq_all => :environment do
 end
 
 desc "Unicorn Restart all servers"
-task :unicorn_all => :environment do
+task :unicorn_all do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'unicorn:restart'
@@ -119,7 +119,7 @@ task :unicorn_all => :environment do
 end
 
 desc "Unlock all servers"
-task :unlock_all => :environment do
+task :unlock_all do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :'deploy:force_unlock'
@@ -127,7 +127,7 @@ task :unlock_all => :environment do
 end
 
 desc "Deploy to all servers"
-task :deploy_all => :environment do
+task :deploy_all do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
     invoke :deploy
