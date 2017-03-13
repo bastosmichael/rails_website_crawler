@@ -11,33 +11,33 @@ class Page::Visit
 
   def cache
     @links.each do |link|
-      check_elasticsearch(link)
+      check_redis(link)
     end
   end
 
-  def check_elasticsearch(url)
-    if new_url = @name.capitalize.constantize.sanitize_url(url)
-      if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url.gsub('https://','http://') } } })['hits']['total'] == 0
-        check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
-      end
-    end
-  rescue NoMethodError => e
-    if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url.gsub('https://','http://') } } })['hits']['total'] == 0
-      check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
-    end
-  end
+  # def check_elasticsearch(url)
+  #   if new_url = @name.capitalize.constantize.sanitize_url(url)
+  #     if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url.gsub('https://','http://') } } })['hits']['total'] == 0
+  #       check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: new_url } } })['hits']['total'] == 0
+  #     end
+  #   end
+  # rescue NoMethodError => e
+  #   if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url.gsub('https://','http://') } } })['hits']['total'] == 0
+  #     check_redis(url) if Elasticsearch::Model.client.search(index: @index, type: @container, body: { query: { match_phrase_prefix: { url: url } } })['hits']['total'] == 0
+  #   end
+  # end
 
   def check_redis(url)
-    # key = Page::Url.new(url).cache_key
-    # unless keys.include? key
-    #   keys << key
-    #   ap "#{list}: #{keys.count}"
+    key = Page::Url.new(url).cache_key
+    unless keys.include? key
+      keys << key
+      # ap "#{list}: #{keys.count}"
       if @type == 'Sampler'
         Crawler::Scrimper.constantize.perform_async url
       else
         ('Crawler::' + @type).constantize.perform_async url
       end
-    # end
+    end
   end
 
   def list

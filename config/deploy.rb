@@ -70,6 +70,7 @@ task :deploy => :environment do
     # instance of your project.
 
     invoke :'sidekiq:quiet'
+    # command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'

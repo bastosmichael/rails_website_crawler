@@ -27,7 +27,7 @@ class Crawler::Base < Worker
     @internal_links ||= begin
       parser.internal_links.map do |url|
         scraper.name.capitalize.constantize.sanitize_url(url)
-      end
+      end.compact
     rescue
       parser.internal_links
     end
