@@ -70,7 +70,7 @@ task :deploy => :environment do
     # instance of your project.
 
     invoke :'sidekiq:quiet'
-    # command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
+    command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master && cd -}
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
@@ -90,11 +90,26 @@ task :deploy => :environment do
   end
 end
 
+desc "Deploys the current version to the server."
+task :update => :environment do
+  on :before_hook do
+    # Put things to run locally before ssh
+  end
+
+  deploy do
+    # Put things that will set up an empty directory into a fully set-up
+    # instance of your project.
+
+    invoke :'sidekiq:quiet'
+    command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
+  end
+end
+
 desc "Update sites folder"
 task :update_all => :environment do
   fetch(:domains).with_progress.each do |domain|
     set :domain, domain
-    command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
+    invoke :update
   end
 end
 
