@@ -70,9 +70,9 @@ task :deploy => :environment do
     # instance of your project.
 
     invoke :'sidekiq:quiet'
-    # command %{cd "#{fetch(:shared_path)}/app/sites" && git pull origin master}
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    command %{cp "#{fetch(:deploy_to)}"/config/sidekiq-slim.yml.example "#{fetch(:shared_path)}/config/sidekiq.yml"}
     invoke :'bundle:install'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
