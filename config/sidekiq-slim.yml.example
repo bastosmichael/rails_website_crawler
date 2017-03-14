@@ -8,6 +8,12 @@
   - [mapper, 900000]
   - [syncer, 80000]
   - [default, 70000]
+  - [spider_one, 50000]
+  - [spider_two, 50000]
+  - [spider_three, 50000]
+  - [spider_four, 50000]
+  - [spider_five, 50000]
+  - [spider, 40000]
   - [sitemapper_one, 1]
   - [sitemapper_two, 1]
   - [sitemapper_three, 1]
@@ -21,6 +27,12 @@
   - [sitemapper, 1]
   - [stretcher, 1]
 :limits:
+  spider: 1
+  spider_one: 1
+  spider_two: 1
+  spider_three: 1
+  spider_four: 1
+  spider_five: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1
