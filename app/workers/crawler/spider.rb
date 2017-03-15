@@ -5,9 +5,15 @@ class Crawler::Spider < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60 * 365
 
-  def perform(url, hash = {})
+  def perform(url, type = nil, hash = {})
     return if url.nil?
     @parsed = hash
+
+    if type.nil?
+      next_type
+    else
+      @type = type
+    end
 
     @url = url
 

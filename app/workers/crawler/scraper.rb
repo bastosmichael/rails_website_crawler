@@ -5,8 +5,14 @@ class Crawler::Scraper < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url)
+  def perform(url, type = nil)
     return if url.nil?
+
+    if type.nil?
+      next_type
+    else
+      @type = type
+    end
 
     @url = url
     Timeout::timeout(60) do
