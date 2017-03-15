@@ -3,19 +3,20 @@ class Crawler::Spider < Crawler::Base
                   retry: true,
                   backtrace: true,
                   unique: :until_and_while_executing,
-                  unique_expiration: 120 * 60
+                  unique_expiration: 120 * 60 * 365
 
   def perform(url, hash = {})
     return if url.nil?
     @parsed = hash
 
     @url = url
+
     Timeout::timeout(60) do
       parser.page = scraper.get
     end
-    internal_links
+
+    visit
     upload
-    visit.cache unless internal_links.empty?
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '410' ||
@@ -31,5 +32,9 @@ class Crawler::Spider < Crawler::Base
     nil
   rescue Timeout::Error => e
     Crawler::Stretcher.perform_async url
+  end
+
+  def next_type
+    @type ||= 'Spider'
   end
 end

@@ -3,5 +3,9 @@ class Crawler::SpiderOne < Crawler::Spider
                   retry: true,
                   backtrace: true,
                   unique: :until_and_while_executing,
-                  unique_expiration: 120 * 60
+                  unique_expiration: 120 * 60 * 365
+
+  def next_type
+    @type ||= 'SpiderOne'
+  end
 end

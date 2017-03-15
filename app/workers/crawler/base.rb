@@ -38,6 +38,8 @@ class Crawler::Base < Worker
   end
 
   def visit
-    @visit ||= Page::Visit.new(internal_links, self.class.name.split('::').last)
+    internal_links.each do |link|
+      ('Crawler::' + next_type).constantize.perform_async url
+    end
   end
 end

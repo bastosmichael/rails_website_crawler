@@ -5,23 +5,18 @@ class Crawler::Sampler < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url, type = nil, hash = {})
+  def perform(url, hash = {})
     return if url.nil?
     @parsed = hash
 
-    if type.nil?
-      next_type
-    else
-      @type = type
-    end
-
     @url = url
+
     Timeout::timeout(60) do
       parser.page = scraper.get
     end
-    internal_links
+
+    visit
     upload
-    visit.cache unless internal_links.empty?
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '410' ||
@@ -41,9 +36,5 @@ class Crawler::Sampler < Crawler::Base
 
   def next_type
     @type ||= 'Scrimper'
-  end
-
-  def visit
-    @visit ||= Page::Visit.new(internal_links, @type)
   end
 end

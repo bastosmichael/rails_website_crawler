@@ -7,12 +7,13 @@ class Crawler::Scraper < Crawler::Base
 
   def perform(url)
     return if url.nil?
+
     @url = url
     Timeout::timeout(60) do
       parser.page = scraper.get
     end
 
-    visit.cache unless internal_links.empty?
+    visit
 
     parser.paginate.each do |next_url|
       Crawler::Scraper.perform_async next_url
@@ -36,9 +37,5 @@ class Crawler::Scraper < Crawler::Base
 
   def next_type
     @type ||= 'Scrimper'
-  end
-
-  def visit
-    @visit ||= Page::Visit.new(internal_links, @type)
   end
 end
