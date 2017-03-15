@@ -11,10 +11,14 @@ class Crawler::Base < Worker
 
   def upload
     scraper.clear
-    parsed = parser.save if parser.build
-    if parsed && parsed['type']
+    @parsed = parsed.merge(parser.save) if parser.build
+    if parsed.presence && parsed['type']
       Recorder::Uploader.perform_async parsed
     end
+  end
+
+  def parsed
+    @parsed ||= {}
   end
 
   def social

@@ -5,8 +5,9 @@ class Crawler::Sampler < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url, type = nil)
+  def perform(url, type = nil, hash = {})
     return if url.nil?
+    @parsed = hash
 
     if type.nil?
       next_type

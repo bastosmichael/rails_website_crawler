@@ -6,8 +6,9 @@ class Crawler::Socializer < Crawler::Sampler
                   unique_expiration: 120 * 60
 
   def upload
-    parsed = parser.save if parser.build
-    if parsed && parsed['type']
+    scraper.clear
+    @parsed = parsed.merge(parser.save) if parser.build
+    if parsed.presence && parsed['type']
       Recorder::Uploader.perform_async parsed.merge(social.shares)
     end
   end

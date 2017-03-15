@@ -5,8 +5,10 @@ class Crawler::Scrimper < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url)
+  def perform(url, hash = {})
     return if url.nil?
+    @parsed = hash
+
     @url = url
     Timeout::timeout(60) do
       parser.page = scraper.get

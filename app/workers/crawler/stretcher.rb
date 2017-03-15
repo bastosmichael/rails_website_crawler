@@ -5,8 +5,10 @@ class Crawler::Stretcher < Crawler::Base
                   unique: :until_and_while_executing,
                   unique_expiration: 120 * 60
 
-  def perform(url)
+  def perform(url, hash = {})
     return if url.nil?
+    @parsed = hash
+
     @url = url
     parser.page = scraper.get
     upload
