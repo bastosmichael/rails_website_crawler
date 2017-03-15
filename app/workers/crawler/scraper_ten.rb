@@ -8,4 +8,10 @@ class Crawler::ScraperTen < Crawler::Sampler
   def next_type
     @type ||= 'ScrimperTen'
   end
+
+  def paginate
+    parser.paginate.each do |next_url|
+      Crawler::ScraperTen.perform_async next_url
+    end
+  end
 end

@@ -15,9 +15,7 @@ class Crawler::Scraper < Crawler::Base
 
     visit
 
-    parser.paginate.each do |next_url|
-      Crawler::Scraper.perform_async next_url
-    end
+    paginate
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '410' ||
@@ -37,5 +35,11 @@ class Crawler::Scraper < Crawler::Base
 
   def next_type
     @type ||= 'Scrimper'
+  end
+
+  def paginate
+    parser.paginate.each do |next_url|
+      Crawler::Scraper.perform_async next_url
+    end
   end
 end
