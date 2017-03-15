@@ -14,6 +14,17 @@
   - [spider_four, 50000]
   - [spider_five, 50000]
   - [spider, 40000]
+  - [scraper_one, 30000]
+  - [scraper_two, 30000]
+  - [scraper_three, 30000]
+  - [scraper_four, 30000]
+  - [scraper_five, 30000]
+  - [scraper_six, 30000]
+  - [scraper_seven, 30000]
+  - [scraper_eight, 30000]
+  - [scraper_nine, 30000]
+  - [scraper_ten, 30000]
+  - [scraper, 30000]
   - [sitemapper_one, 1]
   - [sitemapper_two, 1]
   - [sitemapper_three, 1]
@@ -33,6 +44,17 @@
   spider_three: 1
   spider_four: 1
   spider_five: 1
+  scraper: 1
+  scraper_one: 1
+  scraper_two: 1
+  scraper_three: 1
+  scraper_four: 1
+  scraper_five: 1
+  scraper_six: 1
+  scraper_seven: 1
+  scraper_eight: 1
+  scraper_nine: 1
+  scraper_ten: 1
   sitemapper: 1
   sitemapper_one: 1
   sitemapper_two: 1

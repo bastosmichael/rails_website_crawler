@@ -21,16 +21,27 @@
   - [spider_four, 50000]
   - [spider_five, 50000]
   - [spider, 40000]
-  - [sampler_one, 30000]
-  - [sampler_two, 30000]
-  - [sampler_three, 30000]
-  - [sampler_four, 30000]
-  - [sampler_five, 30000]
-  - [sampler_six, 30000]
-  - [sampler_seven, 30000]
-  - [sampler_eight, 30000]
-  - [sampler_nine, 30000]
-  - [sampler_ten, 30000]
+  - [scraper_one, 30000]
+  - [scraper_two, 30000]
+  - [scraper_three, 30000]
+  - [scraper_four, 30000]
+  - [scraper_five, 30000]
+  - [scraper_six, 30000]
+  - [scraper_seven, 30000]
+  - [scraper_eight, 30000]
+  - [scraper_nine, 30000]
+  - [scraper_ten, 30000]
+  - [scraper, 30000]
+  - [sampler_one, 20000]
+  - [sampler_two, 20000]
+  - [sampler_three, 20000]
+  - [sampler_four, 20000]
+  - [sampler_five, 20000]
+  - [sampler_six, 20000]
+  - [sampler_seven, 20000]
+  - [sampler_eight, 20000]
+  - [sampler_nine, 20000]
+  - [sampler_ten, 20000]
   - [sampler, 20000]
   - [stretcher, 1]
 :process_limits:
@@ -47,6 +58,17 @@
   scrimper_eight: 1
   scrimper_nine: 1
   scrimper_ten: 1
+  scraper: 1
+  scraper_one: 1
+  scraper_two: 1
+  scraper_three: 1
+  scraper_four: 1
+  scraper_five: 1
+  scraper_six: 1
+  scraper_seven: 1
+  scraper_eight: 1
+  scraper_nine: 1
+  scraper_ten: 1
   sampler: 1
   sampler_one: 1
   sampler_two: 1
