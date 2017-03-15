@@ -18,6 +18,10 @@ class Page::Parse < Page::Base
     return url
   end
 
+  def paginate
+    parser.css('.next').map {|n| n[:href]}.compact.uniq
+  end
+
   def screenshot
     @screenshot ||= File.join(@id, date) + '.jpg'
   end
