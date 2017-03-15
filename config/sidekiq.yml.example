@@ -80,11 +80,11 @@
   sampler_eight: 1
   sampler_nine: 1
   sampler_ten: 1
-:limits:
   spider: 1
   spider_one: 1
   spider_two: 1
   spider_three: 1
   spider_four: 1
   spider_five: 1
+:limits:
   stretcher: 1

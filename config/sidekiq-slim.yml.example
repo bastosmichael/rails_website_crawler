@@ -48,7 +48,7 @@
   - [sitemapper_ten, 3]
   - [sitemapper, 2]
   - [stretcher, 1]
-:limits:
+:process_limits:
   spider: 1
   spider_one: 1
   spider_two: 1
@@ -77,4 +77,5 @@
   sitemapper_eight: 1
   sitemapper_nine: 1
   sitemapper_ten: 1
+:limits:
   stretcher: 1
