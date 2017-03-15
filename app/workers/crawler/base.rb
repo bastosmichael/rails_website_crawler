@@ -38,7 +38,7 @@ class Crawler::Base < Worker
   end
 
   def visit
-    internal_links.each do |link|
+    internal_links.each do |url|
       ('Crawler::' + next_type).constantize.perform_async url
     end
   end
