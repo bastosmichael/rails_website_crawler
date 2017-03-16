@@ -2,6 +2,7 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
+  - [recorder, 1200000]
   - [slider, 1100000]
   - [socializer, 1000000]
   - [scrimper_one, 90000]

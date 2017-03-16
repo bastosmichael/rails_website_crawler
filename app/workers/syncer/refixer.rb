@@ -16,7 +16,7 @@ class Syncer::Refixer < Syncer::Base
           end
           r.delete
         rescue
-          Recorder::IdAvailability.perform_async container, id
+          Mapper::IdAvailability.perform_async container, id
         end
       end
     end

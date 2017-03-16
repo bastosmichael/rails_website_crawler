@@ -88,6 +88,6 @@ class Record::Trends < Record::Match
   end
 
   def delete_bad_data url
-    Recorder::UrlAvailability.perform_async url
+    Mapper::UrlAvailability.perform_async url
   end
 end

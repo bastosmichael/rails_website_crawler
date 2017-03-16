@@ -29,7 +29,7 @@ class Crawler::Scraper < Crawler::Base
          e.response_code == '500' ||
          e.response_code == '301' ||
          e.response_code == '302'
-      Recorder::UrlAvailability.perform_async url
+      Mapper::UrlAvailability.perform_async url
     else
       raise
     end
