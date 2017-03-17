@@ -22,6 +22,10 @@ class Page::Parse < Page::Base
     parser.css('.next').map {|n| n[:href]}.compact.uniq
   end
 
+  def scraping
+    []
+  end
+
   def screenshot
     @screenshot ||= File.join(@id, date) + '.jpg'
   end
