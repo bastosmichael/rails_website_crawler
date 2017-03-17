@@ -1,4 +1,4 @@
-class Mapper::IdAvailability < Recorder::Base
+class Mapper::IdAvailability < Mapper::Base
   def perform(container, id)
     @container = container
     types = container.split('-').last.pluralize.gsub(':', '')
