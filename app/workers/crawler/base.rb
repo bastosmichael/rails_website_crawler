@@ -37,6 +37,12 @@ class Crawler::Base < Worker
     end
   end
 
+  def scraping
+    parser.scraping.map do |hash|
+      ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
+    end.compact
+  end
+
   def visit
     internal_links.each do |url|
       ('Crawler::' + next_type).constantize.perform_async url

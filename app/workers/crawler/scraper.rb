@@ -19,7 +19,7 @@ class Crawler::Scraper < Crawler::Base
       parser.page = scraper.get
     end
 
-    visit
+    visit unless scraping.presence
 
     paginate
 
