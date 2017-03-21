@@ -8,7 +8,7 @@
   - [recorder, 1200000]
   - [syncer, 110000]
   - [default, 100000]
-  #- [scrimper_one, 90000]
+  - [scrimper_one, 90000]
   - [scrimper_two, 90000]
   - [scrimper_three, 90000]
   - [scrimper_four, 90000]
