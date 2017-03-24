@@ -23,7 +23,7 @@ class Crawler::Scraper < Crawler::Base
 
     paginate
 
-    upload
+    # upload
   rescue Mechanize::ResponseCodeError => e
     if e.response_code == '404' ||
          e.response_code == '410' ||
