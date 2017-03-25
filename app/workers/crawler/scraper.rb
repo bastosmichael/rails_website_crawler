@@ -15,6 +15,7 @@ class Crawler::Scraper < Crawler::Base
     end
 
     @url = url
+
     Timeout::timeout(60) do
       parser.page = scraper.get
     end

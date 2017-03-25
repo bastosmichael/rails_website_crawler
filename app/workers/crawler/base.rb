@@ -39,7 +39,11 @@ class Crawler::Base < Worker
 
   def scraping
     parser.scraping.map do |hash|
-      ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
+      if hash[:url].presence
+        ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
+      else
+        Recorder::Uploader.perform_async hash
+      end
     end.compact
   end
 
