@@ -50,3 +50,5 @@
   - [sampler_ten, 30000]
   - [sampler, 20000]
   - [stretcher, 1]
+:limits:
+  stretcher: 1
