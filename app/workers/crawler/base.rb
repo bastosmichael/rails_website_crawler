@@ -42,7 +42,7 @@ class Crawler::Base < Worker
       if hash[:url].presence
         ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
       else
-        Recorder::Uploader.perform_async hash
+        Recorder::Uploader.perform_async hash.merge(url: @url)
       end
     end.compact
   end
