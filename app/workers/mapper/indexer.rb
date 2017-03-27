@@ -51,5 +51,7 @@ class Mapper::Indexer < Mapper::Base
   # # rescue Elasticsearch::Transport::Transport::Errors::NotFound
   #  record(id).delete
   #  Crawler::Scrimper.perform_async new_hash['url'] if new_hash['url']
+  rescue Elasticsearch::Transport::Transport::Errors::NotFound => e
+    nil
   end
 end
