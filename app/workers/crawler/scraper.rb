@@ -20,7 +20,17 @@ class Crawler::Scraper < Crawler::Base
       parser.page = scraper.get
     end
 
-    raise "Scraping not found" unless scraping.presence
+    if scraping.presence
+      scraping.each do |hash|
+        if hash[:url].presence
+          ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
+        else
+          Recorder::Uploader.perform_async hash.merge(url: @url)
+        end
+      end
+    else
+      raise "Scraping not found"
+    end
 
     paginate
 
@@ -44,6 +54,10 @@ class Crawler::Scraper < Crawler::Base
 
   def next_type
     @type ||= 'Scrimper'
+  end
+
+  def scraping
+    @scraping ||= parser.scraping.compact
   end
 
   def paginate

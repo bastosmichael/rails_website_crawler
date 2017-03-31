@@ -37,16 +37,6 @@ class Crawler::Base < Worker
     end
   end
 
-  def scraping
-    parser.scraping.map do |hash|
-      if hash[:url].presence
-        ('Crawler::' + next_type).constantize.perform_async hash[:url], hash
-      else
-        Recorder::Uploader.perform_async hash.merge(url: @url)
-      end
-    end.compact
-  end
-
   def visit
     internal_links.each do |url|
       ('Crawler::' + next_type).constantize.perform_async url
