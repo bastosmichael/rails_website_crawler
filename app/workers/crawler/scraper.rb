@@ -20,7 +20,7 @@ class Crawler::Scraper < Crawler::Base
       parser.page = scraper.get
     end
 
-    visit unless scraping.presence
+    raise "Scraping not found" unless scraping.presence
 
     paginate
 
