@@ -17,5 +17,7 @@ class Mapper::UrlAvailability < Mapper::Base
       # Elasticsearch::Model.client.delete index: @index, type: @container, id: record['hits']['hits'].try(:first)['_id']
       # cloud.head(record['hits']['hits'].try(:first)['_id'] + '.json').try(:destroy)
     end
+  rescue NoMethodError => e
+    nil
   end
 end
