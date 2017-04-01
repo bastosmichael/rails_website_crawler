@@ -1,4 +1,4 @@
-class Crawler::ScraperTen < Crawler::Sampler
+class Crawler::ScraperTen < Crawler::Scraper
   sidekiq_options queue: :scraper_ten,
                   retry: true,
                   backtrace: true,
