@@ -21,4 +21,5 @@
   - [sitemapper, 2]
   - [stretcher, 1]
 :limits:
+  sitemapper_one: 1
   stretcher: 1
