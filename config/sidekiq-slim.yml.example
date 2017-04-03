@@ -2,34 +2,12 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [mapper, 1500000]
-  - [slider, 1400000]
-  - [socializer, 1300000]
-  - [recorder, 1200000]
-  - [syncer, 110000]
-  - [default, 100000]
-  - [sitemapper_one, 3]
-  - [sitemapper_two, 3]
-  - [sitemapper_three, 3]
-  - [sitemapper_four, 3]
-  - [sitemapper_five, 3]
-  - [sitemapper_six, 3]
-  - [sitemapper_seven, 3]
-  - [sitemapper_eight, 3]
-  - [sitemapper_nine, 3]
-  - [sitemapper_ten, 3]
-  - [sitemapper, 2]
+  - [slider, 700000]
+  - [socializer, 600000]
+  - [recorder, 50000]
+  - [mapper, 4000]
+  - [syncer, 300]
+  - [default, 20]
   - [stretcher, 1]
 :limits:
-  sitemapper_one: 1
-  sitemapper_two: 1
-  sitemapper_three: 1
-  sitemapper_four: 1
-  sitemapper_five: 1
-  sitemapper_six: 1
-  sitemapper_seven: 1
-  sitemapper_eight: 1
-  sitemapper_nine: 1
-  sitemapper_ten: 1
-  sitemapper: 1
   stretcher: 1
