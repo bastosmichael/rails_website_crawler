@@ -50,3 +50,5 @@
   - [sampler_nine, 30000]
   - [sampler_ten, 30000]
   - [sampler, 20000]
+:process_limits:
+  stretcher: 1
