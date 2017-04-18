@@ -2,23 +2,9 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [slider, 800]
-  - [socializer, 700]
-  - [recorder, 600]
-  - [mapper, 500]
-  - [scrimper_one, 40]
-  - [scrimper_two, 40]
-  - [scrimper_three, 40]
-  - [scrimper_four, 40]
-  - [scrimper_five, 40]
-  - [scrimper_six, 40]
-  - [scrimper_seven, 40]
-  - [scrimper_eight, 40]
-  - [scrimper_nine, 40]
-  - [scrimper_ten, 40]
-  - [scrimper, 40]
-  - [syncer, 3]
-  - [default, 2]
+  - [recorder, 4000]
+  - [mapper, 300]
+  - [default, 20]
   - [sitemapper_one, 1]
   - [sitemapper_two, 1]
   - [sitemapper_three, 1]
@@ -30,6 +16,5 @@
   - [sitemapper_nine, 1]
   - [sitemapper_ten, 1]
   - [sitemapper, 1]
-  - [stretcher, 1]
 :limits:
   stretcher: 1
