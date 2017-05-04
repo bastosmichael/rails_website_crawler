@@ -107,7 +107,7 @@ end
 
 desc "Update sites folder"
 task :update_all => :environment do
-  fetch(:domains).with_progress.each do |domain|
+  fetch(:domains).shuffle.with_progress.each do |domain|
     set :domain, domain
     invoke :update
   end
@@ -117,7 +117,7 @@ end
 
 desc "Sidekiq Restart all servers"
 task :sidekiq_all => :environment do
-  fetch(:domains).with_progress.each do |domain|
+  fetch(:domains).shuffle.with_progress.each do |domain|
     set :domain, domain
     # invoke :chruby, 'ruby-2.3.0'
     command %{cd "#{fetch(:deploy_to)}/current" && RAILS_ENV=production bundle exec sidekiq -d -L log/sidekiq.log -c 1}
@@ -127,7 +127,7 @@ end
 
 desc "Unicorn Restart all servers"
 task :unicorn_all do
-  fetch(:domains).with_progress.each do |domain|
+  fetch(:domains).shuffle.with_progress.each do |domain|
     set :domain, domain
     invoke :'unicorn:restart'
   end
@@ -135,7 +135,7 @@ end
 
 desc "Unlock all servers"
 task :unlock_all do
-  fetch(:domains).with_progress.each do |domain|
+  fetch(:domains).shuffle.with_progress.each do |domain|
     set :domain, domain
     invoke :'deploy:force_unlock'
   end
@@ -143,7 +143,7 @@ end
 
 desc "Deploy to all servers"
 task :deploy_all do
-  fetch(:domains).with_progress.each do |domain|
+  fetch(:domains).shuffle.with_progress.each do |domain|
     set :domain, domain
     invoke :deploy
   end
