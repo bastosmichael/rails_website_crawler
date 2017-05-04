@@ -348,6 +348,8 @@ GEM
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
+    rack-health (0.1.2)
+      rack (>= 1.2.0)
     rack-livereload (0.3.16)
       rack
     rack-protection (1.5.3)
@@ -533,6 +535,7 @@ DEPENDENCIES
   pry
   pry-rails
   quiet_assets
+  rack-health
   rack-livereload
   rails (= 4.2.5)
   rails_layout
