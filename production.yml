@@ -18,14 +18,14 @@
     #   letsencrypt_email: bastosmichael@gmail.com
     #   letsencrypt_cert_domains:
     #     - api.pricenometry.com
-    # - role: nginx-unicorn
-    #   nginx_sites:
-    #     - name: 'production'
-    #       server_name: 'api.pricenometry.com'
-    #       root: '/home/ubuntu/skynet/current'
-    #       listen: '0.0.0.0:80'
-    #       access_log:
-    #         format: 'combined'
+    - role: nginx-unicorn
+      nginx_sites:
+        - name: 'production'
+          server_name: 'localhost'
+          root: '/home/ubuntu/skynet/current'
+          listen: '0.0.0.0:80'
+          access_log:
+            format: 'combined'
     #       ssl:
     #         ssl_only: true
     #         # sensitive_uris:
@@ -43,15 +43,15 @@
             - compress
             - delaycompress
             - copytruncate
-        # - name: nginx
-        #   path: /var/log/nginx/*.log
-        #   options:
-        #     - hourly
-        #     - size 25M
-        #     - rotate 7
-        #     - missingok
-        #     - compress
-        #     - delaycompress
-        #     - copytruncate
-        #   scripts:
-        #     postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
+        - name: nginx
+          path: /var/log/nginx/*.log
+          options:
+            - hourly
+            - size 25M
+            - rotate 7
+            - missingok
+            - compress
+            - delaycompress
+            - copytruncate
+          scripts:
+            postrotate: "[ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`"
