@@ -2,8 +2,8 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [recorder, 4000]
-  - [mapper, 300]
+  - [mapper, 4_000_000]
+  - [recorder, 300_000]
   - [default, 20]
   - [sitemapper_one, 1]
   - [sitemapper_two, 1]
