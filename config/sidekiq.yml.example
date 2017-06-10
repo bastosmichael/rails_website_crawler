@@ -49,7 +49,7 @@
   - [sampler_nine, 30000]
   - [sampler_ten, 30000]
   - [sampler, 20000]
-  - [stretcher, 10000]
+  - [stretcher, 1]
 :process_limits:
   stretcher: 1
   slider: 1
