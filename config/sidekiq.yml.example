@@ -2,9 +2,9 @@
 :concurrency: 1
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
-  - [recorder, 1200000]
-  - [slider, 1100000]
-  - [socializer, 1000000]
+  - [socializer, 1200000]
+  - [recorder, 1100000]
+  - [slider, 1000000]
   - [scrimper_one, 90000]
   - [scrimper_two, 90000]
   - [scrimper_three, 90000]
@@ -49,7 +49,7 @@
   - [sampler_nine, 30000]
   - [sampler_ten, 30000]
   - [sampler, 20000]
-  - [stretcher, 10000]
+  - [stretcher, 1]
 :process_limits:
   stretcher: 1
   slider: 1
