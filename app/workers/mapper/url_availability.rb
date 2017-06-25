@@ -13,11 +13,12 @@ class Mapper::UrlAvailability < Mapper::Base
                                            available: false,
                                            url: record['_source']['url'],
                                            type: record['_type'].split('-').last.capitalize.singularize })
+        # cloud.head(record['_id'] + '.json').try(:destroy)
+        # Elasticsearch::Model.client.delete index: @index, type: @container, id: record['_id']
+        # Crawler::Scrimper.perform_async url
       end
-      # Elasticsearch::Model.client.delete index: @index, type: @container, id: record['hits']['hits'].try(:first)['_id']
-      # cloud.head(record['hits']['hits'].try(:first)['_id'] + '.json').try(:destroy)
     end
-  rescue NoMethodError => e
-    nil
+  # rescue NoMethodError => e
+  #   nil
   end
 end
