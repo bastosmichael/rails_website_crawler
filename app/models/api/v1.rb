@@ -42,9 +42,8 @@ class Api::V1 < Record::Base
                }
 
     old_data.each do |k, v|
-
       if v.is_a?(Hash)
-        if k.include?('_shares')
+        if k.to_s.include?('facebook') || k.to_s.include?('_shares')
           new_data[:social][k] = sanitize_value(v.values.last)
         elsif k.include?('price')
           new_data[:price][k] = sanitize_value(v.values.last)
@@ -52,7 +51,9 @@ class Api::V1 < Record::Base
           new_data[k] = sanitize_value(v.values.last)
         end
       else
-        if k.include?('_shares')
+        if k.to_s.include?('_history')
+          new_data[:history][k.to_s.gsub('_history','')] = sanitize_value(v)
+        elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
           new_data[:social][k] = sanitize_value(v)
         elsif k.include?('price')
           new_data[:price][k] = sanitize_value(v)
@@ -276,13 +277,13 @@ class Api::V1 < Record::Base
 
       e[:_source].each do |k,v|
         if k.to_s.include?('_history')
-          new_data[:history][k.to_s.gsub('_history','')] = v
+          new_data[:history][k.to_s.gsub('_history','')] = sanitize_value(v)
         elsif k.to_s.include?('facebook') || k.to_s.include?('_shares')
-          new_data[:social][k] = v
+          new_data[:social][k] = sanitize_value(v)
         elsif k.to_s.include?('price')
-          new_data[:price][k] = v
+          new_data[:price][k] = sanitize_value(v)
         else
-          new_data[k] = v
+          new_data[k] = sanitize_value(v)
         end
       end
       new_data
