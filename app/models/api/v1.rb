@@ -77,7 +77,7 @@ class Api::V1 < Record::Base
     new_data = {}
     old_data.each do |k, v|
       if v.is_a?(Hash) && v.count > 1
-        new_data[k] = v.merge({Date.today.to_s => v.values.last}).group_by_week {|k,v| k }.map do |k,v|
+        new_data[k] = v.merge({Date.today.to_s => v.values.last}).group_by_day {|k,v| k }.map do |k,v|
           if value = v.try(:first).try(:last)
             @last = sanitize_value(value)
           end
