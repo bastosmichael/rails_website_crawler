@@ -1,5 +1,5 @@
 ---
-:concurrency: 1
+:concurrency: 5
 :pidfile: tmp/pids/sidekiq.pid
 :queues:
   - [socializer, 1200000]
