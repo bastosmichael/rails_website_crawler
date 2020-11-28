@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '4.2.5'
+gem 'rails'
 gem 'rack-health'
 gem 'responders'
 gem 'sqlite3'
