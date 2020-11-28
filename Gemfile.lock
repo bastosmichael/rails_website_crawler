@@ -345,7 +345,7 @@ GEM
       pry (>= 0.10.4)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.8)
+    rack (1.6.13)
     rack-contrib (1.4.0)
       git-version-bump (~> 0.15)
       rack (~> 1.4)
@@ -541,7 +541,7 @@ DEPENDENCIES
   quiet_assets
   rack-health
   rack-livereload
-  rails (= 4.2.5)
+  rails
   rails_layout
   redis-namespace
   redis-objects
